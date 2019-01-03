@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="基础知识点框架与库的区别jquery库+DOM操作+http请求 = 全家桶 如何起步 引包Vue.js 通过Vue对象，new Vue（options） 配置options对象 el:发生动作的目的地 template:模板（必须为一个根节点） data函数，返回的是一个对象 components:key是组件名，value是组件对象 methods：配合事件 props：子组件接受的参数设置插">
+<meta name="description" content="基础知识点框架与库的区别jquery库+DOM操作+http请求 = 全家桶 如何起步 引包Vue.js 通过Vue对象，new Vue（options） 配置options对象 el:发生动作的目的地 template:模板（必须为一个根节点） data函数，返回的是一个对象 components:key是组件名，value是组件对象 methods：配合事件 props：子组件接受的参数设置">
 <meta name="keywords" content="Vue,指令,生命周期 ，组件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue知识点总结">
 <meta property="og:url" content="https://banggan.github.io/2019/01/03/Vue知识点总结/index.html">
 <meta property="og:site_name" content="banggan&#39;s Blog">
-<meta property="og:description" content="基础知识点框架与库的区别jquery库+DOM操作+http请求 = 全家桶 如何起步 引包Vue.js 通过Vue对象，new Vue（options） 配置options对象 el:发生动作的目的地 template:模板（必须为一个根节点） data函数，返回的是一个对象 components:key是组件名，value是组件对象 methods：配合事件 props：子组件接受的参数设置插">
+<meta property="og:description" content="基础知识点框架与库的区别jquery库+DOM操作+http请求 = 全家桶 如何起步 引包Vue.js 通过Vue对象，new Vue（options） 配置options对象 el:发生动作的目的地 template:模板（必须为一个根节点） data函数，返回的是一个对象 components:key是组件名，value是组件对象 methods：配合事件 props：子组件接受的参数设置">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190103095047469.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhbmdiYW5nZ2FuZ2Fu,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-01-03T07:06:49.366Z">
+<meta property="og:updated_time" content="2019-01-03T07:08:59.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue知识点总结">
-<meta name="twitter:description" content="基础知识点框架与库的区别jquery库+DOM操作+http请求 = 全家桶 如何起步 引包Vue.js 通过Vue对象，new Vue（options） 配置options对象 el:发生动作的目的地 template:模板（必须为一个根节点） data函数，返回的是一个对象 components:key是组件名，value是组件对象 methods：配合事件 props：子组件接受的参数设置插">
+<meta name="twitter:description" content="基础知识点框架与库的区别jquery库+DOM操作+http请求 = 全家桶 如何起步 引包Vue.js 通过Vue对象，new Vue（options） 配置options对象 el:发生动作的目的地 template:模板（必须为一个根节点） data函数，返回的是一个对象 components:key是组件名，value是组件对象 methods：配合事件 props：子组件接受的参数设置">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190103095047469.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhbmdiYW5nZ2FuZ2Fu,size_16,color_FFFFFF,t_70">
 
 
@@ -434,10 +434,14 @@
 <li>data函数，返回的是一个对象</li>
 <li>components:key是组件名，value是组件对象</li>
 <li>methods：配合事件</li>
-<li>props：子组件接受的参数设置<h4 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h4></li>
+<li>props：子组件接受的参数设置</li>
 </ul>
 </li>
-<li>：对象、字符串、判断后的布尔值、三元表达式<h4 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h4></li>
+</ul>
+<h4 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h4><ul>
+<li>：对象、字符串、判断后的布尔值、三元表达式</li>
+</ul>
+<h4 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h4><ul>
 <li>v-text:元素的innerText属性</li>
 <li>v-html：元素的innerHTML属性</li>
 <li>v-if:判断是否插入，v-else-if，v-else和v-if必须是相邻的元素</li>
@@ -462,8 +466,10 @@
 <li>beforeDestroy：销毁前，做一些功能的释放，如本地保存</li>
 <li>destroyed：销毁后</li>
 <li>activated：激活</li>
-<li>deactivated：停用<br>小结：<br>频繁的销毁和创建组件？不合理，使用keep_alive内置组件包裹起来，对应的是actived和deactived声明周期；<br>created和actived：都是子组件状态，created没有被keep-alive内置组件包括，actived被包裹；<h4 id="获取DOM元素"><a href="#获取DOM元素" class="headerlink" title="获取DOM元素"></a>获取DOM元素</h4>在组件的DOM部分任意标签写上ref=”xxx”,通过组件对象，this.$refs.xxx获取到元素</li>
+<li>deactivated：停用</li>
 </ul>
+<p>小结：<br>频繁的销毁和创建组件？不合理，使用keep_alive内置组件包裹起来，对应的是actived和deactived声明周期；<br>created和actived：都是子组件状态，created没有被keep-alive内置组件包括，actived被包裹；</p>
+<h4 id="获取DOM元素"><a href="#获取DOM元素" class="headerlink" title="获取DOM元素"></a>获取DOM元素</h4><p>在组件的DOM部分任意标签写上ref=”xxx”,通过组件对象，this.$refs.xxx获取到元素</p>
 
       
     </div>
@@ -595,10 +601,10 @@
               
               
               <div class="site-state-item site-state-categories">
-                
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
-                
+                </a>
               </div>
             
 
@@ -606,10 +612,10 @@
               
               
               <div class="site-state-item site-state-tags">
-                
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 

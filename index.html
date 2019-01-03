@@ -430,10 +430,14 @@
 <li>data函数，返回的是一个对象</li>
 <li>components:key是组件名，value是组件对象</li>
 <li>methods：配合事件</li>
-<li>props：子组件接受的参数设置<h4 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h4></li>
+<li>props：子组件接受的参数设置</li>
 </ul>
 </li>
-<li>：对象、字符串、判断后的布尔值、三元表达式<h4 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h4></li>
+</ul>
+<h4 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h4><ul>
+<li>：对象、字符串、判断后的布尔值、三元表达式</li>
+</ul>
+<h4 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h4><ul>
 <li>v-text:元素的innerText属性</li>
 <li>v-html：元素的innerHTML属性</li>
 <li>v-if:判断是否插入，v-else-if，v-else和v-if必须是相邻的元素</li>
@@ -458,8 +462,10 @@
 <li>beforeDestroy：销毁前，做一些功能的释放，如本地保存</li>
 <li>destroyed：销毁后</li>
 <li>activated：激活</li>
-<li>deactivated：停用<br>小结：<br>频繁的销毁和创建组件？不合理，使用keep_alive内置组件包裹起来，对应的是actived和deactived声明周期；<br>created和actived：都是子组件状态，created没有被keep-alive内置组件包括，actived被包裹；<h4 id="获取DOM元素"><a href="#获取DOM元素" class="headerlink" title="获取DOM元素"></a>获取DOM元素</h4>在组件的DOM部分任意标签写上ref=”xxx”,通过组件对象，this.$refs.xxx获取到元素</li>
+<li>deactivated：停用</li>
 </ul>
+<p>小结：<br>频繁的销毁和创建组件？不合理，使用keep_alive内置组件包裹起来，对应的是actived和deactived声明周期；<br>created和actived：都是子组件状态，created没有被keep-alive内置组件包括，actived被包裹；</p>
+<h4 id="获取DOM元素"><a href="#获取DOM元素" class="headerlink" title="获取DOM元素"></a>获取DOM元素</h4><p>在组件的DOM部分任意标签写上ref=”xxx”,通过组件对象，this.$refs.xxx获取到元素</p>
 
           
         
@@ -1824,10 +1830,10 @@ export default {
               
               
               <div class="site-state-item site-state-categories">
-                
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
-                
+                </a>
               </div>
             
 
@@ -1835,10 +1841,10 @@ export default {
               
               
               <div class="site-state-item site-state-tags">
-                
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
