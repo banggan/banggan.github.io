@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="banggan&#39;s Blog">
 <meta property="og:description" content="每当问到VueJS响应式原理，大家可能都会脱口而出“Vue通过Object.defineProperty方法把data对象的全部属性转化成getter/setter，当属性被访问或修改时通知变化”。然而，其内部深层的响应式原理可能很多人都没有完全理解，网络上关于其响应式原理的文章质量也是参差不齐，大多是贴个代码加段注释了事。本文将会从一个非常简单的例子出发，一步一步分析响应式原理的具体实现思路。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-03T08:34:19.376Z">
+<meta property="og:updated_time" content="2019-01-03T08:35:46.436Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue实现computed原理">
 <meta name="twitter:description" content="每当问到VueJS响应式原理，大家可能都会脱口而出“Vue通过Object.defineProperty方法把data对象的全部属性转化成getter/setter，当属性被访问或修改时通知变化”。然而，其内部深层的响应式原理可能很多人都没有完全理解，网络上关于其响应式原理的文章质量也是参差不齐，大多是贴个代码加段注释了事。本文将会从一个非常简单的例子出发，一步一步分析响应式原理的具体实现思路。">
@@ -385,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.3k
+                  3.1k
                 </span>
               
 
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  13
+                  12
                 </span>
               
             </div>
@@ -797,10 +797,7 @@ hero.health = 5000
 
 // -&gt; 英雄初始类型：脆皮
 // -&gt; 我的类型是：坦克
-</code></pre><p>五、尾声</p>
-<p>看到上述的代码，是不是发现和VueJS源码里面的很像？其实VueJS的思路和原理也是类似的，只不过它做了更多的事情，但核心还是在这里边。</p>
-<p>在学习VueJS源码的时候，曾经被响应式原理弄得头昏脑涨，并非一下子就看懂了。后在不断的思考与尝试下，同时参考了许多其他人的思路，才总算把这一块的知识点完全掌握。希望这篇文章对大家有帮助，如果发现有任何错漏的地方，也欢迎向我指出，谢谢大家~</p>
-
+</code></pre>
       
     </div>
     
