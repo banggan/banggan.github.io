@@ -294,6 +294,558 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/03/Vue实现computed原理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/03/Vue实现computed原理/" itemprop="url">Vue实现computed原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-03T16:32:56+08:00">
+                2019-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>每当问到VueJS响应式原理，大家可能都会脱口而出“Vue通过Object.defineProperty方法把data对象的全部属性转化成getter/setter，当属性被访问或修改时通知变化”。然而，其内部深层的响应式原理可能很多人都没有完全理解，网络上关于其响应式原理的文章质量也是参差不齐，大多是贴个代码加段注释了事。本文将会从一个非常简单的例子出发，一步一步分析响应式原理的具体实现思路。</p>
+<p>一、使数据对象变得“可观测”</p>
+<p>首先，我们定义一个数据对象，就以王者荣耀里面的其中一个英雄为例子：</p>
+<pre><code>const hero = {
+  health: 3000,
+  IQ: 150
+}
+</code></pre><p>我们定义了这个英雄的生命值为3000，IQ为150。但是现在还不知道他是谁，不过这不重要，只需要知道这个英雄将会贯穿我们整篇文章，而我们的目的就是通过这个英雄的属性，知道这个英雄是谁。</p>
+<p>现在我们可以通过hero.health和hero.IQ直接读写这个英雄对应的属性值。但是，当这个英雄的属性被读取或修改时，我们并不知情。那么应该如何做才能够让英雄主动告诉我们，他的属性被修改了呢？这时候就需要借助Object.defineProperty的力量了。</p>
+<p>关于Object.defineProperty的介绍，MDN上是这么说的：</p>
+<p>Object.defineProperty() 方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。<br>在本文中，我们只使用这个方法使对象变得“可观测”，更多关于这个方法的具体内容，请参考<a href="https://developer.mozilla.org...，就不再赘述了。" target="_blank" rel="noopener">https://developer.mozilla.org...，就不再赘述了。</a></p>
+<p>那么如何让这个英雄主动通知我们其属性的读写情况呢？首先改写一下上面的例子：</p>
+<pre><code>let hero = {}
+let val = 3000
+Object.defineProperty(hero, &apos;health&apos;, {
+  get () {
+    console.log(&apos;我的health属性被读取了！&apos;)
+    return val
+  },
+  set (newVal) {
+    console.log(&apos;我的health属性被修改了！&apos;)
+    val = newVal
+  }
+})
+</code></pre><p>我们通过Object.defineProperty方法，给hero定义了一个health属性，这个属性在被读写的时候都会触发一段console.log。现在来尝试一下：</p>
+<pre><code>console.log(&apos;我的health属性被读取了！&apos;)
+// -&gt; 3000
+// -&gt; 我的health属性被读取了！    
+hero.health = 5000
+// -&gt; 我的health属性被修改了
+</code></pre><p>可以看到，英雄已经可以主动告诉我们其属性的读写情况了，这也意味着，这个英雄的数据对象已经是“可观测”的了。为了把英雄的所有属性都变得可观测，我们可以想一个办法：</p>
+<pre><code>/**
+ * 使一个对象转化成可观测对象
+ * @param { Object } obj 对象
+ * @param { String } key 对象的key
+ * @param { Any } val 对象的某个key的值
+ */
+function defineReactive (obj, key, val) {
+  Object.defineProperty(obj, key, {
+    get () {
+      // 触发getter
+      console.log(`我的${key}属性被读取了！`)
+      return val
+    },
+    set (newVal) {
+      // 触发setter
+      console.log(`我的${key}属性被修改了！`)
+      val = newVal
+    }
+  })
+}
+
+/**
+ * 把一个对象的每一项都转化成可观测对象
+ * @param { Object } obj 对象
+ */
+function observable (obj) {
+  const keys = Object.keys(obj)
+  keys.forEach((key) =&gt; {
+    defineReactive(obj, key, obj[key])
+  })
+  return obj
+}
+现在我们可以把英雄这么定义：    
+const hero = observable({
+  health: 3000,
+  IQ: 150
+})
+</code></pre><p>读者们可以在控制台自行尝试读写英雄的属性，看看它是不是已经变得可观测的。</p>
+<p>二、计算属性</p>
+<p>现在，英雄已经变得可观测，任何的读写操作他都会主动告诉我们，但也仅此而已，我们仍然不知道他是谁。如果我们希望在修改英雄的生命值和IQ之后，他能够主动告诉他的其他信息，这应该怎样才能办到呢？假设可以这样：</p>
+<pre><code>watcher(hero, &apos;type&apos;, () =&gt; {
+  return hero.health &gt; 4000 ? &apos;坦克&apos; : &apos;脆皮&apos;
+})
+</code></pre><p>我们定义了一个watcher作为“监听器”，它监听了hero的type属性。这个type属性的值取决于hero.health，换句话来说，当hero.health发生变化时，hero.type也应该发生变化，前者是后者的依赖。我们可以把这个hero.type称为“计算属性”。</p>
+<p>那么，我们应该怎样才能正确构造这个监听器呢？可以看到，在设想当中，监听器接收三个参数，分别是被监听的对象、被监听的属性以及回调函数，回调函数返回一个该被监听属性的值。顺着这个思路，我们尝试着编写一段代码：</p>
+<pre><code>/**
+ * 当计算属性的值被更新时调用
+ * @param { Any } val 计算属性的值
+ */
+function onComputedUpdate (val) {
+  console.log(`我的类型是：${val}`);
+}
+
+/**
+ * 观测者
+ * @param { Object } obj 被观测对象
+ * @param { String } key 被观测对象的key
+ * @param { Function } cb 回调函数，返回“计算属性”的值
+ */
+function watcher (obj, key, cb) {
+  Object.defineProperty(obj, key, {
+    get () {
+      const val = cb()
+      onComputedUpdate(val)
+      return val
+    },
+    set () {
+      console.error(&apos;计算属性无法被赋值！&apos;)
+    }
+  })
+}
+现在我们可以把英雄放在监听器里面，尝试跑一下上面的代码：
+
+watcher(hero, &apos;type&apos;, () =&gt; {
+  return hero.health &gt; 4000 ? &apos;坦克&apos; : &apos;脆皮&apos;
+})
+
+hero.type
+
+hero.health = 5000
+
+hero.type
+
+// -&gt; 我的health属性被读取了！
+// -&gt; 我的类型是：脆皮
+// -&gt; 我的health属性被修改了！
+// -&gt; 我的health属性被读取了！
+// -&gt; 我的类型是：坦克
+</code></pre><p>现在看起来没毛病，一切都运行良好，是不是就这样结束了呢？别忘了，我们现在是通过手动读取hero.type来获取这个英雄的类型，并不是他主动告诉我们的。如果我们希望让英雄能够在health属性被修改后，第一时间主动发起通知，又该怎么做呢？这就涉及到本文的核心知识点——依赖收集。</p>
+<p>三、依赖收集</p>
+<p>我们知道，当一个可观测对象的属性被读写时，会触发它的getter/setter方法。换个思路，如果我们可以在可观测对象的getter/setter里面，去执行监听器里面的onComputedUpdate()方法，是不是就能够实现让对象主动发出通知的功能呢？</p>
+<p>由于监听器内的onComputedUpdate()方法需要接收回调函数的值作为参数，而可观测对象内并没有这个回调函数，所以我们需要借助一个第三方来帮助我们把监听器和可观测对象连接起来。</p>
+<p>这个第三方就做一件事情——收集监听器内的回调函数的值以及onComputedUpdate()方法。</p>
+<p>现在我们把这个第三方命名为“依赖收集器”，一起来看看应该怎么写：</p>
+<pre><code>const Dep = {
+  target: null
+}
+</code></pre><p>就是这么简单。依赖收集器的target就是用来存放监听器里面的onComputedUpdate()方法的。</p>
+<p>定义完依赖收集器，我们回到监听器里，看看应该在什么地方把onComputedUpdate()方法赋值给Dep.target：</p>
+<pre><code>function watcher (obj, key, cb) {
+  // 定义一个被动触发函数，当这个“被观测对象”的依赖更新时调用
+  const onDepUpdated = () =&gt; {
+    const val = cb()
+    onComputedUpdate(val)
+  }
+
+  Object.defineProperty(obj, key, {
+    get () {
+      Dep.target = onDepUpdated
+      // 执行cb()的过程中会用到Dep.target，
+      // 当cb()执行完了就重置Dep.target为null
+      const val = cb()
+      Dep.target = null
+      return val
+    },
+    set () {
+      console.error(&apos;计算属性无法被赋值！&apos;)
+    }
+  })
+}
+</code></pre><p>我们在监听器内部定义了一个新的onDepUpdated()方法，这个方法很简单，就是把监听器回调函数的值以及onComputedUpdate()给打包到一块，然后赋值给Dep.target。这一步非常关键，通过这样的操作，依赖收集器就获得了监听器的回调值以及onComputedUpdate()方法。作为全局变量，Dep.target理所当然的能够被可观测对象的getter/setter所使用。</p>
+<p>重新看一下我们的watcher实例：</p>
+<pre><code>watcher(hero, &apos;type&apos;, () =&gt; {
+  return hero.health &gt; 4000 ? &apos;坦克&apos; : &apos;脆皮&apos;
+})
+在它的回调函数中，调用了英雄的health属性，也就是触发了对应的getter函数。理清楚这一点很重要，因为接下来我们需要回到定义可观测对象的defineReactive()方法当中，对它进行改写：
+
+function defineReactive (obj, key, val) {
+  const deps = []
+  Object.defineProperty(obj, key, {
+    get () {
+      if (Dep.target &amp;&amp; deps.indexOf(Dep.target) === -1) {
+        deps.push(Dep.target)
+      }
+      return val
+    },
+    set (newVal) {
+      val = newVal
+      deps.forEach((dep) =&gt; {
+        dep()
+      })
+    }
+  })
+}
+</code></pre><p>可以看到，在这个方法里面我们定义了一个空数组deps，当getter被触发的时候，就会往里面添加一个Dep.target。回到关键知识点Dep.target等于监听器的onComputedUpdate()方法，这个时候可观测对象已经和监听器捆绑到一块。任何时候当可观测对象的setter被触发时，就会调用数组中所保存的Dep.target方法，也就是自动触发监听器内部的onComputedUpdate()方法。</p>
+<p>至于为什么这里的deps是一个数组而不是一个变量，是因为可能同一个属性会被多个计算属性所依赖，也就是存在多个Dep.target。定义deps为数组，若当前属性的setter被触发，就可以批量调用多个计算属性的onComputedUpdate()方法了。</p>
+<p>完成了这些步骤，基本上我们整个响应式系统就已经搭建完成，下面贴上完整的代码：</p>
+<pre><code>/**
+ * 定义一个“依赖收集器”
+ */
+const Dep = {
+  target: null
+}
+
+/**
+ * 使一个对象转化成可观测对象
+ * @param { Object } obj 对象
+ * @param { String } key 对象的key
+ * @param { Any } val 对象的某个key的值
+ */
+function defineReactive (obj, key, val) {
+  const deps = []
+  Object.defineProperty(obj, key, {
+    get () {
+      console.log(`我的${key}属性被读取了！`)
+      if (Dep.target &amp;&amp; deps.indexOf(Dep.target) === -1) {
+        deps.push(Dep.target)
+      }
+      return val
+    },
+    set (newVal) {
+      console.log(`我的${key}属性被修改了！`)
+      val = newVal
+      deps.forEach((dep) =&gt; {
+        dep()
+      })
+    }
+  })
+}
+
+/**
+ * 把一个对象的每一项都转化成可观测对象
+ * @param { Object } obj 对象
+ */
+function observable (obj) {
+  const keys = Object.keys(obj)
+  for (let i = 0; i &lt; keys.length; i++) {
+    defineReactive(obj, keys[i], obj[keys[i]])
+  }
+  return obj
+}
+
+/**
+ * 当计算属性的值被更新时调用
+ * @param { Any } val 计算属性的值
+ */
+function onComputedUpdate (val) {
+  console.log(`我的类型是：${val}`)
+}
+
+/**
+ * 观测者
+ * @param { Object } obj 被观测对象
+ * @param { String } key 被观测对象的key
+ * @param { Function } cb 回调函数，返回“计算属性”的值
+ */
+function watcher (obj, key, cb) {
+  // 定义一个被动触发函数，当这个“被观测对象”的依赖更新时调用
+  const onDepUpdated = () =&gt; {
+    const val = cb()
+    onComputedUpdate(val)
+  }
+
+  Object.defineProperty(obj, key, {
+    get () {
+      Dep.target = onDepUpdated
+      // 执行cb()的过程中会用到Dep.target，
+      // 当cb()执行完了就重置Dep.target为null
+      const val = cb()
+      Dep.target = null
+      return val
+    },
+    set () {
+      console.error(&apos;计算属性无法被赋值！&apos;)
+    }
+  })
+}
+
+const hero = observable({
+  health: 3000,
+  IQ: 150
+})
+
+watcher(hero, &apos;type&apos;, () =&gt; {
+  return hero.health &gt; 4000 ? &apos;坦克&apos; : &apos;脆皮&apos;
+})
+
+console.log(`英雄初始类型：${hero.type}`)
+
+hero.health = 5000
+
+// -&gt; 我的health属性被读取了！
+// -&gt; 英雄初始类型：脆皮
+// -&gt; 我的health属性被修改了！
+// -&gt; 我的health属性被读取了！
+// -&gt; 我的类型是：坦克
+上述代码可以直接在code pen点击预览或者浏览器控制台上执行。
+</code></pre><p>四、代码优化<br>在上面的例子中，依赖收集器只是一个简单的对象，其实在defineReactive()内部的deps数组等和依赖收集有关的功能，都应该集成在Dep实例当中，所以我们可以把依赖收集器改写一下：</p>
+<pre><code>class Dep {
+  constructor () {
+    this.deps = []
+  }
+
+  depend () {
+    if (Dep.target &amp;&amp; this.deps.indexOf(Dep.target) === -1) {
+      this.deps.push(Dep.target)
+    }
+  }
+
+  notify () {
+    this.deps.forEach((dep) =&gt; {
+      dep()
+    })
+  }
+}
+
+Dep.target = null
+同样的道理，我们对observable和watcher都进行一定的封装与优化，使这个响应式系统变得模块化：
+
+class Observable {
+  constructor (obj) {
+    return this.walk(obj)
+  }
+
+  walk (obj) {
+    const keys = Object.keys(obj)
+    keys.forEach((key) =&gt; {
+      this.defineReactive(obj, key, obj[key])
+    })
+    return obj
+  }
+
+  defineReactive (obj, key, val) {
+    const dep = new Dep()
+    Object.defineProperty(obj, key, {
+      get () {
+        dep.depend()
+        return val
+      },
+      set (newVal) {
+        val = newVal
+        dep.notify()
+      }
+    })
+  }
+}
+class Watcher {
+  constructor (obj, key, cb, onComputedUpdate) {
+    this.obj = obj
+    this.key = key
+    this.cb = cb
+    this.onComputedUpdate = onComputedUpdate
+    return this.defineComputed()
+  }
+
+  defineComputed () {
+    const self = this
+    const onDepUpdated = () =&gt; {
+      const val = self.cb()
+      this.onComputedUpdate(val)
+    }
+
+    Object.defineProperty(self.obj, self.key, {
+      get () {
+        Dep.target = onDepUpdated
+        const val = self.cb()
+        Dep.target = null
+        return val
+      },
+      set () {
+        console.error(&apos;计算属性无法被赋值！&apos;)
+      }
+    })
+  }
+}
+然后我们来跑一下：
+
+const hero = new Observable({
+  health: 3000,
+  IQ: 150
+})
+
+new Watcher(hero, &apos;type&apos;, () =&gt; {
+  return hero.health &gt; 4000 ? &apos;坦克&apos; : &apos;脆皮&apos;
+}, (val) =&gt; {
+  console.log(`我的类型是：${val}`)
+})
+
+console.log(`英雄初始类型：${hero.type}`)
+
+hero.health = 5000
+
+// -&gt; 英雄初始类型：脆皮
+// -&gt; 我的类型是：坦克
+</code></pre><p>五、尾声</p>
+<p>看到上述的代码，是不是发现和VueJS源码里面的很像？其实VueJS的思路和原理也是类似的，只不过它做了更多的事情，但核心还是在这里边。</p>
+<p>在学习VueJS源码的时候，曾经被响应式原理弄得头昏脑涨，并非一下子就看懂了。后在不断的思考与尝试下，同时参考了许多其他人的思路，才总算把这一块的知识点完全掌握。希望这篇文章对大家有帮助，如果发现有任何错漏的地方，也欢迎向我指出，谢谢大家~</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/03/Vue路由/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1872,7 +2424,7 @@ export default {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1894,7 +2446,7 @@ export default {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
