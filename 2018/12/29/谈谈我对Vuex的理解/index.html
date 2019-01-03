@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Vue,vuex,状态管理,">
 
 
 
@@ -80,6 +80,7 @@
 
 
 <meta name="description" content="在近期做得项目中，用到Vue框架，必不可少的也用到vuex状态管理，再加上面试中也被问到了，索性把这一块拿出来抽时间整理一下： 核心概念Vuex 是适用于 Vue.js 应用的状态管理库，为应用中的所有组件提供集中式的状态存储与操作，保证了所有状态以可预测的方式进行修改。官网的一张图：  Vue Components：Vue组件。HTML页面上，负责接收用户操作等交互行为，执行dispatch方法">
+<meta name="keywords" content="Vue,vuex,状态管理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈谈我对vuex的理解">
 <meta property="og:url" content="https://banggan.github.io/2018/12/29/谈谈我对Vuex的理解/index.html">
@@ -88,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/201808121539412?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhbmdiYW5nZ2FuZ2Fu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180812154444633?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhbmdiYW5nZ2FuZ2Fu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:updated_time" content="2018-12-30T10:39:56.209Z">
+<meta property="og:updated_time" content="2019-01-03T07:02:55.046Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈我对vuex的理解">
 <meta name="twitter:description" content="在近期做得项目中，用到Vue框架，必不可少的也用到vuex状态管理，再加上面试中也被问到了，索性把这一块拿出来抽时间整理一下： 核心概念Vuex 是适用于 Vue.js 应用的状态管理库，为应用中的所有组件提供集中式的状态存储与操作，保证了所有状态以可预测的方式进行修改。官网的一张图：  Vue Components：Vue组件。HTML页面上，负责接收用户操作等交互行为，执行dispatch方法">
@@ -461,15 +462,8 @@ const Counter = {
     &lt;/div&gt;      `
 })
 </code></pre><p>通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到。让我们更新下 Counter 的实现：</p>
-<pre><code>const Counter = {
-  template: `&lt;div&gt;{{ count }}&lt;/div&gt;`,
-  computed: {
-    count () {
-      return this.$store.state.count
-    }
-  }
-}
-</code></pre><p>mapState 辅助函数<br>当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余。为了解决这个问题，我们可以使用 mapState 辅助函数帮助我们生成计算属性，让你少按几次键：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const Counter = &#123;</span><br><span class="line">  template: `&lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;`,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    count () &#123;</span><br><span class="line">      return this.$store.state.count</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mapState 辅助函数<br>当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余。为了解决这个问题，我们可以使用 mapState 辅助函数帮助我们生成计算属性，让你少按几次键：</p>
 <pre><code>// 在单独构建的版本中辅助函数为 Vuex.mapState
 import { mapState } from &apos;vuex&apos;    
 export default {
@@ -540,6 +534,16 @@ export default {
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+            <a href="/tags/vuex/" rel="tag"># vuex</a>
+          
+            <a href="/tags/状态管理/" rel="tag"># 状态管理</a>
+          
+        </div>
+      
 
       
       
@@ -555,8 +559,8 @@ export default {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/29/JS之this的指向理解/" rel="prev" title="JS之this的指向理解">
-                JS之this的指向理解 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/12/29/tags/" rel="prev" title="你好，hexo">
+                你好，hexo <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -636,7 +640,7 @@ export default {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -647,12 +651,21 @@ export default {
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>
