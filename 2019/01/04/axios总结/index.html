@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="axios,前后端交互,http请求,">
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="愿你是披荆斩棘的自信女侠">
-<meta property="og:type" content="website">
-<meta property="og:title" content="banggan&#39;s Blog">
-<meta property="og:url" content="https://banggan.github.io/categories/随笔/index.html">
+<meta name="description" content="Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。在Vue中常用axios来做前后端的交互；上一张git上的star值 特点 从浏览器中创建 XMLHttpRequests 从 node.js 创建 http 请求  支持 Promise API  拦截请求和响应 转换请求数据和响应数据  取消请求  自动转换 JSON 数据  客户端支持防御 XSR">
+<meta name="keywords" content="axios,前后端交互,http请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="axios总结">
+<meta property="og:url" content="https://banggan.github.io/2019/01/04/axios总结/index.html">
 <meta property="og:site_name" content="banggan&#39;s Blog">
-<meta property="og:description" content="愿你是披荆斩棘的自信女侠">
+<meta property="og:description" content="Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。在Vue中常用axios来做前后端的交互；上一张git上的star值 特点 从浏览器中创建 XMLHttpRequests 从 node.js 创建 http 请求  支持 Promise API  拦截请求和响应 转换请求数据和响应数据  取消请求  自动转换 JSON 数据  客户端支持防御 XSR">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190104203630621.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019010420524063.png">
+<meta property="og:updated_time" content="2019-01-04T13:32:38.691Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="banggan&#39;s Blog">
-<meta name="twitter:description" content="愿你是披荆斩棘的自信女侠">
+<meta name="twitter:title" content="axios总结">
+<meta name="twitter:description" content="Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。在Vue中常用axios来做前后端的交互；上一张git上的star值 特点 从浏览器中创建 XMLHttpRequests 从 node.js 创建 http 请求  支持 Promise API  拦截请求和响应 转换请求数据和响应数据  取消请求  自动转换 JSON 数据  客户端支持防御 XSR">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190104203630621.png">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://banggan.github.io/categories/随笔/">
+  <link rel="canonical" href="https://banggan.github.io/2019/01/04/axios总结/">
 
 
 
 
 
-  <title>分类: 随笔 | banggan's Blog</title>
+  <title>axios总结 | banggan's Blog</title>
   
 
 
@@ -143,7 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -279,53 +284,241 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>随笔<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/04/axios总结/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/12/30/我的2018/" itemprop="url">
-              
-                <span itemprop="name">我的2018</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">axios总结</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-30T18:39:19+08:00" content="2018-12-30">
-          12-30
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-04T21:31:28+08:00">
+                2019-01-04
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/axios/" itemprop="url" rel="index">
+                    <span itemprop="name">axios</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  631
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <p>Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。在Vue中常用axios来做前后端的交互；<br>上一张git上的star值<br><img src="https://img-blog.csdnimg.cn/20190104203630621.png" alt="在这里插入图片描述"></p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>从浏览器中创建 XMLHttpRequests</li>
+<li>从 node.js 创建 http 请求 </li>
+<li>支持 Promise API </li>
+<li>拦截请求和响应</li>
+<li>转换请求数据和响应数据 </li>
+<li>取消请求 </li>
+<li>自动转换 JSON 数据 </li>
+<li>客户端支持防御 XSRF</li>
+</ul>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>安装：$ npm install axios   cdn方式： src=”<a href="https://unpkg.com/axios/dist/axios.min.js&quot;" target="_blank" rel="noopener">https://unpkg.com/axios/dist/axios.min.js&quot;</a><br>基本使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Axios.method(&apos;url&apos;,[...data],options)</span><br><span class="line">.then(function(res)&#123;&#125;)</span><br><span class="line">.catch(function(err)&#123;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>合并请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">例如：</span><br><span class="line">//定义两个不不同的情请求</span><br><span class="line">var q1 =this.axio.get（‘url’)</span><br><span class="line">var q2= this.post(&apos;url&apos;,&apos;a=1&apos;)</span><br><span class="line">//合并q1,q2请求</span><br><span class="line">this.$axios.all([q1,q2])</span><br><span class="line">.then(this.$axios.spread((res1,res2)=&gt;&#123;              //全成功</span><br><span class="line">	this.res1=res1;</span><br><span class="line">	this.res1=res1;</span><br><span class="line">&#125;))</span><br><span class="line">.catch(err=&gt;&#123;              //只要其中一个失败</span><br><span class="line">    console.log(err);</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>配置公共信息：</p>
+<pre><code>this.$ axios.defaults.baseURL = ‘http://sss/ss/s’
+</code></pre><p>options参数还可以为params查询字符串对象；transformRequest转换请求体数据；headers请求头信息；data请求数据，timeout请求超时<br>场景：所有请求自带的头信息</p>
+<pre><code>this.$axios.headers ={};// 覆盖原本默认的头部
+this.$ axios.defaults.headers.accept =&apos;abc&apos;//修改个别信息即可
+</code></pre><p>没有使用箭头函数的时候，一定要注意作用域的问题，如上诉代码的that<br>登录的安全机制<br><img src="https://img-blog.csdnimg.cn/2019010420524063.png" alt="在这里插入图片描述"><br> xsrfCookieName服务器返回一个xsrf-token令牌，保存起来<br> xsrfHeaderName 请求自动携带x-xsrf-token=xxx</p>
+<h4 id="取消请求-断点续传"><a href="#取消请求-断点续传" class="headerlink" title="取消请求  断点续传"></a>取消请求  断点续传</h4><h5 id="取消请求"><a href="#取消请求" class="headerlink" title="取消请求"></a>取消请求</h5><p> 场景：在上传文件的时候，用户发现去、文件错误取消请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const CancelToken = axios.CancelToken;</span><br><span class="line">const source = CancelToken.source();        //创建标志请求的源对象</span><br><span class="line"></span><br><span class="line">axios.get(&apos;/user/12345&apos;, &#123;</span><br><span class="line">  cancelToken: source.token   // 携带取消的标志 </span><br><span class="line">&#125;).catch(function (thrown) &#123;</span><br><span class="line">  if (axios.isCancel(thrown)) &#123;</span><br><span class="line">    console.log(&apos;Request canceled&apos;, thrown.message);</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    // handle error</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">axios.post(&apos;/user/12345&apos;, &#123;</span><br><span class="line">  name: &apos;new name&apos;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  cancelToken: source.token    // 携带取消的标志</span><br><span class="line">&#125;)</span><br><span class="line">source.cancel(&apos;Operation canceled by the user.&apos;); // 取消导致之前的请求</span><br></pre></td></tr></table></figure></p>
+<h5 id="断点续传"><a href="#断点续传" class="headerlink" title="断点续传"></a>断点续传</h5><p> 场景：文件上传被中断,需要续传<br> 及时获取到已经上传的部分，保存已上传部分：<br> this.loaded = progressEvent.loaded<br> 剪裁文件： </p>
+<pre><code>this.loaded = progressEvent.loaded   //  获取已经上传的部分
+var fileData = this.file.slice(this.loaded +1 , this.file,size)   //裁剪文件
+ var fd = new FormData();
+ fd.append(&apos;file&apos;,fileData);   //后续未上传的文件
+ const CancelToken = axios.CancelToken;
+ const source = CancelToken.source();
+ this.axios.post(&apos;url&apos;,fd,{
+     cancelToken: source.token   // 携带取消的标志
+     //处理事件
+ })
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/axios/" rel="tag"># axios</a>
+          
+            <a href="/tags/前后端交互/" rel="tag"># 前后端交互</a>
+          
+            <a href="/tags/http请求/" rel="tag"># http请求</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/03/Vue实现computed原理/" rel="next" title="Vue实现computed原理">
+                <i class="fa fa-chevron-left"></i> Vue实现computed原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -333,6 +526,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -353,8 +550,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -444,6 +650,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#取消请求-断点续传"><span class="nav-number">3.</span> <span class="nav-text">取消请求  断点续传</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#取消请求"><span class="nav-number">3.1.</span> <span class="nav-text">取消请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#断点续传"><span class="nav-number">3.2.</span> <span class="nav-text">断点续传</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -592,6 +814,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
