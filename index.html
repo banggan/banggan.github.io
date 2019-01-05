@@ -381,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  631
+                  944
                 </span>
               
 
@@ -397,7 +397,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  4
                 </span>
               
             </div>
@@ -451,7 +451,14 @@ var fileData = this.file.slice(this.loaded +1 , this.file,size)   //裁剪文件
      cancelToken: source.token   // 携带取消的标志
      //处理事件
  })
-</code></pre>
+</code></pre><h4 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h4><ul>
+<li>请求拦截器：发起请求之前做的事 </li>
+<li>响应拦截器：响应回来之后做的事</li>
+</ul>
+<p>应用场景1：在请求发起之前，展示一个loading,在响应回来之后，关闭一个loading<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">send:function()&#123;</span><br><span class="line">//配置拦截器</span><br><span class="line">//use给请求之前做的事可是是多件，可以use很多次</span><br><span class="line">this.$ axios.interceptors.request.use(function(config)&#123;</span><br><span class="line">	console.log(config);</span><br><span class="line">	return config;</span><br><span class="line">&#125;);</span><br><span class="line">//响应拦截器</span><br><span class="line">this.$ axios.interceptors.reponse.use(function(res)&#123;</span><br><span class="line">	console.log(res.config);</span><br><span class="line">	this.isShow = true;  //在请求发起之前，展示一个loading</span><br><span class="line">	return  res.config;</span><br><span class="line">&#125;);</span><br><span class="line">this.$ axios.get(&apos;url&apos;)</span><br><span class="line">.then(res=&gt;&#123;</span><br><span class="line">	console.log(&apos;响应回来&apos;,res)</span><br><span class="line">	this.isShow = false;  //在响应回来之后，关闭一个loading</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>应用场景2：实现一个类似的cookie机制<br>服务器 —-设置set-cookie:xxx   保存起来在响应中完成<br>在请求之前，本地获取xxx,设置拦截器，请求头</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sendAjax:function()&#123;</span><br><span class="line">	//  请求拦截器</span><br><span class="line">	this.$axios.interceptors.request.use((config)=&gt;&#123;</span><br><span class="line">	var token = localStroage.getItem(&apos;token&apos;);   // 设置请求头，类似cookie</span><br><span class="line">	if（token）&#123;</span><br><span class="line">	    config.headers[&apos;token&apos;] = token ;</span><br><span class="line">	&#125;</span><br><span class="line">    this.isShow = true;  </span><br><span class="line">	return  res.config;</span><br><span class="line">	&#125;）</span><br><span class="line">	//  响应拦截器</span><br><span class="line">	this.$axios.interceptors.response.use((res)=&gt;&#123;</span><br><span class="line">		if（res .headers.token)&#123;     //获取服务器的响应头</span><br><span class="line">			var token = res.headers.token ;     </span><br><span class="line">			localStroage.setItem(&apos;token&apos;,token) ; </span><br><span class="line">    &#125;</span><br><span class="line">    return  res.config;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
           
         
       
