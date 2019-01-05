@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Vue,源码，Flow,">
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="愿你是披荆斩棘的自信女侠">
-<meta property="og:type" content="website">
-<meta property="og:title" content="banggan&#39;s Blog">
-<meta property="og:url" content="https://banggan.github.io/archives/2018/index.html">
+<meta name="description" content="前言从开始学习Vue到现在也有1年半了吧，以后的工作也是大部分的Vue相关，为了打好基础，方便迎接年后Vue3.0，给自己定了一个计划-有针对性的读源码并做一个系列的总结。 Flow静态检测Vue.js 的源码利用了 Flow 做了静态类型检查，所以要对flow有一定的了解诶啊在 Vue.js 的主目录下有 .flowconfig 文件， 它是 Flow 的配置文件，感兴趣的同学可以看官方文档。这">
+<meta name="keywords" content="Vue,源码，Flow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue源码解读之基础前言">
+<meta property="og:url" content="https://banggan.github.io/2019/01/05/Vue源码解读之基础前言/index.html">
 <meta property="og:site_name" content="banggan&#39;s Blog">
-<meta property="og:description" content="愿你是披荆斩棘的自信女侠">
+<meta property="og:description" content="前言从开始学习Vue到现在也有1年半了吧，以后的工作也是大部分的Vue相关，为了打好基础，方便迎接年后Vue3.0，给自己定了一个计划-有针对性的读源码并做一个系列的总结。 Flow静态检测Vue.js 的源码利用了 Flow 做了静态类型检查，所以要对flow有一定的了解诶啊在 Vue.js 的主目录下有 .flowconfig 文件， 它是 Flow 的配置文件，感兴趣的同学可以看官方文档。这">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-05T08:45:22.898Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="banggan&#39;s Blog">
-<meta name="twitter:description" content="愿你是披荆斩棘的自信女侠">
+<meta name="twitter:title" content="Vue源码解读之基础前言">
+<meta name="twitter:description" content="前言从开始学习Vue到现在也有1年半了吧，以后的工作也是大部分的Vue相关，为了打好基础，方便迎接年后Vue3.0，给自己定了一个计划-有针对性的读源码并做一个系列的总结。 Flow静态检测Vue.js 的源码利用了 Flow 做了静态类型检查，所以要对flow有一定的了解诶啊在 Vue.js 的主目录下有 .flowconfig 文件， 它是 Flow 的配置文件，感兴趣的同学可以看官方文档。这">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://banggan.github.io/archives/2018/">
+  <link rel="canonical" href="https://banggan.github.io/2019/01/05/Vue源码解读之基础前言/">
 
 
 
 
 
-  <title>归档 | banggan's Blog</title>
+  <title>Vue源码解读之基础前言 | banggan's Blog</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -279,212 +281,262 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/05/Vue源码解读之基础前言/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Vue源码解读之基础前言</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T16:44:17+08:00">
+                2019-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 11 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue源码解读/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue源码解读</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/30/我的2018/" itemprop="url">
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          
+         
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">我的2018</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  997
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-30T18:39:19+08:00" content="2018-12-30">
-          12-30
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/30/阮一峰ES6之Promise对象的理解/" itemprop="url">
-              
-                <span itemprop="name">阮一峰ES6之Promise对象的理解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-30T14:44:20+08:00" content="2018-12-30">
-          12-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/30/函数节流与去抖/" itemprop="url">
-              
-                <span itemprop="name">函数节流与去抖</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-30T14:32:07+08:00" content="2018-12-30">
-          12-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>从开始学习Vue到现在也有1年半了吧，以后的工作也是大部分的Vue相关，为了打好基础，方便迎接年后Vue3.0，给自己定了一个计划-有针对性的读源码并做一个系列的总结。</p>
+<h4 id="Flow静态检测"><a href="#Flow静态检测" class="headerlink" title="Flow静态检测"></a>Flow静态检测</h4><p>Vue.js 的源码利用了 Flow 做了静态类型检查，所以要对flow有一定的了解诶啊<br>在 Vue.js 的主目录下有 .flowconfig 文件， 它是 Flow 的配置文件，感兴趣的同学可以看官方文档。这其中的 [libs] 部分用来描述包含指定库定义的目录，默认是名为 flow-typed 的目录。<br>这里 [libs] 配置的是 flow，表示指定的库定义都在 flow 文件夹内。我们打开这个目录，会发现文件如下：</p>
+<pre><code>flow
+├── compiler.js        # 编译相关
+├── component.js       # 组件数据结构
+├── global-api.js      # Global API 结构
+├── modules.js         # 第三方库定义
+├── options.js         # 选项相关
+├── ssr.js             # 服务端渲染相关
+├── vnode.js           # 虚拟 node 相关
+</code></pre><h4 id="Vue源码目录"><a href="#Vue源码目录" class="headerlink" title="Vue源码目录"></a>Vue源码目录</h4><p>在git上下载Vue的源码，可以看到src的子目录如下：</p>
+<pre><code>src
+├── compiler        # 编译相关 
+├── core            # 核心代码 
+├── platforms       # 不同平台的支持，有web+weex
+├── server          # 服务端渲染
+├── sfc             # .vue 文件解析
+├── shared          # 共享代码
+</code></pre><h4 id="Vue源码构建"><a href="#Vue源码构建" class="headerlink" title="Vue源码构建"></a>Vue源码构建</h4><p>Vue.js 源码是基于 Rollup 构建的，它的构建相关配置都在 scripts 目录下。<br>通常一个基于 NPM 托管的项目都会有一个 package.json 文件，它是对项目的描述文件，它的内容实际上是一个标准的 JSON 对象。<br>我们通常会配置 script 字段作为 NPM 的执行脚本，Vue.js 源码构建的脚本如下：</p>
+<pre><code>{
+  &quot;script&quot;: {
+    &quot;build&quot;: &quot;node scripts/build.js&quot;,
+    &quot;build:ssr&quot;: &quot;npm run build -- web-runtime-cjs,web-server-renderer&quot;,
+    &quot;build:weex&quot;: &quot;npm run build --weex&quot;
+  }
+}
+</code></pre><p>先打开构建的入口 JS 文件，在 scripts/build.js 中：<br>这段代码逻辑非常简单，先从配置文件读取配置，再通过命令行参数对构建配置做过滤，这样就可以构建出不同用途的 Vue.js 了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let builds = require(&apos;./config&apos;).getAllBuilds()</span><br><span class="line">// filter builds via command line arg</span><br><span class="line">if (process.argv[2]) &#123;</span><br><span class="line">  const filters = process.argv[2].split(&apos;,&apos;)</span><br><span class="line">  builds = builds.filter(b =&gt; &#123;</span><br><span class="line">    return filters.some(f =&gt; b.output.file.indexOf(f) &gt; -1 || b._name.indexOf(f) &gt; -1)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  // filter out weex builds by default</span><br><span class="line">  builds = builds.filter(b =&gt; &#123;</span><br><span class="line">    return b.output.file.indexOf(&apos;weex&apos;) === -1</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">build(builds)</span><br></pre></td></tr></table></figure></p>
+<h4 id="Vue入口"><a href="#Vue入口" class="headerlink" title="Vue入口"></a>Vue入口</h4><p>import Vue from ‘./runtime/index’ 定义Vue的入口，那Vue是如何被定义的呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;core/index&apos;   //重点！重点引入代码</span><br><span class="line">.........</span><br><span class="line">export default Vue</span><br></pre></td></tr></table></figure></p>
+<p>在core中的index代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;./instance/index&apos;      //重点    引入Vue定义代码</span><br><span class="line">import &#123; initGlobalAPI &#125; from &apos;./global-api/index&apos;</span><br><span class="line">initGlobalAPI(Vue)   //    重点！！1！初始化全局的API</span><br><span class="line"></span><br><span class="line">Object.defineProperty(Vue.prototype, &apos;$isServer&apos;, &#123;</span><br><span class="line">  get: isServerRendering</span><br><span class="line">&#125;)</span><br><span class="line">........</span><br><span class="line">export default Vue</span><br></pre></td></tr></table></figure></p>
+<p>Vue 的真实定义：终于看到了 Vue 的庐山真面目，它实际上就是一个用 Function 实现的类，我们只能通过 new Vue 去实例化它。</p>
+<pre><code>import { initMixin } from &apos;./init&apos;
+import { stateMixin } from &apos;./state&apos;
+import { renderMixin } from &apos;./render&apos;
+import { eventsMixin } from &apos;./events&apos;
+import { lifecycleMixin } from &apos;./lifecycle&apos;
+import { warn } from &apos;../util/index&apos;
 
-        
-        
-        
+function Vue (options) {
+  if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp;
+    !(this instanceof Vue)
+  ) {
+    warn(&apos;Vue is a constructor and should be called with the `new` keyword&apos;)
+  }
+  this._init(options)
+}
 
-        
-        
+initMixin(Vue)
+stateMixin(Vue)
+eventsMixin(Vue)
+lifecycleMixin(Vue)
+renderMixin(Vue)
 
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/29/JS之this的指向理解/" itemprop="url">
-              
-                <span itemprop="name">JS之this的指向理解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-29T12:44:20+08:00" content="2018-12-29">
-          12-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+export default Vue
+</code></pre><p>initGlobalAPI：Vue.js 在整个初始化过程中，除了给它的原型 prototype 上扩展方法，还会给 Vue 这个对象本身扩展全局的静态方法，它的定义在 src/core/global-api/index.js 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">export function initGlobalAPI (Vue: GlobalAPI) &#123;</span><br><span class="line">  // config</span><br><span class="line">  const configDef = &#123;&#125;</span><br><span class="line">  configDef.get = () =&gt; config</span><br><span class="line">  if (process.env.NODE_ENV !== &apos;production&apos;) &#123;</span><br><span class="line">    configDef.set = () =&gt; &#123;</span><br><span class="line">      warn(</span><br><span class="line">        &apos;Do not replace the Vue.config object, set individual fields instead.&apos;</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  Object.defineProperty(Vue, &apos;config&apos;, configDef)</span><br><span class="line">  Vue.util = &#123;</span><br><span class="line">    warn,</span><br><span class="line">    extend,</span><br><span class="line">    mergeOptions,</span><br><span class="line">    defineReactive</span><br><span class="line">  &#125;</span><br><span class="line">  Vue.set = set</span><br><span class="line">  Vue.delete = del</span><br><span class="line">  Vue.nextTick = nextTick</span><br><span class="line">  Vue.options = Object.create(null)</span><br><span class="line">  ASSET_TYPES.forEach(type =&gt; &#123;</span><br><span class="line">    Vue.options[type + &apos;s&apos;] = Object.create(null)</span><br><span class="line">  &#125;)</span><br><span class="line">  Vue.options._base = Vue</span><br><span class="line">  extend(Vue.options.components, builtInComponents)</span><br><span class="line"></span><br><span class="line">  initUse(Vue)</span><br><span class="line">  initMixin(Vue)</span><br><span class="line">  initExtend(Vue)</span><br><span class="line">  initAssetRegisters(Vue)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/29/谈谈我对Vuex的理解/" itemprop="url">
-              
-                <span itemprop="name">谈谈我对vuex的理解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-29T10:44:20+08:00" content="2018-12-29">
-          12-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+            <a href="/tags/源码，Flow/" rel="tag"># 源码，Flow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/05/图像格式的区别以及应用场景/" rel="next" title="图像格式的区别以及应用场景">
+                <i class="fa fa-chevron-left"></i> 图像格式的区别以及应用场景
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -492,6 +544,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -512,8 +568,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -603,6 +668,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Flow静态检测"><span class="nav-number">2.</span> <span class="nav-text">Flow静态检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue源码目录"><span class="nav-number">3.</span> <span class="nav-text">Vue源码目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue源码构建"><span class="nav-number">4.</span> <span class="nav-text">Vue源码构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue入口"><span class="nav-number">5.</span> <span class="nav-text">Vue入口</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -751,6 +832,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

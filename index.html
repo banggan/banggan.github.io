@@ -294,6 +294,430 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/05/Vue源码解读之基础前言/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/05/Vue源码解读之基础前言/" itemprop="url">Vue源码解读之基础前言</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T16:44:17+08:00">
+                2019-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue源码解读/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue源码解读</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  997
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>从开始学习Vue到现在也有1年半了吧，以后的工作也是大部分的Vue相关，为了打好基础，方便迎接年后Vue3.0，给自己定了一个计划-有针对性的读源码并做一个系列的总结。</p>
+<h4 id="Flow静态检测"><a href="#Flow静态检测" class="headerlink" title="Flow静态检测"></a>Flow静态检测</h4><p>Vue.js 的源码利用了 Flow 做了静态类型检查，所以要对flow有一定的了解诶啊<br>在 Vue.js 的主目录下有 .flowconfig 文件， 它是 Flow 的配置文件，感兴趣的同学可以看官方文档。这其中的 [libs] 部分用来描述包含指定库定义的目录，默认是名为 flow-typed 的目录。<br>这里 [libs] 配置的是 flow，表示指定的库定义都在 flow 文件夹内。我们打开这个目录，会发现文件如下：</p>
+<pre><code>flow
+├── compiler.js        # 编译相关
+├── component.js       # 组件数据结构
+├── global-api.js      # Global API 结构
+├── modules.js         # 第三方库定义
+├── options.js         # 选项相关
+├── ssr.js             # 服务端渲染相关
+├── vnode.js           # 虚拟 node 相关
+</code></pre><h4 id="Vue源码目录"><a href="#Vue源码目录" class="headerlink" title="Vue源码目录"></a>Vue源码目录</h4><p>在git上下载Vue的源码，可以看到src的子目录如下：</p>
+<pre><code>src
+├── compiler        # 编译相关 
+├── core            # 核心代码 
+├── platforms       # 不同平台的支持，有web+weex
+├── server          # 服务端渲染
+├── sfc             # .vue 文件解析
+├── shared          # 共享代码
+</code></pre><h4 id="Vue源码构建"><a href="#Vue源码构建" class="headerlink" title="Vue源码构建"></a>Vue源码构建</h4><p>Vue.js 源码是基于 Rollup 构建的，它的构建相关配置都在 scripts 目录下。<br>通常一个基于 NPM 托管的项目都会有一个 package.json 文件，它是对项目的描述文件，它的内容实际上是一个标准的 JSON 对象。<br>我们通常会配置 script 字段作为 NPM 的执行脚本，Vue.js 源码构建的脚本如下：</p>
+<pre><code>{
+  &quot;script&quot;: {
+    &quot;build&quot;: &quot;node scripts/build.js&quot;,
+    &quot;build:ssr&quot;: &quot;npm run build -- web-runtime-cjs,web-server-renderer&quot;,
+    &quot;build:weex&quot;: &quot;npm run build --weex&quot;
+  }
+}
+</code></pre><p>先打开构建的入口 JS 文件，在 scripts/build.js 中：<br>这段代码逻辑非常简单，先从配置文件读取配置，再通过命令行参数对构建配置做过滤，这样就可以构建出不同用途的 Vue.js 了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let builds = require(&apos;./config&apos;).getAllBuilds()</span><br><span class="line">// filter builds via command line arg</span><br><span class="line">if (process.argv[2]) &#123;</span><br><span class="line">  const filters = process.argv[2].split(&apos;,&apos;)</span><br><span class="line">  builds = builds.filter(b =&gt; &#123;</span><br><span class="line">    return filters.some(f =&gt; b.output.file.indexOf(f) &gt; -1 || b._name.indexOf(f) &gt; -1)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  // filter out weex builds by default</span><br><span class="line">  builds = builds.filter(b =&gt; &#123;</span><br><span class="line">    return b.output.file.indexOf(&apos;weex&apos;) === -1</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">build(builds)</span><br></pre></td></tr></table></figure></p>
+<h4 id="Vue入口"><a href="#Vue入口" class="headerlink" title="Vue入口"></a>Vue入口</h4><p>import Vue from ‘./runtime/index’ 定义Vue的入口，那Vue是如何被定义的呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;core/index&apos;   //重点！重点引入代码</span><br><span class="line">.........</span><br><span class="line">export default Vue</span><br></pre></td></tr></table></figure></p>
+<p>在core中的index代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;./instance/index&apos;      //重点    引入Vue定义代码</span><br><span class="line">import &#123; initGlobalAPI &#125; from &apos;./global-api/index&apos;</span><br><span class="line">initGlobalAPI(Vue)   //    重点！！1！初始化全局的API</span><br><span class="line"></span><br><span class="line">Object.defineProperty(Vue.prototype, &apos;$isServer&apos;, &#123;</span><br><span class="line">  get: isServerRendering</span><br><span class="line">&#125;)</span><br><span class="line">........</span><br><span class="line">export default Vue</span><br></pre></td></tr></table></figure></p>
+<p>Vue 的真实定义：终于看到了 Vue 的庐山真面目，它实际上就是一个用 Function 实现的类，我们只能通过 new Vue 去实例化它。</p>
+<pre><code>import { initMixin } from &apos;./init&apos;
+import { stateMixin } from &apos;./state&apos;
+import { renderMixin } from &apos;./render&apos;
+import { eventsMixin } from &apos;./events&apos;
+import { lifecycleMixin } from &apos;./lifecycle&apos;
+import { warn } from &apos;../util/index&apos;
+
+function Vue (options) {
+  if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp;
+    !(this instanceof Vue)
+  ) {
+    warn(&apos;Vue is a constructor and should be called with the `new` keyword&apos;)
+  }
+  this._init(options)
+}
+
+initMixin(Vue)
+stateMixin(Vue)
+eventsMixin(Vue)
+lifecycleMixin(Vue)
+renderMixin(Vue)
+
+export default Vue
+</code></pre><p>initGlobalAPI：Vue.js 在整个初始化过程中，除了给它的原型 prototype 上扩展方法，还会给 Vue 这个对象本身扩展全局的静态方法，它的定义在 src/core/global-api/index.js 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">export function initGlobalAPI (Vue: GlobalAPI) &#123;</span><br><span class="line">  // config</span><br><span class="line">  const configDef = &#123;&#125;</span><br><span class="line">  configDef.get = () =&gt; config</span><br><span class="line">  if (process.env.NODE_ENV !== &apos;production&apos;) &#123;</span><br><span class="line">    configDef.set = () =&gt; &#123;</span><br><span class="line">      warn(</span><br><span class="line">        &apos;Do not replace the Vue.config object, set individual fields instead.&apos;</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  Object.defineProperty(Vue, &apos;config&apos;, configDef)</span><br><span class="line">  Vue.util = &#123;</span><br><span class="line">    warn,</span><br><span class="line">    extend,</span><br><span class="line">    mergeOptions,</span><br><span class="line">    defineReactive</span><br><span class="line">  &#125;</span><br><span class="line">  Vue.set = set</span><br><span class="line">  Vue.delete = del</span><br><span class="line">  Vue.nextTick = nextTick</span><br><span class="line">  Vue.options = Object.create(null)</span><br><span class="line">  ASSET_TYPES.forEach(type =&gt; &#123;</span><br><span class="line">    Vue.options[type + &apos;s&apos;] = Object.create(null)</span><br><span class="line">  &#125;)</span><br><span class="line">  Vue.options._base = Vue</span><br><span class="line">  extend(Vue.options.components, builtInComponents)</span><br><span class="line"></span><br><span class="line">  initUse(Vue)</span><br><span class="line">  initMixin(Vue)</span><br><span class="line">  initExtend(Vue)</span><br><span class="line">  initAssetRegisters(Vue)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/05/图像格式的区别以及应用场景/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/05/图像格式的区别以及应用场景/" itemprop="url">图像格式的区别以及应用场景</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T15:00:24+08:00">
+                2019-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/图像格式/" itemprop="url" rel="index">
+                    <span itemprop="name">图像格式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在实际的开发中，遇到了这个问题，有点理不清，特来整理一次：</p>
+<h4 id="jpg格式"><a href="#jpg格式" class="headerlink" title="jpg格式"></a>jpg格式</h4><p>全名应该是JPEG。JPEG 图片以 24 位颜色存储单个光栅图像。JPEG 是与平台无关的格式，支持最高级别的压缩，不过，这种压缩是有损耗的。渐近式JPEG文件支持交错。可以提高或降低 JPEG文件压缩的级别。但是，文件大小是以图像质量为代价的。压缩比率可以高达 100:1。（JPEG 格式可在 10:1 到 20:1 的比率下轻松地压缩文件，而图片质量不会下降。）JPEG压缩可以很好地处理写实摄影作品。但是，对于颜色较少、对比级别强烈、实心边框或纯色区域大的较简单的作品，JPEG 压缩无法提供理想的结果。有时，压缩比率会低到5:1，严重损失了图片完整性。这一损失产生的原因是，JPEG 压缩方案可以很好地压缩类似的色调，但是 JPEG 压缩方案不能很好地处理亮度的强烈差异或处理纯色区域。<br>Jpeg格式特点：</p>
+<ul>
+<li>透明性：它不支持透明性</li>
+<li>动画：它不支持动画</li>
+<li>损耗性：除了一些比如说（仅仅是90、180、270度旋转），裁切，从标准类型到先进类型，编辑图片的原数据之外，所有其它操作对jpeg图像的处理都会使得它的质量损失，所以我们在编辑过程一般用png作为过渡格式。</li>
+<li>隔行渐进显示，它支持隔行渐进显示（但是ie浏览器并不支持这个属性，但是ie会在整个图像信息完全达到的时候显示）。<br>由上可以看出Jpeg是最适web上面的摄影图片和数字照相机中。根据惊叹我们在页面中使用的商品图片、采用人像或者好、实物素材制作的广告更适合采用JPG格式保存。<h4 id="gif格式"><a href="#gif格式" class="headerlink" title="gif格式"></a>gif格式</h4>GIF(GraphicsInterchange Format)的原义是“图像互换格式”，是CompuServe公司在 1987年开发的图像文件格式。GIF文件的数据，是一种基于LZW算法的连续色调的无损压缩格式。其压缩率一般在50％左右，它不属于任何应用程序。目前几乎所有相关软件都支持它，公共领域有大量的软件在使用GIF图像文件。GIF图像文件的数据是经过压缩的，而且是采用了可变长度等压缩算法。所以GIF的图像深度从lbit到8bit，也即GIF最多支持256种色彩的图像。GIF格式的另一个特点是其在一个GIF文件中可以存多幅彩色图像，如果把存于一个文件中的多幅图像数据逐幅读出并显示到屏幕上，就可构成一种最简单的动画。<br>gif 格式特点：</li>
+<li>透明性：gif是一种布尔透明类型，即它可以使全透明，也可是全不透明，但是它并没有半透明的（alpha透明）。</li>
+<li>动画：gif格式支持动画。</li>
+<li>无损耗性：gif是一种无损耗的图像格式，这也意味着你可以对gif图片做任何操作也不会使得图像质量产生损耗。</li>
+<li>水平扫描：gif是使用一种叫做LZW的算法进行压缩的，当压缩gif的过程中，像素是由上到下水平压缩的，这也意味着同等条件下，横向的gif图片比竖向的gif更加小。例如500<em>10的图片比10</em>500的图片更加小。</li>
+<li>间隔渐进显示：gif支持可选择性的间隔渐进显示。<br>由以上特点看出只有256种颜色的gif图片不适合照片，但它适合对颜色要求不高的图形（比如说图标、图表等）。<h4 id="png格式"><a href="#png格式" class="headerlink" title="png格式"></a>png格式</h4>PNG是20世纪90年代中期开始开发的图像文件存储格式，其目的是企图替代GIF和TIFF文件格式，同时增加一些GIF文件格式所不具备的特性。流式网络图形格式(Portable Network Graphic Format，PNG)名称来源于非官方的“PNG’s NotGIF”，是一种位图文件(bitmapfile)存储格式，读成“ping”。PNG用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的α通道数据。PNG使用从LZ77派生的无损数据压缩算法<br>Png格式特点：</li>
+<li>类型：Png这种图片格式包括了许多类，但是在实践的大致中可以分为256色的png和全色的png，你完全可以用256色的png代替gif，用全色的png代替jpeg。</li>
+<li>透明性：png是完全支持alpha透明的（透明、半透明、不透明），尽管有两个怪异的现象在ie6（下面详细讨论）</li>
+<li>动画：它不支持动画<br>Png8的在ie中的怪异表现：半透明的png8在ie6以下的浏览器显示为全透明。<br>alpha透明的全色PNG（png32）在ie6中会出现背景颜色（通常是灰色）<br>上面可以总结：全透明的png8可以在任一浏览器正常显示（就像gif一样）。半透明的png8在除了ie6及其一下的浏览器下错误的显示成全透明，其它的浏览器都能正常显示半透明。图像上颜色较少、并且主要以纯色或者平滑的渐变色填充以及具备较大的亮度差异的图像适合以png8格式存储。<h4 id="svg格式"><a href="#svg格式" class="headerlink" title="svg格式"></a>svg格式</h4>可缩放矢量图形是基于可扩展标记语言（标准通用标记语言的子集），用于描述二维矢量图形的一种图形格式。它由万维网联盟制定，是一个开放标准。<br>SVG格式特点：</li>
+<li>SVG 指可伸缩矢量图形 (Scalable Vector Graphics)</li>
+<li>SVG 用来定义用于网络的基于矢量的图形</li>
+<li>SVG 使用 XML 格式定义图形</li>
+<li>SVG 图像在放大或改变尺寸的情况下其图形质量不会有所损失</li>
+<li>SVG 是万维网联盟的标准</li>
+<li>SVG 与诸如 DOM和 XSL 之类的W3C标准是一个整体<br>SVG跟上面这些图片格式最大的不同，是SVG是矢量图。这意味着SVG图片由直线和曲线以及绘制它们的方法组成。当你放大一个SVG图片的时候，你看到的还是线和曲线，而不会出现像素点。这意味着SVG图片在放大时，不会失真，所以它非常适合用来绘制企业Logo、Icon等。 <h4 id="bmp格式"><a href="#bmp格式" class="headerlink" title="bmp格式"></a>bmp格式</h4>BMP是一种与硬件设备无关的图像文件格式，使用非常广。它采用位映射存储格式，除了图像深度可选以外，不采用其他任何压缩，因此，BMP文件所占用的空间很大。BMP文件的图像深度可选lbit、4bit、8bit及24bit。BMP文件存储数据时，图像的扫描方式是按从左到右、从下到上的顺序。<br>这是一种比较老的图片格式。BMP是无损的，但同时这种图片格式几乎没有对数据进行压缩，所以BMP格式的图片通常具有较大的文件大小。虽然同时支持索引色和直接色是一个优点，但是太大的文件格式格式导致它几乎没有用武之地，现在除了在Windows操作系统中还比较常见之外，我们几乎看不到它。<h4 id="WebP格式"><a href="#WebP格式" class="headerlink" title="WebP格式"></a>WebP格式</h4>WebP是谷歌开发的一种新图片格式，WebP是同时支持有损和无损压缩的、使用直接色的、点阵图。<br>想象Web上的图片之多，百分之几十的提升，是非常非常大的优化。只可惜，目前只有Chrome浏览器和Opera浏览器支持WebP格式，所以WebP的应用并不广泛。为了使用更先进的技术，比如WebP图片格式，来压缩互联网上传输的数据流量，谷歌甚至提供了Chrome Data Compression Proxy，设置了Chrome Data Compression Proxy作为Web代理之后，你访问的所有网站中的图片，在经过Proxy的时候，都会被转换成WebP格式，以降低图片文件的大小。从名字就可以看出来它是为Web而生的，什么叫为Web而生呢？就是说相同质量的图片，WebP具有更小的文件体积。现在网站上充满了大量的图片，如果能够降低每一个图片的文件大小，那么将大大减少浏览器和服务器之间的数据传输量，进而降低访问延迟，提升访问体验。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/04/axios总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2317,277 +2741,13 @@ obj.f();
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2018/12/29/谈谈我对Vuex的理解/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="banggan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="banggan's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/29/谈谈我对Vuex的理解/" itemprop="url">谈谈我对vuex的理解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-29T10:44:20+08:00">
-                2018-12-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-          
-         
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在近期做得项目中，用到Vue框架，必不可少的也用到vuex状态管理，再加上面试中也被问到了，索性把这一块拿出来抽时间整理一下：</p>
-<h4 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h4><p>Vuex 是适用于 Vue.js 应用的状态管理库，为应用中的所有组件提供集中式的状态存储与操作，保证了所有状态以可预测的方式进行修改。<br>官网的一张图：<br><img src="https://img-blog.csdn.net/201808121539412?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhbmdiYW5nZ2FuZ2Fu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="vuex"></p>
-<ul>
-<li>Vue Components：Vue组件。HTML页面上，负责接收用户操作等交互行为，执行dispatch方法触发对应action进行回应。</li>
-<li>dispatch：操作行为触发方法，是唯一能执行action的方法。</li>
-<li>actions：操作行为处理模块。负责处理Vue Components接收到的所有交互行为。包含同步/异步操作，支持多个同名方法，按照注册的顺序依次触发。向后台API请求的操作就在这个模块中进行，包括触发其他action以及提交mutation的操作。该模块提供了Promise的封装，以支持action的链式触发。</li>
-<li>commit：状态改变提交操作方法。对mutation进行提交，是唯一能执行mutation的方法。</li>
-<li>mutations：状态改变操作方法。是Vuex修改state的唯一推荐方法，其他修改方式在严格模式下将会报错。该方法只能进行同步操作，且方法名只能全局唯一。操作之中会有一些hook暴露出来，以进行state的监控等。</li>
-<li>state：页面状态管理容器对象。集中存储Vue components中data对象的零散数据，全局唯一，以进行统一的状态管理。页面显示所需的数据从该对象中进行读取，利用Vue的细粒度数据响应机制来进行高效的状态更新。<ul>
-<li>getters：state对象读取方法。图中没有单独列出该模块，应该被包含在了render中，Vue Components通过该方法读取全局state对象。</li>
-</ul>
-</li>
-</ul>
-<p>Vue组件接收交互行为，调用dispatch方法触发action相关处理，若页面状态需要改变，则调用commit方法提交mutation修改state，通过getters获取到state新值，重新渲染Vue Components，界面随之更新</p>
-<h4 id="完整流程-单向数据流"><a href="#完整流程-单向数据流" class="headerlink" title="完整流程 单向数据流"></a>完整流程 单向数据流</h4><p>规定所有的数据操作必须通过 action – mutation – state change 的流程来进行，再结合Vue的数据视图双向绑定特性来实现页面的展示更新<br><img src="https://img-blog.csdn.net/20180812154444633?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhbmdiYW5nZ2FuZ2Fu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<h4 id="state单一状态树"><a href="#state单一状态树" class="headerlink" title="state单一状态树"></a>state单一状态树</h4><p>那么我们如何在 Vue 组件中展示状态呢？由于 Vuex 的状态存储是响应式的，从 store 实例中读取状态最简单的方法就是在计算属性中返回某个状态：</p>
-<pre><code>// 创建一个 Counter 组件
-const Counter = {
-  template: `&lt;div&gt;{{ count }}&lt;/div&gt;`,
-  computed: {
-    count () {
-      return store.state.count
-    }
-  }
-}
-</code></pre><p>然而，这种模式导致组件依赖全局状态单例。在模块化的构建系统中，在每个需要使用 state 的组件中需要频繁地导入，并且在测试组件时需要模拟状态。<br>Vuex 通过 store 选项，提供了一种机制将状态从根组件“注入”到每一个子组件中（需调用 Vue.use(Vuex)）：</p>
-<pre><code>const app = new Vue({
-  el: &apos;#app&apos;,
-  // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
-  store,
-  components: { Counter },
-  template: `
-    &lt;div class=&quot;app&quot;&gt;
-      &lt;counter&gt;&lt;/counter&gt;
-    &lt;/div&gt;      `
-})
-</code></pre><p>通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到。让我们更新下 Counter 的实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const Counter = &#123;</span><br><span class="line">  template: `&lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;`,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    count () &#123;</span><br><span class="line">      return this.$store.state.count</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>mapState 辅助函数<br>当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余。为了解决这个问题，我们可以使用 mapState 辅助函数帮助我们生成计算属性，让你少按几次键：</p>
-<pre><code>// 在单独构建的版本中辅助函数为 Vuex.mapState
-import { mapState } from &apos;vuex&apos;    
-export default {
-  computed: mapState({
-    count: state =&gt; state.count,
-    // 传字符串参数 &apos;count&apos; 等同于 `state =&gt; state.count`
-    countAlias: &apos;count&apos;,
-    // 为了能够使用 `this` 获取局部状态，必须使用常规函数
-    countPlusLocalState (state) {
-      return state.count + this.localCount
-    }
-  })
-}
-</code></pre><h4 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h4><p>更改 Vuex 的 store 中的状态的唯一方法是提交 mutation。Vuex 中的 mutation 非常类似于事件：每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数：<br>而且Mutation必须为同步函数<br>当触发一个类型为 increment 的 mutation 时，调用此函数。”要唤醒一个 mutation handler，你需要以相应的 type 调用 store.commit 方法：store.commit(‘increment’)</p>
-<pre><code>const store = new Vuex.Store({
-  state: {
-    count: 1
-  },
-  mutations: {
-    increment (state) {
-      // 变更状态
-      state.count++
-    }
-  }
-})
-</code></pre><h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><p>Action 类似于 mutation，不同在于：<br>Action 提交的是 mutation，而不是直接变更状态。<br>Action 可以包含任意异步操作。</p>
-<pre><code>const store = new Vuex.Store({
-  state: {
-    count: 0
-  },
-  mutations: {
-    increment (state) {
-      state.count++
-    }
-  },
-  actions: {
-    increment (context) {
-      context.commit(&apos;increment&apos;)
-    }
-  }
-})
-</code></pre><p>Action 函数接受一个与 store 实例具有相同方法和属性的 context 对象，因此你可以调用 context.commit 提交一个 mutation，或者通过 context.state 和 context.getters 来获取 state 和 getters。</p>
-<h6 id="分发-Action"><a href="#分发-Action" class="headerlink" title="分发 Action"></a>分发 Action</h6><p>Action 通过 store.dispatch 方法触发：store.dispatch(‘increment’)<br>在组件中分发 Action:在组件中使用 this.$store.dispatch(‘xxx’) 分发 action，或者使用 mapActions 辅助函数将组件的 methods 映射为 store.dispatch 调用（需要先在根节点注入 store）：</p>
-<pre><code>import { mapActions } from &apos;vuex&apos;    
-export default {
-  methods: {
-    ...mapActions([
-      &apos;increment&apos;, // 将 `this.increment()` 映射为 `this.$store.dispatch(&apos;increment&apos;)`
-  // `mapActions` 也支持载荷：
-  &apos;incrementBy&apos; // 将 `this.incrementBy(amount)` 映射为 `this.$store.dispatch(&apos;incrementBy&apos;, amount)`
-]),
-...mapActions({
-  add: &apos;increment&apos; // 将 `this.add()` 映射为 `this.$store.dispatch(&apos;increment&apos;)`
-})
-</code></pre><p>  }<br>}</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2633,7 +2793,7 @@ export default {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2644,7 +2804,7 @@ export default {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2655,7 +2815,7 @@ export default {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
