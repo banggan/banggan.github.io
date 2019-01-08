@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="banggan&#39;s Blog">
 <meta property="og:description" content="从最开始vue初始化到渲染的整个流程如下：new Vue—-一系列的初始化—-$mount做挂载—如果是带编译的版本就compile,没有就跳过—render函数—生成vnode—patch方法—渲染成DOM,如下图： 何为数据驱动数据驱动就是指视图由数据来生成，在传统的前端开发中，大多是利用jQuery直接对DOM进行修改，而在Vue开发中，对视图的修改，不会直接操作DOM，而是通过修改数据来实">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://banggan.github.io/images/Vue_data.png">
-<meta property="og:updated_time" content="2019-01-08T07:09:20.807Z">
+<meta property="og:image" content="https://banggan.github.io/2019/01/08/images/Vue_data.png">
+<meta property="og:updated_time" content="2019-01-08T07:11:04.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue源码解读之数据绑定">
 <meta name="twitter:description" content="从最开始vue初始化到渲染的整个流程如下：new Vue—-一系列的初始化—-$mount做挂载—如果是带编译的版本就compile,没有就跳过—render函数—生成vnode—patch方法—渲染成DOM,如下图： 何为数据驱动数据驱动就是指视图由数据来生成，在传统的前端开发中，大多是利用jQuery直接对DOM进行修改，而在Vue开发中，对视图的修改，不会直接操作DOM，而是通过修改数据来实">
-<meta name="twitter:image" content="https://banggan.github.io/images/Vue_data.png">
+<meta name="twitter:image" content="https://banggan.github.io/2019/01/08/images/Vue_data.png">
 
 
 
@@ -424,7 +424,7 @@
       
 
       
-        <p>从最开始vue初始化到渲染的整个流程如下：new Vue—-一系列的初始化—-$mount做挂载—如果是带编译的版本就compile,没有就跳过—render函数—生成vnode—patch方法—渲染成DOM,如下图：<br><img src="/images/Vue_data.png" alt="在这里插入图片描述"></p>
+        <p>从最开始vue初始化到渲染的整个流程如下：new Vue—-一系列的初始化—-$mount做挂载—如果是带编译的版本就compile,没有就跳过—render函数—生成vnode—patch方法—渲染成DOM,如下图：<br><img src="./../images/Vue_data.png" alt="在这里插入图片描述"></p>
 <h4 id="何为数据驱动"><a href="#何为数据驱动" class="headerlink" title="何为数据驱动"></a>何为数据驱动</h4><p>数据驱动就是指视图由数据来生成，在传统的前端开发中，大多是利用jQuery直接对DOM进行修改，而在Vue开发中，对视图的修改，不会直接操作DOM，而是通过修改数据来实现。当交互较为复杂的时候，我们只需要关心数据，所有的逻辑都是通过对DOM的修改实现，而不用接触DOM，这样不仅仅简化代码，让代码逻辑更为清晰也有利于代码的维护。</p>
 <h4 id="new-Vue的实际过程"><a href="#new-Vue的实际过程" class="headerlink" title="new Vue的实际过程"></a>new Vue的实际过程</h4><p>从入口代码开始分析，我们先来分析 new Vue 背后发生了哪些事情。我们都知道，new 关键字在 Javascript 语言中代表实例化是一个对象，而 Vue 实际上是一个类，类在 Javascript 中是用 Function 来实现的，来看一下源码，在src/core/instance/index.js 中。</p>
 <pre><code>function Vue (options) {
