@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="render,Virtual DOM,createElement,update,patch,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="从最开始vue初始化到渲染的整个流程如下：new Vue—-一系列的初始化—-$mount做挂载—如果是带编译的版本就compile,没有就跳过—render函数—生成vnode—patch方法—渲染成DOM,如下图： 何为数据驱动数据驱动就是指视图由数据来生成，在传统的前端开发中，大多是利用jQuery直接对DOM进行修改，而在Vue开发中，对视图的修改，不会直接操作DOM，而是通过修改数据来实">
+<meta name="keywords" content="render,Virtual DOM,createElement,update,patch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue源码解读之数据绑定">
+<meta property="og:url" content="https://banggan.github.io/2019/01/08/Vue源码解读之数据绑定/index.html">
+<meta property="og:site_name" content="banggan&#39;s Blog">
+<meta property="og:description" content="从最开始vue初始化到渲染的整个流程如下：new Vue—-一系列的初始化—-$mount做挂载—如果是带编译的版本就compile,没有就跳过—render函数—生成vnode—patch方法—渲染成DOM,如下图： 何为数据驱动数据驱动就是指视图由数据来生成，在传统的前端开发中，大多是利用jQuery直接对DOM进行修改，而在Vue开发中，对视图的修改，不会直接操作DOM，而是通过修改数据来实">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-08T06:53:14.853Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue源码解读之数据绑定">
+<meta name="twitter:description" content="从最开始vue初始化到渲染的整个流程如下：new Vue—-一系列的初始化—-$mount做挂载—如果是带编译的版本就compile,没有就跳过—render函数—生成vnode—patch方法—渲染成DOM,如下图： 何为数据驱动数据驱动就是指视图由数据来生成，在传统的前端开发中，大多是利用jQuery直接对DOM进行修改，而在Vue开发中，对视图的修改，不会直接操作DOM，而是通过修改数据来实">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://banggan.github.io/2019/01/08/Vue源码解读之数据绑定/">
+
+
+
+
+
+  <title>Vue源码解读之数据绑定 | banggan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">banggan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">因上努力，果上随缘</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/08/Vue源码解读之数据绑定/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue源码解读之数据绑定</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-08T14:35:31+08:00">
+                2019-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue源码解读/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue源码解读</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  29
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从最开始vue初始化到渲染的整个流程如下：new Vue—-一系列的初始化—-$mount做挂载—如果是带编译的版本就compile,没有就跳过—render函数—生成vnode—patch方法—渲染成DOM,如下图：</p>
+<h4 id="何为数据驱动"><a href="#何为数据驱动" class="headerlink" title="何为数据驱动"></a>何为数据驱动</h4><p>数据驱动就是指视图由数据来生成，在传统的前端开发中，大多是利用jQuery直接对DOM进行修改，而在Vue开发中，对视图的修改，不会直接操作DOM，而是通过修改数据来实现。当交互较为复杂的时候，我们只需要关心数据，所有的逻辑都是通过对DOM的修改实现，而不用接触DOM，这样不仅仅简化代码，让代码逻辑更为清晰也有利于代码的维护。</p>
+<h4 id="new-Vue的实际过程"><a href="#new-Vue的实际过程" class="headerlink" title="new Vue的实际过程"></a>new Vue的实际过程</h4><p>从入口代码开始分析，我们先来分析 new Vue 背后发生了哪些事情。我们都知道，new 关键字在 Javascript 语言中代表实例化是一个对象，而 Vue 实际上是一个类，类在 Javascript 中是用 Function 来实现的，来看一下源码，在src/core/instance/index.js 中。</p>
+<pre><code>function Vue (options) {
+  if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp;
+    !(this instanceof Vue)
+  ) {
+    warn(&apos;Vue is a constructor and should be called with the `new` keyword&apos;)
+  }
+  this._init(options)
+}
+</code></pre><p>可以看到 Vue 只能通过 new 关键字初始化，然后会调用 this._init 方法</p>
+<pre><code>Vue.prototype._init = function (options?: Object) { //挂载在原型上的init方法
+  const vm: Component = this
+ .........
+       // merge options  合并options
+  if (options &amp;&amp; options._isComponent) {
+    // optimize internal component instantiation
+    // since dynamic options merging is pretty slow, and none of the
+    // internal component options needs special treatment.
+    initInternalComponent(vm, options)
+  } else {
+    vm.$options = mergeOptions(
+      resolveConstructorOptions(vm.constructor),
+      options || {},
+      vm
+    )
+  }
+  .......
+  // expose real self         一系列的初始化
+  vm._self = vm               
+  initLifecycle(vm)             //生命周期初始化
+  initEvents(vm)       // 事件
+  initRender(vm)   
+  callHook(vm, &apos;beforeCreate&apos;)
+  initInjections(vm) // resolve injections before data/props
+  initState(vm)  //对data。props等的初始化，最终通过poxy(vm,&apos;_data;,key)代理挂载到vm上
+  initProvide(vm) // resolve provide after data/props
+  callHook(vm, &apos;created&apos;)
+
+  /* istanbul ignore if */
+  if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; config.performance &amp;&amp; mark) {
+    vm._name = formatComponentName(vm, false)
+    mark(endTag)
+    measure(`vue ${vm._name} init`, startTag, endTag)
+  }    
+  if (vm.$options.el) {     //判断有没有el 如果有
+    vm.$mount(vm.$options.el)  //通过$mount做挂载 目的就是把模板渲染成最终的DOM
+  }
+}
+</code></pre><p>Vue 初始化主要就干了几件事情，合并配置，初始化生命周期，初始化事件中心，初始化渲染，初始化 data、props、computed、watcher 等等。</p>
+<h4 id="Vue-实例挂载的实现"><a href="#Vue-实例挂载的实现" class="headerlink" title="Vue 实例挂载的实现"></a>Vue 实例挂载的实现</h4><p>Vue 中我们是通过 $mount 实例方法去挂载 vm 的，先来看一下 src/platform/web/entry-runtime-with-compiler.js 文件中定义：</p>
+<pre><code>const mount = Vue.prototype.$mount
+Vue.prototype.$mount = function (
+  el?: string | Element,
+  hydrating?: boolean
+): Component {
+  el = el &amp;&amp; query(el)
+
+  //如果el为bady或者element  报警告   vue不可直接挂载在bady或者element 会直接覆盖
+  if (el === document.body || el === document.documentElement) {
+    process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; warn(
+      `Do not mount Vue to &lt;html&gt; or &lt;body&gt; - mount to normal elements instead.`
+    )
+    return this
+  }
+
+  const options = this.$options  
+  // resolve template/el and convert to render function
+  if (!options.render) {     //是否定义render方法
+    let template = options.template
+    if (template) {     //是否定义render方法
+      if (typeof template === &apos;string&apos;) {
+        if (template.charAt(0) === &apos;#&apos;) {
+          template = idToTemplate(template)
+          /* istanbul ignore if */
+          if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; !template) {
+            warn(
+              `Template element not found or is empty: ${options.template}`,
+              this
+            )
+          }
+        }
+      } else if (template.nodeType) {
+        template = template.innerHTML
+      } else {   
+        if (process.env.NODE_ENV !== &apos;production&apos;) {
+          warn(&apos;invalid template option:&apos; + template, this)
+        }
+        return this
+      }
+    } else if (el) {
+      template = getOuterHTML(el)     //拿到对象的outerhtml
+    }
+    if (template) {
+      /* istanbul ignore if */
+      if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; config.performance &amp;&amp; mark) {
+        mark(&apos;compile&apos;)
+      }
+ // 编译相关的内容，会转换为rander函数
+      const { render, staticRenderFns } = compileToFunctions(template, {
+        shouldDecodeNewlines,
+        shouldDecodeNewlinesForHref,
+        delimiters: options.delimiters,
+        comments: options.comments
+      }, this)
+      options.render = render
+      options.staticRenderFns = staticRenderFns
+
+      /* istanbul ignore if */
+      if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; config.performance &amp;&amp; mark) {
+        mark(&apos;compile end&apos;)
+        measure(`vue ${this._name} compile`, &apos;compile&apos;, &apos;compile end&apos;)
+      }
+    }
+  }
+  return mount.call(this, el, hydrating)   //原型上的mount方法
+}
+</code></pre><p>这段代码首先缓存了原型上的 $mount 方法，再重新定义该方法。首先，它对 el 做了限制，Vue 不能挂载在 body、html 这样的根节点上。接下来的是很关键的逻辑 —— 如果没有定义 render 方法，则会把 el 或者 template 字符串转换成 render 方法。这里我们要牢记，在 Vue 2.0 版本中，所有 Vue 的组件的渲染最终都需要 render 方法，无论我们是用单文件 .vue 方式开发组件，还是写了 el 或者 template 属性，最终都会转换成 render 方法，那么这个过程是 Vue 的一个“在线编译”的过程，它是调用 compileToFunctions 方法实现的，编译过程我们之后会介绍。最后，调用原先原型上的 $mount 方法挂载。</p>
+<pre><code>// public mount method
+Vue.prototype.$mount = function (
+  el?: string | Element,
+  hydrating?: boolean
+): Component {
+  el = el &amp;&amp; inBrowser ? query(el) : undefined
+  return mountComponent(this, el, hydrating)
+}
+</code></pre><p>$mount 方法支持传入 2 个参数，第一个是 el，它表示挂载的元素，可以是字符串，也可以是 DOM 对象，如果是字符串在浏览器环境下会调用 query 方法转换成 DOM 对象的。第二个参数是和服务端渲染相关，在浏览器环境下我们不需要传第二个参数。<br>$mount 方法实际上会去调用 mountComponent 方法，这个方法定义在 src/core/instance/lifecycle.js 文件中：</p>
+<pre><code>export function mountComponent (
+  vm: Component,
+  el: ?Element,
+  hydrating?: boolean
+): Component {
+  vm.$el = el    //  做一个缓存 
+  if (!vm.$options.render) {   //  如果没有render  创建一个VNode
+    vm.$options.render = createEmptyVNode
+    if (process.env.NODE_ENV !== &apos;production&apos;) {
+      /* istanbul ignore if */
+      if ((vm.$options.template &amp;&amp; vm.$options.template.charAt(0) !== &apos;#&apos;) ||
+        vm.$options.el || el) {    // 用了template  用了runtime版本；
+        warn(
+          &apos;You are using the runtime-only build of Vue where the template &apos; +
+          &apos;compiler is not available. Either pre-compile the templates into &apos; +
+          &apos;render functions, or use the compiler-included build.&apos;,
+          vm
+        )
+      } else {
+        warn(
+          &apos;Failed to mount component: template or render function not defined.&apos;,  //没有template和render函数
+          vm
+        )
+      }
+    }
+  }
+  callHook(vm, &apos;beforeMount&apos;)
+  let updateComponent
+  /* istanbul ignore if */  开发环境又配置了performance 的时候
+  if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; config.performance &amp;&amp; mark) {
+    updateComponent = () =&gt; {
+      const name = vm._name
+      const id = vm._uid
+      const startTag = `vue-perf-start:${id}`
+      const endTag = `vue-perf-end:${id}`
+
+      mark(startTag)
+      const vnode = vm._render()
+      mark(endTag)
+      measure(`vue ${name} render`, startTag, endTag)
+      mark(startTag)
+      vm._update(vnode, hydrating)
+      mark(endTag)
+      measure(`vue ${name} patch`, startTag, endTag)
+    }
+  } else {
+    updateComponent = () =&gt; {    //   渲染方法  监听到执行的过程，修改的时候也是触发这个方法
+      vm._update(vm._render(), hydrating)    //执行vm._render(), vm._update(）
+    }
+  }
+
+  // we set this to vm._watcher inside the watcher&apos;s constructor
+  // since the watcher&apos;s initial patch may call $forceUpdate (e.g. inside child
+  // component&apos;s mounted hook), which relies on vm._watcher being already defined
+  //   渲染watcher watcher也是一个类   noop是空函数
+  new Watcher(vm, updateComponent, noop, {
+    before () {
+      if (vm._isMounted) {
+        callHook(vm, &apos;beforeUpdate&apos;)
+      }
+    }
+  }, true /* isRenderWatcher */)
+  hydrating = false
+
+  // manually mounted instance, call mounted on self
+  // mounted is called for render-created child components in its inserted hook
+  if (vm.$vnode == null) {
+    vm._isMounted = true
+    callHook(vm, &apos;mounted&apos;)
+  }
+  return vm
+}
+</code></pre><p>从上面的代码可以看到，mountComponent 核心就是先调用 vm._render 方法先生成虚拟 Node，再实例化一个渲染Watcher，在它的回调函数中会调用 updateComponent 方法，最终调用 vm._update 更新 DOM。<br>Watcher 在这里起到两个作用，一个是初始化的时候会执行回调函数，另一个是当 vm 实例中的监测的数据发生变化的时候执行回调函数<br>函数最后判断为根节点的时候设置 vm._isMounted 为 true， 表示这个实例已经挂载了，同时执行 mounted 钩子函数。 这里注意 vm.$vnode 表示 Vue 实例的父虚拟 Node，所以它为 Null 则表示当前是根 Vue 的实例。</p>
+<h4 id="vm-render"><a href="#vm-render" class="headerlink" title="vm_render()"></a>vm_render()</h4><p>Vue 的 _render 方法是实例的一个私有方法，它用来把实例渲染成一个虚拟 Node。它的定义在 src/core/instance/render.js 文件中：</p>
+<pre><code>Vue.prototype._render = function (): VNode {
+  const vm: Component = this
+  const { render, _parentVnode } = vm.$options
+
+  // reset _rendered flag on slots for duplicate slot check
+  if (process.env.NODE_ENV !== &apos;production&apos;) {
+    for (const key in vm.$slots) {
+      // $flow-disable-line
+      vm.$slots[key]._rendered = false
+    }
+  }
+
+  if (_parentVnode) {
+    vm.$scopedSlots = _parentVnode.data.scopedSlots || emptyObject
+  }
+
+  // set parent vnode. this allows render functions to have access
+  // to the data on the placeholder node.
+  vm.$vnode = _parentVnode
+  // render self
+  let vnode
+  try {
+    vnode = render.call(vm._renderProxy, vm.$createElement)  
+    //vm._renderProxy其实就是vm本身
+  } catch (e) {
+    handleError(e, vm, `render`)
+    // return error render result,
+    // or previous vnode to prevent render error causing blank component
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== &apos;production&apos;) {
+      if (vm.$options.renderError) {
+        try {
+          vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
+        } catch (e) {
+          handleError(e, vm, `renderError`)
+          vnode = vm._vnode
+        }
+      } else {
+        vnode = vm._vnode
+      }
+    } else {
+      vnode = vm._vnode
+    }
+  }
+  // return empty vnode in case the render function errored out
+  if (!(vnode instanceof VNode)) {
+    if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; Array.isArray(vnode)) {
+      warn(
+        &apos;Multiple root nodes returned from render function. Render function &apos; +
+        &apos;should return a single root node.&apos;,
+        vm
+      )
+    }
+    vnode = createEmptyVNode()
+  }
+  // set parent
+  vnode.parent = _parentVnode
+  return vnode
+}
+</code></pre><p>这段代码最关键的是 render 方法的调用，我们在平时的开发工作中手写 render 方法的场景比较少，而写的比较多的是 template 模板，在之前的 mounted 方法的实现中，会把 template 编译成 render 方法<br>在 Vue 的官方文档中介绍了 render 函数的第一个参数是 createElement，那么结合之前的例子：</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  {{ message }}
+&lt;/div&gt;
+</code></pre><p>相当于我们编写如下 render 函数：</p>
+<pre><code>render: function (createElement) {
+  return createElement(&apos;div&apos;, {
+     attrs: {
+        id: &apos;app&apos;
+      },
+  }, this.message)
+}
+</code></pre><p>再回到 _render 函数中的 render 方法的调用：</p>
+<pre><code>vnode = render.call(vm._renderProxy, vm.$createElement)
+</code></pre><p>可以看到，render 函数中的 createElement 方法就是 vm.$createElement 方法：</p>
+<pre><code>export function initRender (vm: Component) {
+  vm._c = (a, b, c, d) =&gt; createElement(vm, a, b, c, d, false)
+  vm.$createElement = (a, b, c, d) =&gt; createElement(vm, a, b, c, d, true)
+}
+</code></pre><p>实际上，vm.$createElement 方法定义是在执行 initRender 方法的时候，可以看到除了 vm.$createElement 方法，还有一个 vm._c 方法，它是被模板编译成的 render 函数使用，而 vm.$createElement 是用户手写 render 方法使用的， 这俩个方法支持的参数相同，并且内部都调用了 createElement 方法。<br>vm._render 最终是通过执行 createElement 方法并返回的是 vnode，它是一个虚拟 Node。</p>
+<h4 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a>Virtual DOM</h4><p>Virtual DOM 就是用一个原生的 JS 对象去描述一个 DOM 节点，真正的 DOM 元素是非常庞大的，因为浏览器的标准就把 DOM 设计的非常复杂。当我们频繁的去做 DOM 更新，会产生一定的性能问题。所以它比创建一个 DOM 的代价要小很多。在 Vue.js 中，Virtual DOM 是用 VNode 这么一个 Class 去描述，它是定义在 src/core/vdom/vnode.js 中的。</p>
+<pre><code>export default class VNode {
+  tag: string | void;
+  data: VNodeData | void;
+  children: ?Array&lt;VNode&gt;;
+  text: string | void;
+  elm: Node | void;
+  ns: string | void;
+  context: Component | void; // rendered in this component&apos;s scope
+  key: string | number | void;
+  componentOptions: VNodeComponentOptions | void;
+  componentInstance: Component | void; // component instance
+  parent: VNode | void; // component placeholder node
+  .......
+</code></pre><p>可以看到 Vue.js 中的 Virtual DOM 的定义还是略微复杂一些的，因为它这里包含了很多 Vue.js 的特性。其实 VNode 是对真实 DOM 的一种抽象描述，它的核心定义标签名、数据、子节点、键值等，其它属性都是都是用来扩展 VNode 的灵活性以及实现一些特殊 feature 的。由于 VNode 只是用来映射到真实 DOM 的渲染，不需要包含操作 DOM 的方法，因此它是非常轻量和简单的。Virtual DOM 除了它的数据结构的定义，映射到真实的 DOM 实际上要经历 VNode 的 create、diff、patch 等过程。</p>
+<h4 id="createElement"><a href="#createElement" class="headerlink" title="createElement"></a>createElement</h4><p>Vue.js 利用 createElement 方法创建 VNode，它定义在 src/core/vdom/create-elemenet.js 中：</p>
+<pre><code>export function createElement (
+  context: Component,
+  tag: any,
+  data: any,
+  children: any,
+  normalizationType: any,
+  alwaysNormalize: boolean
+): VNode | Array&lt;VNode&gt; {
+  if (Array.isArray(data) || isPrimitive(data)) {   // 对参数个数不一致的处理
+    normalizationType = children
+    children = data
+    data = undefined
+  }
+  if (isTrue(alwaysNormalize)) {
+    normalizationType = ALWAYS_NORMALIZE
+  }
+  return _createElement(context, tag, data, children, normalizationType)
+}
+</code></pre><p>createElement 方法实际上是对 _createElement 方法的封装，它允许传入的参数更加灵活，在处理这些参数后，调用真正创建 VNode 的函数 _createElement：</p>
+<pre><code>export function _createElement (  //五个参数
+  context: Component,
+  tag?: string | Class&lt;Component&gt; | Function | Object,
+  data?: VNodeData,
+  children?: any,
+  normalizationType?: number
+): VNode | Array&lt;VNode&gt; {
+  if (isDef(data) &amp;&amp; isDef((data: any).__ob__)) {   //对data做校验   data不能是响应式
+    process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; warn(
+      `Avoid using observed data object as vnode data: ${JSON.stringify(data)}\n` +
+      &apos;Always create fresh vnode data objects in each render!&apos;,
+      context
+    )
+    return createEmptyVNode()     // 相当于一个注释结点
+  }
+  // object syntax in v-bind
+  if (isDef(data) &amp;&amp; isDef(data.is)) {   判断data.is   做相应的处理
+    tag = data.is
+  }
+  if (!tag) {
+    // in case of component :is set to falsy value
+    return createEmptyVNode()   // 不是真值 返回注释结点
+  }
+  // warn against non-primitive key  对key的一个判断
+ ..........
+  }
+  if (normalizationType === ALWAYS_NORMALIZE) {    
+    children = normalizeChildren(children)   // 如果其中一个子节点为array 递归 
+  } else if (normalizationType === SIMPLE_NORMALIZE) {
+    children = simpleNormalizeChildren(children)  //对children做遍历  是一个一维数组  数组每一个都是一个vnode
+  }
+  let vnode, ns
+  if (typeof tag === &apos;string&apos;) {          //   tag为一个string
+    let Ctor
+    ns = (context.$vnode &amp;&amp; context.$vnode.ns) || config.getTagNamespace(tag)
+    if (config.isReservedTag(tag)) {   
+      // platform built-in elements
+      vnode = new VNode(   //  创建一个vnode
+        config.parsePlatformTagName(tag), data, children,
+        undefined, undefined, context
+      )
+    } else if (isDef(Ctor = resolveAsset(context.$options, &apos;components&apos;, tag))) {
+      // component  组件的解析
+      vnode = createComponent(Ctor, data, context, children, tag)
+    } else {
+      // unknown or unlisted namespaced elements
+      // check at runtime because it may get assigned a namespace when its
+      // parent normalizes children
+      vnode = new VNode(
+        tag, data, children,
+        undefined, undefined, context
+      )
+    }
+  } else {
+    // direct component options / constructor
+    vnode = createComponent(tag, data, context, children)
+  }
+  if (Array.isArray(vnode)) {
+    return vnode
+  } else if (isDef(vnode)) {
+    if (isDef(ns)) applyNS(vnode, ns)
+    if (isDef(data)) registerDeepBindings(data)
+    return vnode
+  } else {
+    return createEmptyVNode()
+  }
+}
+</code></pre><p>_createElement 方法有 5 个参数，context 表示 VNode 的上下文环境，它是 Component 类型；tag 表示标签，它可以是一个字符串，也可以是一个 Component；data 表示 VNode 的数据，它是一个 VNodeData 类型；children 表示当前 VNode 的子节点，它是任意类型的，它接下来需要被规范为标准的 VNode 数组；normalizationType 表示子节点规范的类型，类型不同规范的方法也就不一样，它主要是参考 render 函数是编译生成的还是用户手写的。<br>createElement 函数的流程略微有点多，我们接下来主要分析 2 个重点的流程 —— children 的规范化以及 VNode 的创建。</p>
+<h5 id="children-的规范化"><a href="#children-的规范化" class="headerlink" title="children 的规范化"></a>children 的规范化</h5><p>由于 Virtual DOM 实际上是一个树状结构，每一个 VNode 可能会有若干个子节点，这些子节点应该也是 VNode 的类型。_createElement 接收的第 4 个参数 children 是任意类型的，因此我们需要把它们规范成 VNode 类型。<br>这里根据 normalizationType 的不同，调用了 normalizeChildren(children) 和 simpleNormalizeChildren(children) 方法，它们的定义都在 src/core/vdom/helpers/normalzie-children.js 中：</p>
+<pre><code>// 1. When the children contains components - because a functional component
+// may return an Array instead of a single root. In this case, just a simple
+// normalization is needed - if any child is an Array, we flatten the whole
+// thing with Array.prototype.concat. It is guaranteed to be only 1-level deep
+// because functional components already normalize their own children.
+export function simpleNormalizeChildren (children: any) {
+  for (let i = 0; i &lt; children.length; i++) {
+    if (Array.isArray(children[i])) {
+      return Array.prototype.concat.apply([], children)
+    }
+  }
+  return children
+}
+
+// 2. When the children contains constructs that always generated nested Arrays,
+// e.g. &lt;template&gt;, &lt;slot&gt;, v-for, or when the children is provided by user
+// with hand-written render functions / JSX. In such cases a full normalization
+// is needed to cater to all possible types of children values.
+export function normalizeChildren (children: any): ?Array&lt;VNode&gt; {
+  return isPrimitive(children)
+    ? [createTextVNode(children)]
+    : Array.isArray(children)
+      ? normalizeArrayChildren(children)
+      : undefined
+}
+</code></pre><p>simpleNormalizeChildren 方法调用场景是 render 函数当函数是编译生成的。理论上编译生成的 children 都已经是 VNode 类型的，但这里有一个例外，就是 functional component 函数式组件返回的是一个数组而不是一个根节点，所以会通过 Array.prototype.concat 方法把整个 children 数组打平，让它的深度只有一层。<br>normalizeChildren 方法的调用场景有 2 种，一个场景是 render 函数是用户手写的，当 children 只有一个节点的时候，Vue.js 从接口层面允许用户把 children 写成基础类型用来创建单个简单的文本节点，这种情况会调用 createTextVNode 创建一个文本节点的 VNode；另一个场景是当编译 slot、v-for 的时候会产生嵌套数组的情况，会调用 normalizeArrayChildren 方法，接下来看一下它的实现：</p>
+<pre><code>function normalizeArrayChildren (children: any, nestedIndex?: string): Array&lt;VNode&gt; {
+  const res = []
+  let i, c, lastIndex, last
+  for (i = 0; i &lt; children.length; i++) {
+    c = children[i]
+    if (isUndef(c) || typeof c === &apos;boolean&apos;) continue
+    lastIndex = res.length - 1
+    last = res[lastIndex]
+    //  nested
+    if (Array.isArray(c)) {
+      if (c.length &gt; 0) {
+        c = normalizeArrayChildren(c, `${nestedIndex || &apos;&apos;}_${i}`)
+        // merge adjacent text nodes
+        if (isTextNode(c[0]) &amp;&amp; isTextNode(last)) {
+          res[lastIndex] = createTextVNode(last.text + (c[0]: any).text)
+          c.shift()
+        }
+        res.push.apply(res, c)
+      }
+    } else if (isPrimitive(c)) {
+      if (isTextNode(last)) {
+        // merge adjacent text nodes
+        // this is necessary for SSR hydration because text nodes are
+        // essentially merged when rendered to HTML strings
+        res[lastIndex] = createTextVNode(last.text + c)
+      } else if (c !== &apos;&apos;) {
+        // convert primitive to vnode
+        res.push(createTextVNode(c))
+      }
+    } else {
+      if (isTextNode(c) &amp;&amp; isTextNode(last)) {
+        // merge adjacent text nodes
+        res[lastIndex] = createTextVNode(last.text + c.text)
+      } else {
+        // default key for nested array children (likely generated by v-for)
+        if (isTrue(children._isVList) &amp;&amp;
+          isDef(c.tag) &amp;&amp;
+          isUndef(c.key) &amp;&amp;
+          isDef(nestedIndex)) {
+          c.key = `__vlist${nestedIndex}_${i}__`
+        }
+        res.push(c)
+      }
+    }
+  }
+  return res
+}
+</code></pre><p>normalizeArrayChildren 接收 2 个参数，children 表示要规范的子节点，nestedIndex 表示嵌套的索引，因为单个 child 可能是一个数组类型。 normalizeArrayChildren 主要的逻辑就是遍历 children，获得单个节点 c，然后对 c 的类型判断，如果是一个数组类型，则递归调用 normalizeArrayChildren; 如果是基础类型，则通过 createTextVNode 方法转换成 VNode 类型；否则就已经是 VNode 类型了，如果 children 是一个列表并且列表还存在嵌套的情况，则根据 nestedIndex 去更新它的 key。这里需要注意一点，在遍历的过程中，对这 3 种情况都做了如下处理：如果存在两个连续的 text 节点，会把它们合并成一个 text 节点。<br>经过对 children 的规范化，children 变成了一个类型为 VNode 的 Array。</p>
+<h5 id="vnode-创建"><a href="#vnode-创建" class="headerlink" title="vnode 创建"></a>vnode 创建</h5><p>回到 createElement 函数，规范化 children 后，接下来会去创建一个 VNode 的实例：</p>
+<pre><code>let vnode, ns
+if (typeof tag === &apos;string&apos;) {
+  let Ctor
+  ns = (context.$vnode &amp;&amp; context.$vnode.ns) || config.getTagNamespace(tag)
+  if (config.isReservedTag(tag)) {
+    // platform built-in elements
+    vnode = new VNode(
+      config.parsePlatformTagName(tag), data, children,
+      undefined, undefined, context
+    )
+  } else if (isDef(Ctor = resolveAsset(context.$options, &apos;components&apos;, tag))) {
+    // component
+    vnode = createComponent(Ctor, data, context, children, tag)
+  } else {
+    // unknown or unlisted namespaced elements
+    // check at runtime because it may get assigned a namespace when its
+    // parent normalizes children
+    vnode = new VNode(
+      tag, data, children,
+      undefined, undefined, context
+    )
+  }
+} else {
+  // direct component options / constructor
+  vnode = createComponent(tag, data, context, children)
+}
+</code></pre><p>这里先对 tag 做判断，如果是 string 类型，则接着判断如果是内置的一些节点，则直接创建一个普通 VNode，如果是为已注册的组件名，则通过 createComponent 创建一个组件类型的 VNode，否则创建一个未知的标签的 VNode。 如果是 tag 一个 Component 类型，则直接调用 createComponent 创建一个组件类型的 VNode 节点。对于 createComponent 创建组件类型的 VNode 的过程，我们之后会去介绍，本质上它还是返回了一个 VNode。<br>那么至此，我们大致了解了 createElement 创建 VNode 的过程，每个 VNode 有 children，children 每个元素也是一个 VNode，这样就形成了一个 VNode Tree，它很好的描述了我们的 DOM Tree。<br>回到 mountComponent 函数的过程，我们已经知道 vm._render 是如何创建了一个 VNode，接下来就是要把这个 VNode 渲染成一个真实的 DOM 并渲染出来，这个过程是通过 vm._update 完成的。</p>
+<h4 id="vm-update"><a href="#vm-update" class="headerlink" title="vm_update"></a>vm_update</h4><p>Vue 的 _update 是实例的一个私有方法，它被调用的时机有 2 个，一个是首次渲染，一个是数据更新的时候。_update 方法的作用是把 VNode 渲染成真实的 DOM</p>
+<pre><code>Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
+  const vm: Component = this
+  const prevEl = vm.$el
+  const prevVnode = vm._vnode
+  const prevActiveInstance = activeInstance
+  activeInstance = vm
+  vm._vnode = vnode
+  // Vue.prototype.__patch__ is injected in entry points
+  // based on the rendering backend used.
+  if (!prevVnode) {
+    // initial render
+    vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
+  } else {
+    // updates
+    vm.$el = vm.__patch__(prevVnode, vnode)
+  }
+  activeInstance = prevActiveInstance
+  // update __vue__ reference
+  if (prevEl) {
+    prevEl.__vue__ = null
+  }
+  if (vm.$el) {
+    vm.$el.__vue__ = vm
+  }
+  // if parent is an HOC, update its $el as well
+  if (vm.$vnode &amp;&amp; vm.$parent &amp;&amp; vm.$vnode === vm.$parent._vnode) {
+    vm.$parent.$el = vm.$el
+  }
+  // updated hook is called by the scheduler to ensure that children are
+  // updated in a parent&apos;s updated hook.
+}
+</code></pre><p>_update 的核心就是调用 vm.<strong>patch</strong> 方法，它的定义在 src/platforms/web/runtime/patch.js中：</p>
+<pre><code>export const patch: Function = createPatchFunction({ nodeOps, modules })
+</code></pre><p>该方法的定义是调用 createPatchFunction 方法的返回值，这里传入了一个对象，包含 nodeOps 参数和 modules 参数。其中，nodeOps 封装了一系列 DOM 操作的方法，modules 定义了一些模块的钩子函数的实现。<br>createPatchFunction 内部定义了一系列的辅助方法，最终返回了一个 patch 方法，这个方法就赋值给了 vm._update 函数里调用的 vm.<strong>patch</strong>，它接收 4个参数，oldVnode 表示旧的 VNode 节点，它也可以不存在或者是一个 DOM 对象；vnode 表示执行 _render 后返回的 VNode 的节点；hydrating 表示是否是服务端渲染；removeOnly 是给 transition-group 用的，patch 的逻辑看上去相对复杂<br>确定了这些入参后，我们回到 patch 函数的执行过程，看几个关键步骤。</p>
+<pre><code>const isRealElement = isDef(oldVnode.nodeType)
+if (!isRealElement &amp;&amp; sameVnode(oldVnode, vnode)) {
+  // patch existing root node
+  patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly)
+} else {
+  if (isRealElement) {
+    // mounting to a real element
+    // check if this is server-rendered content and if we can perform
+    // a successful hydration.
+    if (oldVnode.nodeType === 1 &amp;&amp; oldVnode.hasAttribute(SSR_ATTR)) {
+      oldVnode.removeAttribute(SSR_ATTR)
+      hydrating = true
+    }
+    if (isTrue(hydrating)) {
+      if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
+        invokeInsertHook(vnode, insertedVnodeQueue, true)
+        return oldVnode
+      } else if (process.env.NODE_ENV !== &apos;production&apos;) {
+        warn(
+          &apos;The client-side rendered virtual DOM tree is not matching &apos; +
+          &apos;server-rendered content. This is likely caused by incorrect &apos; +
+          &apos;HTML markup, for example nesting block-level elements inside &apos; +
+          &apos;&lt;p&gt;, or missing &lt;tbody&gt;. Bailing hydration and performing &apos; +
+          &apos;full client-side render.&apos;
+        )
+      }
+    }      
+    // either not server-rendered, or hydration failed.
+    // create an empty node and replace it
+    oldVnode = emptyNodeAt(oldVnode)
+  }
+
+  // replacing existing element
+  const oldElm = oldVnode.elm
+  const parentElm = nodeOps.parentNode(oldElm)
+
+  // create new node 创建新结点
+  createElm(
+    vnode,
+    insertedVnodeQueue,
+    // extremely rare edge case: do not insert if old element is in a
+    // leaving transition. Only happens when combining transition +
+    // keep-alive + HOCs. (#4590)
+    oldElm._leaveCb ? null : parentElm,
+    nodeOps.nextSibling(oldElm)
+  )
+}
+</code></pre><p>由于我们传入的 oldVnode 实际上是一个 DOM container，所以 isRealElement 为 true，接下来又通过 emptyNodeAt 方法把 oldVnode 转换成 VNode 对象，然后再调用 createElm 方法，这个方法在这里非常重要，来看一下它的实现：</p>
+<pre><code>function createElm (
+  vnode,
+  insertedVnodeQueue,
+  parentElm,
+  refElm,
+  nested,
+  ownerArray,
+  index
+) {
+  if (isDef(vnode.elm) &amp;&amp; isDef(ownerArray)) {
+    // This vnode was used in a previous render!
+    // now it&apos;s used as a new node, overwriting its elm would cause
+    // potential patch errors down the road when it&apos;s used as an insertion
+    // reference node. Instead, we clone the node on-demand before creating
+    // associated DOM element for it.
+    vnode = ownerArray[index] = cloneVNode(vnode)
+  }
+
+  vnode.isRootInsert = !nested // for transition enter check    创建子组件
+  if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
+    return
+  }
+  const data = vnode.data
+  const children = vnode.children
+  const tag = vnode.tag
+  if (isDef(tag)) {
+    if (process.env.NODE_ENV !== &apos;production&apos;) {
+      if (data &amp;&amp; data.pre) {
+        creatingElmInVPre++
+      }
+      if (isUnknownElement(vnode, creatingElmInVPre)) {
+        warn(
+          &apos;Unknown custom element: &lt;&apos; + tag + &apos;&gt; - did you &apos; +
+          &apos;register the component correctly? For recursive components, &apos; +
+          &apos;make sure to provide the &quot;name&quot; option.&apos;,
+          vnode.context
+        )
+      }
+    }    
+    vnode.elm = vnode.ns
+      ? nodeOps.createElementNS(vnode.ns, tag)
+      : nodeOps.createElement(tag, vnode)
+    setScope(vnode)
+
+    /* istanbul ignore if */
+    if (__WEEX__) {
+      // ...
+    } else {
+      createChildren(vnode, children, insertedVnodeQueue)
+      if (isDef(data)) {
+        invokeCreateHooks(vnode, insertedVnodeQueue)
+      }
+      insert(parentElm, vnode.elm, refElm)
+    } 
+    if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; data &amp;&amp; data.pre) {
+      creatingElmInVPre--
+    }
+  } else if (isTrue(vnode.isComment)) {
+    vnode.elm = nodeOps.createComment(vnode.text)
+    insert(parentElm, vnode.elm, refElm)
+  } else {
+    vnode.elm = nodeOps.createTextNode(vnode.text)
+    insert(parentElm, vnode.elm, refElm)
+  }
+}
+</code></pre><p>createElm 的作用是通过虚拟节点创建真实的 DOM 并插入到它的父节点中。 我们来看一下它的一些关键逻辑，createComponent 方法目的是尝试创建子组件，在当前这个 case 下它的返回值为 false；接下来判断 vnode 是否包含 tag，如果包含，先简单对 tag 的合法性在非生产环境下做校验，看是否是一个合法标签；然后再去调用平台 DOM 的操作去创建一个占位符元素。<br>接下来调用 createChildren 方法去创建子元素：</p>
+<pre><code>createChildren(vnode, children, insertedVnodeQueue)
+function createChildren (vnode, children, insertedVnodeQueue) {
+  if (Array.isArray(children)) {
+    if (process.env.NODE_ENV !== &apos;production&apos;) {
+      checkDuplicateKeys(children)
+    }
+    for (let i = 0; i &lt; children.length; ++i) {
+      createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i)
+    }
+  } else if (isPrimitive(vnode.text)) {
+    nodeOps.appendChild(vnode.elm, nodeOps.createTextNode(String(vnode.text)))
+  }
+}
+</code></pre><p>createChildren 的逻辑很简单，实际上是遍历子虚拟节点，递归调用 createElm，这里要注意的一点是在遍历过程中会把 vnode.elm 作为父容器的 DOM 节点占位符传入。</p>
+<p>接着再调用 invokeCreateHooks 方法执行所有的 create 的钩子并把 vnode push 到 insertedVnodeQueue 中。</p>
+<pre><code> if (isDef(data)) {
+  invokeCreateHooks(vnode, insertedVnodeQueue)
+}    
+function invokeCreateHooks (vnode, insertedVnodeQueue) {
+  for (let i = 0; i &lt; cbs.create.length; ++i) {
+    cbs.create[i](emptyNode, vnode)
+  }
+  i = vnode.data.hook // Reuse variable
+  if (isDef(i)) {
+    if (isDef(i.create)) i.create(emptyNode, vnode)
+    if (isDef(i.insert)) insertedVnodeQueue.push(vnode)
+  }
+}
+</code></pre><p>最后调用 insert 方法把 DOM 插入到父节点中，因为是递归调用，子元素会优先调用 insert，所以整个 vnode 树节点的插入顺序是先子后父。来看一下 insert 方法，它的定义在 src/core/vdom/patch.js 上。</p>
+<pre><code>insert(parentElm, vnode.elm, refElm)
+function insert (parent, elm, ref) {
+  if (isDef(parent)) {
+    if (isDef(ref)) {
+      if (ref.parentNode === parent) {
+        nodeOps.insertBefore(parent, elm, ref)
+      }
+    } else {
+      nodeOps.appendChild(parent, elm)
+    }
+  }
+}
+</code></pre><p>insert 逻辑很简单，调用一些 nodeOps 把子节点插入到父节点中，这些辅助方法定义在 src/platforms/web/runtime/node-ops.js 中：</p>
+<pre><code>export function insertBefore (parentNode: Node, newNode: Node, referenceNode: Node) {
+  parentNode.insertBefore(newNode, referenceNode)
+}
+
+export function appendChild (node: Node, child: Node) {
+  node.appendChild(child)
+}
+</code></pre><p>其实就是调用原生 DOM 的 API 进行 DOM 操作，在 createElm 过程中，如果 vnode 节点不包含 tag，则它有可能是一个注释或者纯文本节点，可以直接插入到父元素中。首次渲染我们调用了 createElm 方法，这里传入的 parentElm 是 oldVnode.elm 的父元素，在我们的例子是 id 为 #app div 的父元素，也就是 Body；实际上整个过程就是递归创建了一个完整的 DOM 树并插入到 Body 上。<br>嗯，终于大概对着学习文档理了一遍。有点简陋，可能很多细节没有注意到</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/render/" rel="tag"># render</a>
+          
+            <a href="/tags/Virtual-DOM/" rel="tag"># Virtual DOM</a>
+          
+            <a href="/tags/createElement/" rel="tag"># createElement</a>
+          
+            <a href="/tags/update/" rel="tag"># update</a>
+          
+            <a href="/tags/patch/" rel="tag"># patch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/05/Vue源码解读之基础前言/" rel="next" title="Vue源码解读之基础前言">
+                <i class="fa fa-chevron-left"></i> Vue源码解读之基础前言
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="banggan">
+            
+              <p class="site-author-name" itemprop="name">banggan</p>
+              <p class="site-description motion-element" itemprop="description">愿你是披荆斩棘的自信女侠</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/banggan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="banggan12@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/bangbanggangan" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="skype:yourname?call|chat" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#何为数据驱动"><span class="nav-number">1.</span> <span class="nav-text">何为数据驱动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-Vue的实际过程"><span class="nav-number">2.</span> <span class="nav-text">new Vue的实际过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-实例挂载的实现"><span class="nav-number">3.</span> <span class="nav-text">Vue 实例挂载的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vm-render"><span class="nav-number">4.</span> <span class="nav-text">vm_render()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Virtual-DOM"><span class="nav-number">5.</span> <span class="nav-text">Virtual DOM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#createElement"><span class="nav-number">6.</span> <span class="nav-text">createElement</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#children-的规范化"><span class="nav-number">6.1.</span> <span class="nav-text">children 的规范化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vnode-创建"><span class="nav-number">6.2.</span> <span class="nav-text">vnode 创建</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vm-update"><span class="nav-number">7.</span> <span class="nav-text">vm_update</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">banggan</span>
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
