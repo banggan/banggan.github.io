@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="基本类型JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 原始数据类型布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boole">
+<meta name="description" content="JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boolean(1);// i">
 <meta name="keywords" content="TypeScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TypeScript学习笔记之基本类型">
 <meta property="og:url" content="https://banggan.github.io/2019/01/16/TypeScript学习笔记之基本类型/index.html">
 <meta property="og:site_name" content="banggan&#39;s Blog">
-<meta property="og:description" content="基本类型JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 原始数据类型布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boole">
+<meta property="og:description" content="JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boolean(1);// i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-16T06:37:07.644Z">
+<meta property="og:updated_time" content="2019-01-16T06:46:31.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TypeScript学习笔记之基本类型">
-<meta name="twitter:description" content="基本类型JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 原始数据类型布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boole">
+<meta name="twitter:description" content="JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boolean(1);// i">
 
 
 
@@ -422,8 +422,8 @@
       
 
       
-        <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><p>JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined</p>
-<h3 id="原始数据类型"><a href="#原始数据类型" class="headerlink" title="原始数据类型"></a>原始数据类型</h3><h4 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h4><p>在TypeScript中，使用<code>boolean</code>定义布尔值类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let do: boolean = true</span><br></pre></td></tr></table></figure></p>
+        <p>JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined</p>
+<h4 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h4><p>在TypeScript中，使用<code>boolean</code>定义布尔值类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let do: boolean = true</span><br></pre></td></tr></table></figure></p>
 <p>使用构造函数<code>Boolean</code>创造的对象并不是布尔值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let createdByNewBoolean: boolean = new Boolean(1);</span><br><span class="line">// index.ts(1,5): error TS2322: Type &apos;Boolean&apos; is not assignable to type &apos;boolean&apos;.</span><br></pre></td></tr></table></figure></p>
 <p>因为 new Boolean()返回的是一个<code>Boolean</code>对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let createdByNewBoolean: boolean = new Boolean(1);</span><br></pre></td></tr></table></figure></p>
 <p>直接调用<code>Boolean</code>也可以返回一个<code>boolean</code>类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let createByBoolean:boolean = Boolean(1);</span><br></pre></td></tr></table></figure></p>
@@ -668,7 +668,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">1.</span> <span class="nav-text">基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原始数据类型"><span class="nav-number">1.1.</span> <span class="nav-text">原始数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#布尔值"><span class="nav-number">1.1.1.</span> <span class="nav-text">布尔值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值"><span class="nav-number">1.1.2.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串"><span class="nav-number">1.1.3.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排列"><span class="nav-number">1.1.4.</span> <span class="nav-text">排列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元组"><span class="nav-number">1.1.5.</span> <span class="nav-text">元组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#枚举"><span class="nav-number">1.1.6.</span> <span class="nav-text">枚举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空值"><span class="nav-number">1.1.7.</span> <span class="nav-text">空值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Null-和-Undefined"><span class="nav-number">1.1.8.</span> <span class="nav-text">Null 和 Undefined</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#任意值"><span class="nav-number">1.1.9.</span> <span class="nav-text">任意值</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#布尔值"><span class="nav-number">1.</span> <span class="nav-text">布尔值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值"><span class="nav-number">2.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串"><span class="nav-number">3.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排列"><span class="nav-number">4.</span> <span class="nav-text">排列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元组"><span class="nav-number">5.</span> <span class="nav-text">元组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#枚举"><span class="nav-number">6.</span> <span class="nav-text">枚举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空值"><span class="nav-number">7.</span> <span class="nav-text">空值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Null-和-Undefined"><span class="nav-number">8.</span> <span class="nav-text">Null 和 Undefined</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#任意值"><span class="nav-number">9.</span> <span class="nav-text">任意值</span></a></li></ol></div>
             
 
           </div>

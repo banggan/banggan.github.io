@@ -420,8 +420,8 @@
       
         
           
-            <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><p>JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined</p>
-<h3 id="原始数据类型"><a href="#原始数据类型" class="headerlink" title="原始数据类型"></a>原始数据类型</h3><h4 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h4><p>在TypeScript中，使用<code>boolean</code>定义布尔值类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let do: boolean = true</span><br></pre></td></tr></table></figure></p>
+            <p>JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined</p>
+<h4 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h4><p>在TypeScript中，使用<code>boolean</code>定义布尔值类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let do: boolean = true</span><br></pre></td></tr></table></figure></p>
 <p>使用构造函数<code>Boolean</code>创造的对象并不是布尔值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let createdByNewBoolean: boolean = new Boolean(1);</span><br><span class="line">// index.ts(1,5): error TS2322: Type &apos;Boolean&apos; is not assignable to type &apos;boolean&apos;.</span><br></pre></td></tr></table></figure></p>
 <p>因为 new Boolean()返回的是一个<code>Boolean</code>对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let createdByNewBoolean: boolean = new Boolean(1);</span><br></pre></td></tr></table></figure></p>
 <p>直接调用<code>Boolean</code>也可以返回一个<code>boolean</code>类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let createByBoolean:boolean = Boolean(1);</span><br></pre></td></tr></table></figure></p>
