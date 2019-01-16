@@ -294,6 +294,226 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/16/TypeScript学习笔记之基本类型/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/16/TypeScript学习笔记之基本类型/" itemprop="url">TypeScript学习笔记之基本类型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-16T14:35:23+08:00">
+                2019-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/TypeScript学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><p>JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined</p>
+<h3 id="原始数据类型"><a href="#原始数据类型" class="headerlink" title="原始数据类型"></a>原始数据类型</h3><h4 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h4><p>在TypeScript中，使用<code>boolean</code>定义布尔值类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let do: boolean = true</span><br></pre></td></tr></table></figure></p>
+<p>使用构造函数<code>Boolean</code>创造的对象并不是布尔值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let createdByNewBoolean: boolean = new Boolean(1);</span><br><span class="line">// index.ts(1,5): error TS2322: Type &apos;Boolean&apos; is not assignable to type &apos;boolean&apos;.</span><br></pre></td></tr></table></figure></p>
+<p>因为 new Boolean()返回的是一个<code>Boolean</code>对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let createdByNewBoolean: boolean = new Boolean(1);</span><br></pre></td></tr></table></figure></p>
+<p>直接调用<code>Boolean</code>也可以返回一个<code>boolean</code>类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let createByBoolean:boolean = Boolean(1);</span><br></pre></td></tr></table></figure></p>
+<p>在 TypeScript 中，boolean 是 JavaScript 中的基本类型，而 Boolean 是 JavaScript 中的构造函数。</p>
+<h4 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h4><p>使用<code>number</code>定义的数值类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> decLiteral: <span class="built_in">number</span> = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">let</span> hexLiteral: <span class="built_in">number</span> = <span class="number">0xf00d</span>;</span><br><span class="line"><span class="comment">// ES6 中的二进制表示法</span></span><br><span class="line"><span class="keyword">let</span> binaryLiteral: <span class="built_in">number</span> = <span class="number">0b1010</span>;</span><br><span class="line"><span class="comment">// ES6 中的八进制表示法</span></span><br><span class="line"><span class="keyword">let</span> octalLiteral: <span class="built_in">number</span> = <span class="number">0o744</span>;</span><br><span class="line"><span class="keyword">let</span> notANumber: <span class="built_in">number</span> = <span class="literal">NaN</span>;</span><br><span class="line"><span class="keyword">let</span> infinityNumber: <span class="built_in">number</span> = <span class="literal">Infinity</span>;</span><br></pre></td></tr></table></figure>
+<p>编译结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> decLiteral = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">var</span> hexLiteral = <span class="number">0xf00d</span>;</span><br><span class="line"><span class="comment">// ES6 中的二进制表示法</span></span><br><span class="line"><span class="keyword">var</span> binaryLiteral = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// ES6 中的八进制表示法</span></span><br><span class="line"><span class="keyword">var</span> octalLiteral = <span class="number">484</span>;</span><br><span class="line"><span class="keyword">var</span> notANumber = <span class="literal">NaN</span>;</span><br><span class="line"><span class="keyword">var</span> infinityNumber = <span class="literal">Infinity</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p>使用 <code>string</code> 定义字符串类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myName: <span class="built_in">string</span> = <span class="string">'Tom'</span>;</span><br><span class="line"><span class="keyword">let</span> myAge: <span class="built_in">number</span> = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模板字符串</span></span><br><span class="line"><span class="keyword">let</span> sentence: <span class="built_in">string</span> = <span class="string">`Hello, my name is <span class="subst">$&#123;myName&#125;</span>.</span></span><br><span class="line"><span class="string">I'll be <span class="subst">$&#123;myAge + 1&#125;</span> years old next month.`</span>;</span><br></pre></td></tr></table></figure>
+<p>编译结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myName = <span class="string">'Tom'</span>;</span><br><span class="line"><span class="keyword">var</span> myAge = <span class="number">25</span>;</span><br><span class="line"><span class="comment">// 模板字符串</span></span><br><span class="line"><span class="keyword">var</span> sentence = <span class="string">"Hello, my name is "</span> + myName + <span class="string">".\nI'll be "</span> + (myAge + <span class="number">1</span>) + <span class="string">" years old next month."</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="排列"><a href="#排列" class="headerlink" title="排列"></a>排列</h4><p>TypeScript与JavaScript一样，允许使用值数组。数组类型可以用两种方式之一编写。在第一个中，使用后跟[]元素的类型来表示该元素类型的数组：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let list: number[] = [1, 2, 3];</span><br></pre></td></tr></table></figure></p>
+<p>另一种方式：使用通用数组类型Array<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let list: Array&lt;number&gt; = [1, 2, 3];</span><br></pre></td></tr></table></figure></p>
+<h4 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h4><p>元组类型表示一个数组，其中已知固定数量的元素的类型，但不必相同。例如，您可能希望将值表示为a string和a 的对number：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Declare a tuple type</span><br><span class="line">let x: [string, number];</span><br><span class="line">// Initialize it</span><br><span class="line">x = [&quot;hello&quot;, 10]; // OK</span><br><span class="line">// Initialize it incorrectly</span><br><span class="line">x = [10, &quot;hello&quot;]; // Error</span><br></pre></td></tr></table></figure></p>
+<p>访问具有已知索引的元素时，将检索正确的类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(x[0].substr(1)); // OK</span><br><span class="line">console.log(x[1].substr(1)); // Error, &apos;number&apos; does not have &apos;substr&apos;</span><br></pre></td></tr></table></figure></p>
+<h4 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h4><p>默认情况下，枚举从开始编号开始编号0，可以手动设置其中一个成员的值来更改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = 1, Green, Blue&#125;</span><br><span class="line">let c: Color = Color.Green;</span><br></pre></td></tr></table></figure></p>
+<p>枚举的一个便利功能是,可以从数值转到枚举中该值的名称。例如，如果我们有值，2但不确定在Color上面的枚举中映射到了什么，我们可以查找相应的名称：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = 1, Green, Blue&#125;</span><br><span class="line">let colorName: string = Color[2];</span><br><span class="line"></span><br><span class="line">console.log(colorName); // Displays &apos;Green&apos; as its value is 2 abov</span><br></pre></td></tr></table></figure></p>
+<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><p>JavaScript 没有空值（Void）的概念，在 TypeScript 中，可以用 <code>void</code> 表示没有任何返回值的函数：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">warnUser</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"This is my warning message"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>声明一个 <code>void</code> 类型的变量没有什么用，因为你只能将它赋值为 <code>undefined</code> 和 <code>null</code>：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> unusable: <span class="built_in">void</span> = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="Null-和-Undefined"><a href="#Null-和-Undefined" class="headerlink" title="Null 和 Undefined"></a>Null 和 Undefined</h4><p>在 TypeScript 中，可以使用 <code>null</code> 和 <code>undefined</code> 来定义这两个原始数据类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> u: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">let</span> n: <span class="literal">null</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p><code>undefined</code> 类型的变量只能被赋值为 <code>undefined</code>，<code>null</code> 类型的变量只能被赋值为 <code>null</code>。</p>
+<p>与 <code>void</code> 的区别是，<code>undefined</code> 和 <code>null</code> 是所有类型的子类型。也就是说 <code>undefined</code> 类型的变量，可以赋值给 <code>number</code> 类型的变量：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样不会报错</span></span><br><span class="line"><span class="keyword">let</span> num: <span class="built_in">number</span> = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样也不会报错</span></span><br><span class="line"><span class="keyword">let</span> u: <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">let</span> num: <span class="built_in">number</span> = u;</span><br></pre></td></tr></table></figure>
+<p>而 <code>void</code> 类型的变量不能赋值给 <code>number</code> 类型的变量：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> u: <span class="built_in">void</span>;</span><br><span class="line"><span class="keyword">let</span> num: <span class="built_in">number</span> = u;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.ts(2,5): error TS2322: Type 'void' is not assignable to type 'number'.</span></span><br></pre></td></tr></table></figure>
+<h4 id="任意值"><a href="#任意值" class="headerlink" title="任意值"></a>任意值</h4><p>我们可能需要描述在编写应用程序时我们不知道的变量类型。这些值可能来自动态内容，例如来自用户或第三方库。在这些情况下，我们希望选择退出类型检查，并让值通过编译时检查。为此，我们使用以下<code>any</code>类型标记这些<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> notSure: <span class="built_in">any</span> = <span class="number">4</span>;</span><br><span class="line">notSure = <span class="string">"maybe a string instead"</span>;</span><br><span class="line">notSure = <span class="literal">false</span>; <span class="comment">// okay, definitely a boolean</span></span><br></pre></td></tr></table></figure></p>
+<p>如果是一个普通类型，在赋值过程中改变类型是不被允许的：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myFavoriteNumber: <span class="built_in">string</span> = <span class="string">'seven'</span>;</span><br><span class="line">myFavoriteNumber = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.ts(2,1): error TS2322: Type 'number' is not assignable to type 'string'.</span></span><br></pre></td></tr></table></figure>
+<p>但如果是 <code>any</code> 类型，则允许被赋值为任意类型。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myFavoriteNumber: <span class="built_in">any</span> = <span class="string">'seven'</span>;</span><br><span class="line">myFavoriteNumber = <span class="number">7</span>;</span><br></pre></td></tr></table></figure>
+<p>在任意值上访问任何属性都是允许的：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> anyThing: <span class="built_in">any</span> = <span class="string">'hello'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(anyThing.myName);</span><br><span class="line"><span class="built_in">console</span>.log(anyThing.myName.firstName);</span><br></pre></td></tr></table></figure>
+<p>也允许调用任何方法：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> anyThing: <span class="built_in">any</span> = <span class="string">'Tom'</span>;</span><br><span class="line">anyThing.setName(<span class="string">'Jerry'</span>);</span><br><span class="line">anyThing.setName(<span class="string">'Jerry'</span>).sayHello();</span><br><span class="line">anyThing.myName.setFirstName(<span class="string">'Cat'</span>);</span><br></pre></td></tr></table></figure>
+<p>可以认为，<strong>声明一个变量为任意值之后，对它的任何操作，返回的内容的类型都是任意值</strong>。</p>
+<p><strong>变量如果在声明的时候，未指定其类型，那么它会被识别为任意值类型</strong>：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> something;</span><br><span class="line">something = <span class="string">'seven'</span>;</span><br><span class="line">something = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">something.setName(<span class="string">'Tom'</span>);</span><br></pre></td></tr></table></figure>
+<p>等价于</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> something: <span class="built_in">any</span>;</span><br><span class="line">something = <span class="string">'seven'</span>;</span><br><span class="line">something = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">something.setName(<span class="string">'Tom'</span>);</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/16/TypeScript学习之初入TypeScript/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -3291,207 +3511,6 @@ hero.health = 5000
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2018/12/30/我的2018/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="banggan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="banggan's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/30/我的2018/" itemprop="url">我的2018</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-30T18:39:19+08:00">
-                2018-12-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-          
-         
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>感觉今年过的很快，其实回头看看经历了很多很多。在2018的尾巴上，回顾这一年的经历，只为明年做的更好。</p>
-<h3 id="回首过去"><a href="#回首过去" class="headerlink" title="回首过去"></a>回首过去</h3><h4 id="关于学习"><a href="#关于学习" class="headerlink" title="关于学习"></a>关于学习</h4><p>这一年，教研室从一楼搬到了五楼，搬砖的工作量也相应的随楼层的增加而增加。前前后后忙了两个项目，主要的技术栈是bootstrap、Vue、elementUI、webpack等开发工具，那段时间很忙，很头疼，因为没有前辈指导，所有踩的坑都得一个一个一遍又一遍的踩，却感觉很充实，那段时间是自己知识积累最快的一个阶段了吧。<br>后面的一段时间自学了小程序，自己也开发了一个小程序、因审核内容受限、所以没上线。方向是好的，自己可以拿来练练手。12月，联系了一个前辈、打算慢慢参与开源，虽然目前来说是一些维护的事，但也好在为来年的计划做点铺垫。<br>其他方面，学会了烘培、拉花、做咖啡，学会了游泳，也尝试了未曾尝试过的菜肴。</p>
-<h4 id="关于秋招"><a href="#关于秋招" class="headerlink" title="关于秋招"></a>关于秋招</h4><p>秋招算是自己沉淀知识的阶段，年初买的红皮书、权威指南等前端方面的书籍也在秋招的时候看了个遍。过程总的来说很幸运也很遗憾，幸运的是在6月就拿了一个研究所的offer，心里也不是特别的慌；遗憾的是因错过阿里三面的电话而失之交臂，投提前批，找内推就如同石沉大海，没有回应。后面去上海参加上汽举行的“摩尔100计划”，也算散心了，运气也好了起来，最后拿到的offer中，有高薪资的、有发展好的，没有选择最高薪资的、也没有选择发展最好的，而是选择了自己觉得最适合的公司吧。对于秋招的总结，大概就是以下几点：</p>
-<ul>
-<li>基础知识要扎实，特别是css，js方面。</li>
-<li>在js方面，不仅要有基础，更要有深度。</li>
-<li>框架方面，不能只会用，更要了解原理，深入源码</li>
-<li>工程方面，要考虑到网络通信、上线bug、维护的问题。</li>
-<li>知识的广度，不能局限在前端，后台、安全也很重要。</li>
-<li>要有大前端的思想，不能局限在一个模子里面。</li>
-</ul>
-<h4 id="关于毕设"><a href="#关于毕设" class="headerlink" title="关于毕设"></a>关于毕设</h4><p>作为一个前端开发，毕设做人脸识别也算是一种挑战，当找完工作回归教研室看我的开题报告的时候，我第一反应这谁的毕设？谁写的开题报告？我为啥做这个？典型的灵魂三问，然而我不知道系列。疯狂的看英文文献，找创新点，标数据集，训练模型，路途还很遥远，壮士还需努力啊。</p>
-<h4 id="关于健身"><a href="#关于健身" class="headerlink" title="关于健身"></a>关于健身</h4><p>2018年参加了人生第一场正式的马拉松、没有想象中那么难、只是需要坚持下去就好了，路途中有很多让我很感动的风景：单腿带着拐杖走的人，年过七旬的人，坐在轮椅里的人，带着小孩坚持走的人；你会发现，比你优秀的、没你生来完善的人都在努力坚持着自己的生活、你还有什么理由不努力呢？<br>2018年坚持健身的又一年，很庆幸自己没有理由的坚持了下来并养成了习惯，因为是阳光的、美好的，所以更想去坚持吧。</p>
-<h4 id="关于旅行"><a href="#关于旅行" class="headerlink" title="关于旅行"></a>关于旅行</h4><p>18年去的地方不多也不少，时常怀念自己大学毕业义工旅行的日子，真正做到随遇而安的小安，开了属于自己的民宿的露露，她们都走上了自己喜欢的那条路。对于旅行，我一直是坚持的，在路上的。这一年徒步了白雪皑皑的四人同、带老妈小弟逛了成都、打卡了上海、自驾了川西大环线，又一次去了色达，遇见了稻城，更遇见了自己。</p>
-<h3 id="展望未来"><a href="#展望未来" class="headerlink" title="展望未来"></a>展望未来</h3><p>保持对生活的热情，保持内心的孩子气，做自己想做的事情，无论生活变成什么样子，可以受苦，可以跌倒，可以失落，但是不能当废柴。努力做好下面的：</p>
-<ul>
-<li>因上努力，果上随缘 </li>
-<li>好好学习，顺利毕业 </li>
-<li>多多读书，坚持阅读 </li>
-<li>努力工作，尽早适应 </li>
-<li>参与开源，多看源码 </li>
-<li>做好总结，及时更博 </li>
-<li>坚持锻炼，坚持健身</li>
-<li>做好理财，出去旅行 </li>
-<li>自爱沉稳，而后爱人</li>
-</ul>
-<p>都说2019年属猪的一年，肯定不缺肉吃。我想我的2019年，少点焦虑，多点自律。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3544,7 +3563,7 @@ hero.health = 5000
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

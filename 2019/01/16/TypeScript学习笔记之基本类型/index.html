@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript,">
+  <meta name="keywords" content="TypeScript,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="####使用场景以下场景往往由于事件频繁被触发，因而频繁执行DOM操作、资源加载等重行为，导致UI停顿甚至浏览器崩溃。  window对象的resize、scroll事件 拖拽时的mousemove事件 射击游戏中的mousedown、keydown事件 文字输入、自动完成的keyup事件  实际上对于window的resize事件，实际需求大多为停止改变大小n毫秒后执行后续处理；而其他事件大多的">
-<meta name="keywords" content="JavaScript">
+<meta name="description" content="基本类型JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 原始数据类型布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boole">
+<meta name="keywords" content="TypeScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="函数节流与去抖">
-<meta property="og:url" content="https://banggan.github.io/2018/12/30/函数节流与去抖/index.html">
+<meta property="og:title" content="TypeScript学习笔记之基本类型">
+<meta property="og:url" content="https://banggan.github.io/2019/01/16/TypeScript学习笔记之基本类型/index.html">
 <meta property="og:site_name" content="banggan&#39;s Blog">
-<meta property="og:description" content="####使用场景以下场景往往由于事件频繁被触发，因而频繁执行DOM操作、资源加载等重行为，导致UI停顿甚至浏览器崩溃。  window对象的resize、scroll事件 拖拽时的mousemove事件 射击游戏中的mousedown、keydown事件 文字输入、自动完成的keyup事件  实际上对于window的resize事件，实际需求大多为停止改变大小n毫秒后执行后续处理；而其他事件大多的">
+<meta property="og:description" content="基本类型JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 原始数据类型布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boole">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-03T06:49:51.067Z">
+<meta property="og:updated_time" content="2019-01-16T06:37:07.644Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="函数节流与去抖">
-<meta name="twitter:description" content="####使用场景以下场景往往由于事件频繁被触发，因而频繁执行DOM操作、资源加载等重行为，导致UI停顿甚至浏览器崩溃。  window对象的resize、scroll事件 拖拽时的mousemove事件 射击游戏中的mousedown、keydown事件 文字输入、自动完成的keyup事件  实际上对于window的resize事件，实际需求大多为停止改变大小n毫秒后执行后续处理；而其他事件大多的">
+<meta name="twitter:title" content="TypeScript学习笔记之基本类型">
+<meta name="twitter:description" content="基本类型JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined 原始数据类型布尔值在TypeScript中，使用boolean定义布尔值类型1let do: boolean = true 使用构造函数Boolean创造的对象并不是布尔值12let createdByNewBoolean: boolean = new Boole">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://banggan.github.io/2018/12/30/函数节流与去抖/">
+  <link rel="canonical" href="https://banggan.github.io/2019/01/16/TypeScript学习笔记之基本类型/">
 
 
 
 
 
-  <title>函数节流与去抖 | banggan's Blog</title>
+  <title>TypeScript学习笔记之基本类型 | banggan's Blog</title>
   
 
 
@@ -295,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2018/12/30/函数节流与去抖/">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/16/TypeScript学习笔记之基本类型/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="banggan">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">函数节流与去抖</h1>
+          <h1 class="post-title" itemprop="name headline">TypeScript学习笔记之基本类型</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-30T14:32:07+08:00">
-                2018-12-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-16T14:35:23+08:00">
+                2019-01-16
               </time>
             
 
@@ -347,8 +347,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
+                  <a href="/categories/TypeScript学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript学习笔记</span>
                   </a>
                 </span>
 
@@ -385,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  903
+                  1.2k
                 </span>
               
 
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  5
                 </span>
               
             </div>
@@ -422,83 +422,53 @@
       
 
       
-        <p>####使用场景<br>以下场景往往由于事件频繁被触发，因而频繁执行DOM操作、资源加载等重行为，导致UI停顿甚至浏览器崩溃。</p>
-<ul>
-<li>window对象的resize、scroll事件</li>
-<li>拖拽时的mousemove事件</li>
-<li>射击游戏中的mousedown、keydown事件</li>
-<li>文字输入、自动完成的keyup事件</li>
-</ul>
-<p>实际上对于window的resize事件，实际需求大多为停止改变大小n毫秒后执行后续处理；而其他事件大多的需求是以一定的0执行后续处理。针对这两种需求就出现了debounce和throttle两种解决办法。 </p>
-<p>####debounce<br>抖动：如果用手指一直按住一个弹簧，它将不会弹起直到你松手为止。 也就是说当调用动作n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间。<br>接口定义：</p>
-<pre><code>/**
-* 空闲控制 返回函数连续调用时，空闲时间必须大于或等于 idle，action 才会执行
-* @param idle   {number}    空闲时间，单位毫秒
-* @param action {function}  请求关联函数，实际应用需要调用的函数
-* @return {function}    返回客户调用函数
-*/
-debounce(idle,action)
-</code></pre><p>简单实现1：<br>利用定时器，让函数执行延迟500毫秒，在500毫秒内如果有函数又被调用则删除上一次调用，这次调用500毫秒后执行，如此往复</p>
-<pre><code>window.onscroll = function(){//lazyload();
-debounce(lazyload,window);
-};
-function debounce(method,context){
-clearTimeout(method.timeout);
-method.timeout = setTimeout(function(){
-method.call(context);
-},500);
-}
-function lazyload(){
-console.log(&quot;scroll执行了&quot;+scrollnum);
-}
-</code></pre><p>简单实现2：</p>
-<p>还有一种节流方式，是通过返回闭包的形式，可以设置延迟时间，两者运行的结果是一样，但是我在实际操作的时候设置延迟500时，滚动过了一会才执行了,设置为delay为100的时候在视觉上就没有感觉延迟。而且函数也只滚动了一次。</p>
-<pre><code>function debounce1(method,delay){
-    var timer = null;
-    return function(){
-        var context = this,args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function(){
-        method.apply(context,args);
-        },delay);
-    }
-}
-</code></pre><p>####throttle<br>当我一直滚动鼠标的时候，lazyload函数就会不断被延迟，这样只有停下来的时候才会执行，那么再有些需要及时显示的情况下，就显得不那么友好了(对于实现keyup事件的提示也没有意义了)，所以可以为函数添加一个参数作为到固定间隔必须执行，到了这个时间间隔就必须执行，这个时候就引入了节流：</p>
-<p>节流：如果将水龙头拧紧直到水是以水滴的形式流出，那你会发现每隔一段时间，就会有一滴水流出。也就是会说预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期<br>接口定义：</p>
-<pre><code>/**
-* 频率控制 返回函数连续调用时，action 执行频率限定为 次 / delay
-* @param delay  {number}    延迟时间，单位毫秒
-* @param action {function}  请求关联函数，实际应用需要调用的函数
-* @return {function}    返回客户调用函数
-*/
-throttle(delay,action)
-</code></pre><p>简单实现：</p>
-<pre><code>var throttle = function(delay, action){
-  var last = 0;
-  return function(){
-    var curr = +new Date();
-    if (curr - last &gt; delay){
-      action.apply(this, arguments);
-      last = curr ;
-    }
-  }
-}
-</code></pre><p>简单实现2：</p>
-<pre><code>function throttle2(method, delay, time) {
-    var timeout,startTime = new Date();
-    return function() {
-        var context = this,
-        args = arguments,
-        curTime = new Date();
-        clearTimeout(timeout);// 如果达到了规定的触发时间间隔，触发 handler
-        if (curTime - startTime &gt;= time) {
-            method.apply(context, args);
-            startTime = curTime;//没达到触发间隔，重新设定定时器
-        } else {
-            timeout = setTimeout(method, delay);
-        }
-};
-</code></pre>
+        <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><p>JavaScript的类型分为原始数据类型和对象类型，原始数据类型主要包括：布尔值、数值、字符串、null、undefined</p>
+<h3 id="原始数据类型"><a href="#原始数据类型" class="headerlink" title="原始数据类型"></a>原始数据类型</h3><h4 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h4><p>在TypeScript中，使用<code>boolean</code>定义布尔值类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let do: boolean = true</span><br></pre></td></tr></table></figure></p>
+<p>使用构造函数<code>Boolean</code>创造的对象并不是布尔值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let createdByNewBoolean: boolean = new Boolean(1);</span><br><span class="line">// index.ts(1,5): error TS2322: Type &apos;Boolean&apos; is not assignable to type &apos;boolean&apos;.</span><br></pre></td></tr></table></figure></p>
+<p>因为 new Boolean()返回的是一个<code>Boolean</code>对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let createdByNewBoolean: boolean = new Boolean(1);</span><br></pre></td></tr></table></figure></p>
+<p>直接调用<code>Boolean</code>也可以返回一个<code>boolean</code>类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let createByBoolean:boolean = Boolean(1);</span><br></pre></td></tr></table></figure></p>
+<p>在 TypeScript 中，boolean 是 JavaScript 中的基本类型，而 Boolean 是 JavaScript 中的构造函数。</p>
+<h4 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h4><p>使用<code>number</code>定义的数值类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> decLiteral: <span class="built_in">number</span> = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">let</span> hexLiteral: <span class="built_in">number</span> = <span class="number">0xf00d</span>;</span><br><span class="line"><span class="comment">// ES6 中的二进制表示法</span></span><br><span class="line"><span class="keyword">let</span> binaryLiteral: <span class="built_in">number</span> = <span class="number">0b1010</span>;</span><br><span class="line"><span class="comment">// ES6 中的八进制表示法</span></span><br><span class="line"><span class="keyword">let</span> octalLiteral: <span class="built_in">number</span> = <span class="number">0o744</span>;</span><br><span class="line"><span class="keyword">let</span> notANumber: <span class="built_in">number</span> = <span class="literal">NaN</span>;</span><br><span class="line"><span class="keyword">let</span> infinityNumber: <span class="built_in">number</span> = <span class="literal">Infinity</span>;</span><br></pre></td></tr></table></figure>
+<p>编译结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> decLiteral = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">var</span> hexLiteral = <span class="number">0xf00d</span>;</span><br><span class="line"><span class="comment">// ES6 中的二进制表示法</span></span><br><span class="line"><span class="keyword">var</span> binaryLiteral = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// ES6 中的八进制表示法</span></span><br><span class="line"><span class="keyword">var</span> octalLiteral = <span class="number">484</span>;</span><br><span class="line"><span class="keyword">var</span> notANumber = <span class="literal">NaN</span>;</span><br><span class="line"><span class="keyword">var</span> infinityNumber = <span class="literal">Infinity</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p>使用 <code>string</code> 定义字符串类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myName: <span class="built_in">string</span> = <span class="string">'Tom'</span>;</span><br><span class="line"><span class="keyword">let</span> myAge: <span class="built_in">number</span> = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模板字符串</span></span><br><span class="line"><span class="keyword">let</span> sentence: <span class="built_in">string</span> = <span class="string">`Hello, my name is <span class="subst">$&#123;myName&#125;</span>.</span></span><br><span class="line"><span class="string">I'll be <span class="subst">$&#123;myAge + 1&#125;</span> years old next month.`</span>;</span><br></pre></td></tr></table></figure>
+<p>编译结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myName = <span class="string">'Tom'</span>;</span><br><span class="line"><span class="keyword">var</span> myAge = <span class="number">25</span>;</span><br><span class="line"><span class="comment">// 模板字符串</span></span><br><span class="line"><span class="keyword">var</span> sentence = <span class="string">"Hello, my name is "</span> + myName + <span class="string">".\nI'll be "</span> + (myAge + <span class="number">1</span>) + <span class="string">" years old next month."</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="排列"><a href="#排列" class="headerlink" title="排列"></a>排列</h4><p>TypeScript与JavaScript一样，允许使用值数组。数组类型可以用两种方式之一编写。在第一个中，使用后跟[]元素的类型来表示该元素类型的数组：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let list: number[] = [1, 2, 3];</span><br></pre></td></tr></table></figure></p>
+<p>另一种方式：使用通用数组类型Array<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let list: Array&lt;number&gt; = [1, 2, 3];</span><br></pre></td></tr></table></figure></p>
+<h4 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h4><p>元组类型表示一个数组，其中已知固定数量的元素的类型，但不必相同。例如，您可能希望将值表示为a string和a 的对number：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Declare a tuple type</span><br><span class="line">let x: [string, number];</span><br><span class="line">// Initialize it</span><br><span class="line">x = [&quot;hello&quot;, 10]; // OK</span><br><span class="line">// Initialize it incorrectly</span><br><span class="line">x = [10, &quot;hello&quot;]; // Error</span><br></pre></td></tr></table></figure></p>
+<p>访问具有已知索引的元素时，将检索正确的类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(x[0].substr(1)); // OK</span><br><span class="line">console.log(x[1].substr(1)); // Error, &apos;number&apos; does not have &apos;substr&apos;</span><br></pre></td></tr></table></figure></p>
+<h4 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h4><p>默认情况下，枚举从开始编号开始编号0，可以手动设置其中一个成员的值来更改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = 1, Green, Blue&#125;</span><br><span class="line">let c: Color = Color.Green;</span><br></pre></td></tr></table></figure></p>
+<p>枚举的一个便利功能是,可以从数值转到枚举中该值的名称。例如，如果我们有值，2但不确定在Color上面的枚举中映射到了什么，我们可以查找相应的名称：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = 1, Green, Blue&#125;</span><br><span class="line">let colorName: string = Color[2];</span><br><span class="line"></span><br><span class="line">console.log(colorName); // Displays &apos;Green&apos; as its value is 2 abov</span><br></pre></td></tr></table></figure></p>
+<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><p>JavaScript 没有空值（Void）的概念，在 TypeScript 中，可以用 <code>void</code> 表示没有任何返回值的函数：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">warnUser</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"This is my warning message"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>声明一个 <code>void</code> 类型的变量没有什么用，因为你只能将它赋值为 <code>undefined</code> 和 <code>null</code>：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> unusable: <span class="built_in">void</span> = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="Null-和-Undefined"><a href="#Null-和-Undefined" class="headerlink" title="Null 和 Undefined"></a>Null 和 Undefined</h4><p>在 TypeScript 中，可以使用 <code>null</code> 和 <code>undefined</code> 来定义这两个原始数据类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> u: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">let</span> n: <span class="literal">null</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p><code>undefined</code> 类型的变量只能被赋值为 <code>undefined</code>，<code>null</code> 类型的变量只能被赋值为 <code>null</code>。</p>
+<p>与 <code>void</code> 的区别是，<code>undefined</code> 和 <code>null</code> 是所有类型的子类型。也就是说 <code>undefined</code> 类型的变量，可以赋值给 <code>number</code> 类型的变量：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样不会报错</span></span><br><span class="line"><span class="keyword">let</span> num: <span class="built_in">number</span> = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样也不会报错</span></span><br><span class="line"><span class="keyword">let</span> u: <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">let</span> num: <span class="built_in">number</span> = u;</span><br></pre></td></tr></table></figure>
+<p>而 <code>void</code> 类型的变量不能赋值给 <code>number</code> 类型的变量：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> u: <span class="built_in">void</span>;</span><br><span class="line"><span class="keyword">let</span> num: <span class="built_in">number</span> = u;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.ts(2,5): error TS2322: Type 'void' is not assignable to type 'number'.</span></span><br></pre></td></tr></table></figure>
+<h4 id="任意值"><a href="#任意值" class="headerlink" title="任意值"></a>任意值</h4><p>我们可能需要描述在编写应用程序时我们不知道的变量类型。这些值可能来自动态内容，例如来自用户或第三方库。在这些情况下，我们希望选择退出类型检查，并让值通过编译时检查。为此，我们使用以下<code>any</code>类型标记这些<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> notSure: <span class="built_in">any</span> = <span class="number">4</span>;</span><br><span class="line">notSure = <span class="string">"maybe a string instead"</span>;</span><br><span class="line">notSure = <span class="literal">false</span>; <span class="comment">// okay, definitely a boolean</span></span><br></pre></td></tr></table></figure></p>
+<p>如果是一个普通类型，在赋值过程中改变类型是不被允许的：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myFavoriteNumber: <span class="built_in">string</span> = <span class="string">'seven'</span>;</span><br><span class="line">myFavoriteNumber = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.ts(2,1): error TS2322: Type 'number' is not assignable to type 'string'.</span></span><br></pre></td></tr></table></figure>
+<p>但如果是 <code>any</code> 类型，则允许被赋值为任意类型。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myFavoriteNumber: <span class="built_in">any</span> = <span class="string">'seven'</span>;</span><br><span class="line">myFavoriteNumber = <span class="number">7</span>;</span><br></pre></td></tr></table></figure>
+<p>在任意值上访问任何属性都是允许的：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> anyThing: <span class="built_in">any</span> = <span class="string">'hello'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(anyThing.myName);</span><br><span class="line"><span class="built_in">console</span>.log(anyThing.myName.firstName);</span><br></pre></td></tr></table></figure>
+<p>也允许调用任何方法：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> anyThing: <span class="built_in">any</span> = <span class="string">'Tom'</span>;</span><br><span class="line">anyThing.setName(<span class="string">'Jerry'</span>);</span><br><span class="line">anyThing.setName(<span class="string">'Jerry'</span>).sayHello();</span><br><span class="line">anyThing.myName.setFirstName(<span class="string">'Cat'</span>);</span><br></pre></td></tr></table></figure>
+<p>可以认为，<strong>声明一个变量为任意值之后，对它的任何操作，返回的内容的类型都是任意值</strong>。</p>
+<p><strong>变量如果在声明的时候，未指定其类型，那么它会被识别为任意值类型</strong>：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> something;</span><br><span class="line">something = <span class="string">'seven'</span>;</span><br><span class="line">something = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">something.setName(<span class="string">'Tom'</span>);</span><br></pre></td></tr></table></figure>
+<p>等价于</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> something: <span class="built_in">any</span>;</span><br><span class="line">something = <span class="string">'seven'</span>;</span><br><span class="line">something = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">something.setName(<span class="string">'Tom'</span>);</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -515,7 +485,7 @@ throttle(delay,action)
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
           
         </div>
       
@@ -528,8 +498,8 @@ throttle(delay,action)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/29/JS之this的指向理解/" rel="next" title="JS之this的指向理解">
-                <i class="fa fa-chevron-left"></i> JS之this的指向理解
+              <a href="/2019/01/16/TypeScript学习之初入TypeScript/" rel="next" title="TypeScript学习笔记之初入TypeScript">
+                <i class="fa fa-chevron-left"></i> TypeScript学习笔记之初入TypeScript
               </a>
             
           </div>
@@ -537,10 +507,6 @@ throttle(delay,action)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/30/阮一峰ES6之Promise对象的理解/" rel="prev" title="阮一峰ES6之Promise对象的理解">
-                阮一峰ES6之Promise对象的理解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,8 +558,17 @@ throttle(delay,action)
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -683,6 +658,22 @@ throttle(delay,action)
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">1.</span> <span class="nav-text">基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原始数据类型"><span class="nav-number">1.1.</span> <span class="nav-text">原始数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#布尔值"><span class="nav-number">1.1.1.</span> <span class="nav-text">布尔值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值"><span class="nav-number">1.1.2.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串"><span class="nav-number">1.1.3.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排列"><span class="nav-number">1.1.4.</span> <span class="nav-text">排列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元组"><span class="nav-number">1.1.5.</span> <span class="nav-text">元组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#枚举"><span class="nav-number">1.1.6.</span> <span class="nav-text">枚举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空值"><span class="nav-number">1.1.7.</span> <span class="nav-text">空值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Null-和-Undefined"><span class="nav-number">1.1.8.</span> <span class="nav-text">Null 和 Undefined</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#任意值"><span class="nav-number">1.1.9.</span> <span class="nav-text">任意值</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
