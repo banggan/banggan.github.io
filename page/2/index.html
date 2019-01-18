@@ -294,6 +294,211 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/03/Vue基础知识点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/03/Vue基础知识点/" itemprop="url">Vue基础知识点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-03T14:39:19+08:00">
+                2019-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue知识点总结/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue知识点总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  851
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="基础知识点"><a href="#基础知识点" class="headerlink" title="基础知识点"></a>基础知识点</h3><h4 id="框架与库的区别"><a href="#框架与库的区别" class="headerlink" title="框架与库的区别"></a>框架与库的区别</h4><p>jquery库+DOM操作+http请求 = 全家桶</p>
+<h4 id="如何起步"><a href="#如何起步" class="headerlink" title="如何起步"></a>如何起步</h4><ul>
+<li>引包Vue.js</li>
+<li>通过Vue对象，new Vue（options）</li>
+<li>配置options对象<ul>
+<li>el:发生动作的目的地</li>
+<li>template:模板（必须为一个根节点）</li>
+<li>data函数，返回的是一个对象</li>
+<li>components:key是组件名，value是组件对象</li>
+<li>methods：配合事件</li>
+<li>props：子组件接受的参数设置</li>
+</ul>
+</li>
+</ul>
+<h4 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h4>：对象、字符串、判断后的布尔值、三元表达式<br><br>#### 常用指令<br> - v-text:元素的innerText属性<br> - v-html：元素的innerHTML属性<br> - v-if:判断是否插入，v-else-if，v-else和v-if必须是相邻的元素<br> - v-show:隐藏元素，给元素加上display：none<br> - v-bind:绑定属性，单向数据流,v-bind:属性=‘变量’     简写：属性名=‘xxx’<br> - v-model：双向数据绑定，v-on:事件名=‘函数’         简写： @事件名<br> - v-on:绑定事件，处理自定义原生事件，v-on:事件名=“表达式 ||函数名 ”<br> - v-for:循环<br> 用法：v-for=“item in stus”<br> 如果stus为数组，（item，index） in stus<br> 如果stus为obj，（value,key,index） in stus<br><br>#### 全局组件<br>场景：公共性功能组件，减少冗余代码<br>全局API：Vue.component(‘组件名’，组件对象)<br><br>#### 过滤器<br>给数据的显示进行操作，如反转，改变属性等<br>filter：全局过滤器，Vue.filter(‘过滤器名’，过滤方式fun)<br>filters：组件内的过滤器，Vue.filters(‘过滤器名’，过滤方式fun)，使用:内容 | 过滤器名<br><br>#### watch<br>监视单个属性改变，无法监视复杂类型，因为监视的是对象地址，地址没有改变，改变的只是属性<br><br>#### computed<br>监视多个：object | array<br> computed：{ 监视的业务名:function(){}}   使用：
+<h4 id="slot"><a href="#slot" class="headerlink" title="slot"></a>slot</h4><p>vue内置的组件，父组件向子组件传DOM结构，而props是动态的数据，如果有选择性传递，就具名插槽，以name来选择，使用的对应的slot=name值即可</p>
+<h4 id="组件生命周期"><a href="#组件生命周期" class="headerlink" title="组件生命周期"></a>组件生命周期</h4><p>所有的生命周期钩子自动绑定 this 上下文到实例中，因此你可以访问数据，对属性和方法进行运算。这意味着你不能使用箭头函数来定义一个生命周期方法 (例如 created: () =&gt; this.fetchTodos())。这是因为箭头函数绑定了父上下文，因此 this 与你期待的 Vue 实例不同，this.fetchTodos 的行为未定义。<br><img src="https://img-blog.csdnimg.cn/20190103095047469.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhbmdiYW5nZ2FuZ2Fu,size_16,color_FFFFFF,t_70" alt="生命周期图示"></p>
+<ul>
+<li>beforeCreate：组件创建之前，拿不到数据</li>
+<li>created:可以操作数据，并且可以实现vue-&gt;页面的额影响，用于发起http请求</li>
+<li>beforeMount：vue起作用，装载数据到DOM之前，应用：vue启动前的DOM</li>
+<li>mounted：vue起作用，装载数据到DOM之前，应用：vue启动后的DOM，仅执行一次</li>
+<li>beforeUpdate:基于数据的改变才会触发，数据改变之前，应用：获取原DOM</li>
+<li>updated：基于数据的改变才会触发，数据改变之后,应用：获取新DOM</li>
+<li>beforeDestroy：销毁前，做一些功能的释放，如本地保存</li>
+<li>destroyed：销毁后</li>
+<li>activated：激活</li>
+<li>deactivated：停用</li>
+</ul>
+<p>小结：<br>频繁的销毁和创建组件？不合理，使用keep_alive内置组件包裹起来，对应的是actived和deactived声明周期；<br>created和actived：都是子组件状态，created没有被keep-alive内置组件包括，actived被包裹；</p>
+<h4 id="获取DOM元素"><a href="#获取DOM元素" class="headerlink" title="获取DOM元素"></a>获取DOM元素</h4><p>在组件的DOM部分任意标签写上ref=”xxx”,通过组件对象，this.$refs.xxx获取到元素</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2018/12/30/我的2018/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1452,7 +1657,7 @@ export default {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1474,7 +1679,7 @@ export default {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
