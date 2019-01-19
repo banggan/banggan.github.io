@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="watcher,getter,Dep,">
 
 
 
@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="愿你是披荆斩棘的自信女侠">
+<meta name="description" content="通过上一篇Vue源码解读之响应式原理,我们可以看到Vue利用defineReactive会把普通的对象装换为响应式对象，在defineReactive函数中，重点是const dep = new Dep()，在设置getter的时候，收集依赖也就是dep.depend() 依赖收集 先看一下getter做的事情：访问对象属性的时候触发 123456789101112131415161718192">
+<meta name="keywords" content="watcher,getter,Dep">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue源码解读之依赖收集">
 <meta property="og:url" content="https://banggan.github.io/2019/01/19/Vue源码解读之依赖收集/index.html">
 <meta property="og:site_name" content="banggan&#39;s Blog">
-<meta property="og:description" content="愿你是披荆斩棘的自信女侠">
+<meta property="og:description" content="通过上一篇Vue源码解读之响应式原理,我们可以看到Vue利用defineReactive会把普通的对象装换为响应式对象，在defineReactive函数中，重点是const dep = new Dep()，在设置getter的时候，收集依赖也就是dep.depend() 依赖收集 先看一下getter做的事情：访问对象属性的时候触发 123456789101112131415161718192">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-19T07:55:40.119Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/Vue-dep.png">
+<meta property="og:updated_time" content="2019-01-19T08:00:58.489Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue源码解读之依赖收集">
-<meta name="twitter:description" content="愿你是披荆斩棘的自信女侠">
+<meta name="twitter:description" content="通过上一篇Vue源码解读之响应式原理,我们可以看到Vue利用defineReactive会把普通的对象装换为响应式对象，在defineReactive函数中，重点是const dep = new Dep()，在设置getter的时候，收集依赖也就是dep.depend() 依赖收集 先看一下getter做的事情：访问对象属性的时候触发 123456789101112131415161718192">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/Vue-dep.png">
 
 
 
@@ -334,6 +337,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue源码解读/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue源码解读</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -362,7 +387,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1.2k
                 </span>
               
 
@@ -378,7 +403,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  5
                 </span>
               
             </div>
@@ -399,7 +424,16 @@
       
 
       
-        
+        <p> 通过上一篇<a href="https://banggan.github.io/2019/01/12/Vue%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB%E4%B9%8B%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/">Vue源码解读之响应式原理</a>,我们可以看到Vue利用defineReactive会把普通的对象装换为响应式对象，在defineReactive函数中，重点是const dep = new Dep()，在设置getter的时候，收集依赖也就是dep.depend()</p>
+<h4 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h4><p> 先看一下getter做的事情：访问对象属性的时候触发<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> export function defineReactive (</span><br><span class="line">  obj: Object,</span><br><span class="line">  key: string,</span><br><span class="line">  val: any,</span><br><span class="line">  customSetter?: ?Function,</span><br><span class="line">  shallow?: boolean</span><br><span class="line">) &#123;</span><br><span class="line">  const dep = new Dep()//在每个响应式键值的闭包中定义一个dep对象</span><br><span class="line">..........</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    enumerable: true,</span><br><span class="line">    configurable: true,</span><br><span class="line">    get: function reactiveGetter () &#123;</span><br><span class="line">    //拿到getter,没有getter就直接取val</span><br><span class="line">      const value = getter ? getter.call(obj) : val</span><br><span class="line">      //依赖收集的过程  Dep类：建立数据和watch之间的桥梁</span><br><span class="line">      if (Dep.target) &#123;</span><br><span class="line">        dep.depend() // 进行收集依赖</span><br><span class="line">        </span><br><span class="line">        if (childOb) &#123; </span><br><span class="line">          childOb.dep.depend()</span><br><span class="line">          if (Array.isArray(value)) &#123;</span><br><span class="line">            dependArray(value)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      return value  //最终返回value</span><br><span class="line">    &#125;,</span><br><span class="line">    // ...</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 在getter 的时候进行依赖的收集，只有在 Dep.target 中有值的时候才会进行依赖收集；</p>
+<p> 这个 Dep.target 是在Watcher实例的 get 方法调用的时候 pushTarget 会把当前取值的watcher推入 Dep.target，原先的watcher压栈到 targetStack 栈中，当前取值的watcher取值结束后出栈并把原先的watcher值赋给 Dep.target，cleanupDeps 最后把新的 newDeps 里已经没有的watcher清空，以防止视图上已经不需要的无用watcher触发</p>
+<h4 id="Dep"><a href="#Dep" class="headerlink" title="Dep"></a>Dep</h4><p>Dep 是整个 getter 依赖收集的核心，主要是建立数据和watcher之间的桥梁，主要是记录哪些Watcher依赖自己的变化，dep.depend()作用是在调用Dep.target的addDep（）函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">let uid = 0  、、Dep的实例ID，为了方便去重</span><br><span class="line"></span><br><span class="line">export default class Dep &#123;</span><br><span class="line">  static target: ?Watcher;// 当前是谁在进行依赖收集</span><br><span class="line">  id: number;</span><br><span class="line">  subs: Array&lt;Watcher&gt;; //所有的watcher集合</span><br><span class="line"></span><br><span class="line">  constructor () &#123;</span><br><span class="line">    this.id = uid++   //Dep的实例id </span><br><span class="line">    this.subs = []    //存储收集器中需要通知的watcher</span><br><span class="line">  &#125;</span><br><span class="line">  addSub(sub: Watcher) &#123; ... &#125;  //添加一个观察者对象</span><br><span class="line">  removeSub(sub: Watcher) &#123; ... &#125;  //移除一个观察者对象</span><br><span class="line">  depend () &#123;//依赖收集，当存在Dep.target的时候把自己添加观察者的依赖中 </span><br><span class="line">    if (Dep.target) &#123;</span><br><span class="line">      Dep.target.addDep(this)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  notify() &#123; ... &#125;  // 通知所有订阅者 </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Dep.target = null</span><br><span class="line">const targetStack = []   // watcher栈</span><br><span class="line">//将watcher观察者实例设置给Dep.target，用以依赖收集。同时将该实例存入target栈</span><br><span class="line">export function pushTarget (_target: ?Watcher) &#123;</span><br><span class="line">  if (Dep.target) targetStack.push(Dep.target)</span><br><span class="line">  Dep.target = _target</span><br><span class="line">&#125;</span><br><span class="line">//将观察者实例从target栈中取出并设置给Dep.target </span><br><span class="line">export function popTarget () &#123;</span><br><span class="line">  Dep.target = targetStack.pop()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Dep 是一个 Class，它定义了一些属性和方法，这里需要特别注意的是它有一个静态属性 target，这是一个全局唯一 Watcher，这是一个非常巧妙的设计，因为在同一时间只能有一个全局的 Watcher 被计算，另外它的自身属性 subs 也是 Watcher 的数组。它是Watcher的实例，用来通知更新。</p>
+<h4 id="watcher"><a href="#watcher" class="headerlink" title="watcher"></a>watcher</h4><p>再来看一下watcher的实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">export default class Watcher &#123;</span><br><span class="line">  constructor(</span><br><span class="line">    vm: Component,</span><br><span class="line">    expOrFn: string | Function,</span><br><span class="line">    cb: Function,</span><br><span class="line">    options?: ?Object,</span><br><span class="line">    isRenderWatcher?: boolean    //是否是渲染watcher的标志位</span><br><span class="line">  ) &#123;</span><br><span class="line"></span><br><span class="line">    this.getter = expOrFn    // 在get方法中执行</span><br><span class="line">    if (this.computed) &#123;    // 是否是 计算属性</span><br><span class="line">      this.value = undefined</span><br><span class="line">      this.dep = new Dep()//计算属性创建过程中并未求值</span><br><span class="line">    &#125; else &#123;    // 不是计算属性会立刻求值</span><br><span class="line">      this.value = this.get()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  /* 获得getter的值并且重新进行依赖收集 */</span><br><span class="line"></span><br><span class="line">  get() &#123;</span><br><span class="line">    pushTarget(this)    // 设置Dep.target = this</span><br><span class="line">    let value</span><br><span class="line">    value = this.getter.call(vm, vm)</span><br><span class="line">    popTarget() // 将观察者实例从target栈中取出并设置给Dep.target</span><br><span class="line">    this.cleanupDeps()</span><br><span class="line">    return value</span><br><span class="line">  &#125;</span><br><span class="line">  addDep(dep: Dep)//添加一个依赖关系到Deps集合中 </span><br><span class="line"></span><br><span class="line">  cleanupDeps() // 清理newDeps里没有的无用watcher依赖</span><br><span class="line">  update()// 调度者接口，当依赖发生改变的时候进行回调 </span><br><span class="line">  run() // 调度者工作接口，将被调度者回调 </span><br><span class="line"></span><br><span class="line">  getAndInvoke(cb: Function) &#123; ... &#125;</span><br><span class="line"></span><br><span class="line">  evaluate() //收集该watcher的所有deps依赖</span><br><span class="line"></span><br><span class="line">  depend() // 收集该watcher的所有deps依赖，只有计算属性使用 </span><br><span class="line"></span><br><span class="line">  teardown() // 将自身从所有依赖收集订阅列表删除</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="依赖收集流程"><a href="#依赖收集流程" class="headerlink" title="依赖收集流程"></a>依赖收集流程</h4><p><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/Vue-dep.png" alt="依赖收集流程图"><br>当我们实例化一个渲染watcher的时候，执行this.get方法。进行get函数执行pushTarget()，实际上把Dep.target 赋值为当前的渲染 watcher 并压栈，接着执行value = this.getter.call(vm, vm)，实际上调用getter方法，触发数据的getter,从而调用dep.depend方法，也就会执行Dep.target.addDep(this):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">addDep (dep: Dep) &#123;</span><br><span class="line">  const id = dep.id</span><br><span class="line">  if (!this.newDepIds.has(id)) &#123;</span><br><span class="line">    this.newDepIds.add(id)</span><br><span class="line">    this.newDeps.push(dep)</span><br><span class="line">    if (!this.depIds.has(id)) &#123;</span><br><span class="line">      dep.addSub(this)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时会做一些逻辑判断（保证同一数据不会被添加多次）后执行 dep.addSub(this)，那么就会执行 this.subs.push(sub)，也就是说把当前的 watcher 订阅到这个数据持有的 dep 的 subs 中，这个目的是为后续数据变化时候能通知到哪些 subs。</p>
+
       
     </div>
     
@@ -413,6 +447,16 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/watcher/" rel="tag"># watcher</a>
+          
+            <a href="/tags/getter/" rel="tag"># getter</a>
+          
+            <a href="/tags/Dep/" rel="tag"># Dep</a>
+          
+        </div>
       
 
       
@@ -483,8 +527,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -523,7 +576,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -574,6 +627,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖收集"><span class="nav-number">1.</span> <span class="nav-text">依赖收集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dep"><span class="nav-number">2.</span> <span class="nav-text">Dep</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#watcher"><span class="nav-number">3.</span> <span class="nav-text">watcher</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖收集流程"><span class="nav-number">4.</span> <span class="nav-text">依赖收集流程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
