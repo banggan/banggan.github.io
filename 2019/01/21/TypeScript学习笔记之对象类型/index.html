@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="图像格式,">
+  <meta name="keywords" content="Interfaces,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在实际的开发中，遇到了这个问题，有点理不清，特来整理一次： jpg格式全名应该是JPEG。JPEG 图片以 24 位颜色存储单个光栅图像。JPEG 是与平台无关的格式，支持最高级别的压缩，不过，这种压缩是有损耗的。渐近式JPEG文件支持交错。可以提高或降低 JPEG文件压缩的级别。但是，文件大小是以图像质量为代价的。压缩比率可以高达 100:1。（JPEG 格式可在 10:1 到 20:1 的比率">
-<meta name="keywords" content="图像格式">
+<meta name="description" content="在TypeScript中，利用接口(Interfaces)来定义对象的类型。 在面向对象语言中，接口（Interfaces）、它是对行为的抽象，而具体如何行动需要由类（classes）去实现（implements）。在TypeScript中没有接口的概念，在编译成JavaScript的时候，所有的接口会被擦出掉，而TypeScript的核心之一就是类型检查。 在TypeScript里，接口的作用就">
+<meta name="keywords" content="Interfaces">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图像格式的区别以及应用场景">
-<meta property="og:url" content="https://banggan.github.io/2019/01/05/图像格式的区别以及应用场景/index.html">
+<meta property="og:title" content="TypeScript学习笔记之对象类型">
+<meta property="og:url" content="https://banggan.github.io/2019/01/21/TypeScript学习笔记之对象类型/index.html">
 <meta property="og:site_name" content="banggan&#39;s Blog">
-<meta property="og:description" content="在实际的开发中，遇到了这个问题，有点理不清，特来整理一次： jpg格式全名应该是JPEG。JPEG 图片以 24 位颜色存储单个光栅图像。JPEG 是与平台无关的格式，支持最高级别的压缩，不过，这种压缩是有损耗的。渐近式JPEG文件支持交错。可以提高或降低 JPEG文件压缩的级别。但是，文件大小是以图像质量为代价的。压缩比率可以高达 100:1。（JPEG 格式可在 10:1 到 20:1 的比率">
+<meta property="og:description" content="在TypeScript中，利用接口(Interfaces)来定义对象的类型。 在面向对象语言中，接口（Interfaces）、它是对行为的抽象，而具体如何行动需要由类（classes）去实现（implements）。在TypeScript中没有接口的概念，在编译成JavaScript的时候，所有的接口会被擦出掉，而TypeScript的核心之一就是类型检查。 在TypeScript里，接口的作用就">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-05T07:05:09.194Z">
+<meta property="og:updated_time" content="2019-01-21T04:53:33.176Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="图像格式的区别以及应用场景">
-<meta name="twitter:description" content="在实际的开发中，遇到了这个问题，有点理不清，特来整理一次： jpg格式全名应该是JPEG。JPEG 图片以 24 位颜色存储单个光栅图像。JPEG 是与平台无关的格式，支持最高级别的压缩，不过，这种压缩是有损耗的。渐近式JPEG文件支持交错。可以提高或降低 JPEG文件压缩的级别。但是，文件大小是以图像质量为代价的。压缩比率可以高达 100:1。（JPEG 格式可在 10:1 到 20:1 的比率">
+<meta name="twitter:title" content="TypeScript学习笔记之对象类型">
+<meta name="twitter:description" content="在TypeScript中，利用接口(Interfaces)来定义对象的类型。 在面向对象语言中，接口（Interfaces）、它是对行为的抽象，而具体如何行动需要由类（classes）去实现（implements）。在TypeScript中没有接口的概念，在编译成JavaScript的时候，所有的接口会被擦出掉，而TypeScript的核心之一就是类型检查。 在TypeScript里，接口的作用就">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://banggan.github.io/2019/01/05/图像格式的区别以及应用场景/">
+  <link rel="canonical" href="https://banggan.github.io/2019/01/21/TypeScript学习笔记之对象类型/">
 
 
 
 
 
-  <title>图像格式的区别以及应用场景 | banggan's Blog</title>
+  <title>TypeScript学习笔记之对象类型 | banggan's Blog</title>
   
 
 
@@ -295,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/05/图像格式的区别以及应用场景/">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/21/TypeScript学习笔记之对象类型/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="banggan">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">图像格式的区别以及应用场景</h1>
+          <h1 class="post-title" itemprop="name headline">TypeScript学习笔记之对象类型</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T15:00:24+08:00">
-                2019-01-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T12:52:56+08:00">
+                2019-01-21
               </time>
             
 
@@ -347,8 +347,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/图像格式/" itemprop="url" rel="index">
-                    <span itemprop="name">图像格式</span>
+                  <a href="/categories/TypeScript学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript学习笔记</span>
                   </a>
                 </span>
 
@@ -385,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.2k
+                  1.5k
                 </span>
               
 
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7
+                  6
                 </span>
               
             </div>
@@ -422,29 +422,44 @@
       
 
       
-        <p>在实际的开发中，遇到了这个问题，有点理不清，特来整理一次：</p>
-<h4 id="jpg格式"><a href="#jpg格式" class="headerlink" title="jpg格式"></a>jpg格式</h4><p>全名应该是JPEG。JPEG 图片以 24 位颜色存储单个光栅图像。JPEG 是与平台无关的格式，支持最高级别的压缩，不过，这种压缩是有损耗的。渐近式JPEG文件支持交错。可以提高或降低 JPEG文件压缩的级别。但是，文件大小是以图像质量为代价的。压缩比率可以高达 100:1。（JPEG 格式可在 10:1 到 20:1 的比率下轻松地压缩文件，而图片质量不会下降。）JPEG压缩可以很好地处理写实摄影作品。但是，对于颜色较少、对比级别强烈、实心边框或纯色区域大的较简单的作品，JPEG 压缩无法提供理想的结果。有时，压缩比率会低到5:1，严重损失了图片完整性。这一损失产生的原因是，JPEG 压缩方案可以很好地压缩类似的色调，但是 JPEG 压缩方案不能很好地处理亮度的强烈差异或处理纯色区域。<br>Jpeg格式特点：</p>
-<ul>
-<li>透明性：它不支持透明性</li>
-<li>动画：它不支持动画</li>
-<li>损耗性：除了一些比如说（仅仅是90、180、270度旋转），裁切，从标准类型到先进类型，编辑图片的原数据之外，所有其它操作对jpeg图像的处理都会使得它的质量损失，所以我们在编辑过程一般用png作为过渡格式。</li>
-<li>隔行渐进显示，它支持隔行渐进显示（但是ie浏览器并不支持这个属性，但是ie会在整个图像信息完全达到的时候显示）。<br>由上可以看出Jpeg是最适web上面的摄影图片和数字照相机中。根据惊叹我们在页面中使用的商品图片、采用人像或者好、实物素材制作的广告更适合采用JPG格式保存。<h4 id="gif格式"><a href="#gif格式" class="headerlink" title="gif格式"></a>gif格式</h4>GIF(GraphicsInterchange Format)的原义是“图像互换格式”，是CompuServe公司在 1987年开发的图像文件格式。GIF文件的数据，是一种基于LZW算法的连续色调的无损压缩格式。其压缩率一般在50％左右，它不属于任何应用程序。目前几乎所有相关软件都支持它，公共领域有大量的软件在使用GIF图像文件。GIF图像文件的数据是经过压缩的，而且是采用了可变长度等压缩算法。所以GIF的图像深度从lbit到8bit，也即GIF最多支持256种色彩的图像。GIF格式的另一个特点是其在一个GIF文件中可以存多幅彩色图像，如果把存于一个文件中的多幅图像数据逐幅读出并显示到屏幕上，就可构成一种最简单的动画。<br>gif 格式特点：</li>
-<li>透明性：gif是一种布尔透明类型，即它可以使全透明，也可是全不透明，但是它并没有半透明的（alpha透明）。</li>
-<li>动画：gif格式支持动画。</li>
-<li>无损耗性：gif是一种无损耗的图像格式，这也意味着你可以对gif图片做任何操作也不会使得图像质量产生损耗。</li>
-<li>水平扫描：gif是使用一种叫做LZW的算法进行压缩的，当压缩gif的过程中，像素是由上到下水平压缩的，这也意味着同等条件下，横向的gif图片比竖向的gif更加小。例如500<em>10的图片比10</em>500的图片更加小。</li>
-<li>间隔渐进显示：gif支持可选择性的间隔渐进显示。<br>由以上特点看出只有256种颜色的gif图片不适合照片，但它适合对颜色要求不高的图形（比如说图标、图表等）。<h4 id="png格式"><a href="#png格式" class="headerlink" title="png格式"></a>png格式</h4>PNG是20世纪90年代中期开始开发的图像文件存储格式，其目的是企图替代GIF和TIFF文件格式，同时增加一些GIF文件格式所不具备的特性。流式网络图形格式(Portable Network Graphic Format，PNG)名称来源于非官方的“PNG’s NotGIF”，是一种位图文件(bitmapfile)存储格式，读成“ping”。PNG用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的α通道数据。PNG使用从LZ77派生的无损数据压缩算法<br>Png格式特点：</li>
-<li>类型：Png这种图片格式包括了许多类，但是在实践的大致中可以分为256色的png和全色的png，你完全可以用256色的png代替gif，用全色的png代替jpeg。</li>
-<li>透明性：png是完全支持alpha透明的（透明、半透明、不透明），尽管有两个怪异的现象在ie6（下面详细讨论）</li>
-<li>动画：它不支持动画<br>Png8的在ie中的怪异表现：半透明的png8在ie6以下的浏览器显示为全透明。<br>alpha透明的全色PNG（png32）在ie6中会出现背景颜色（通常是灰色）<br>上面可以总结：全透明的png8可以在任一浏览器正常显示（就像gif一样）。半透明的png8在除了ie6及其一下的浏览器下错误的显示成全透明，其它的浏览器都能正常显示半透明。图像上颜色较少、并且主要以纯色或者平滑的渐变色填充以及具备较大的亮度差异的图像适合以png8格式存储。<h4 id="svg格式"><a href="#svg格式" class="headerlink" title="svg格式"></a>svg格式</h4>可缩放矢量图形是基于可扩展标记语言（标准通用标记语言的子集），用于描述二维矢量图形的一种图形格式。它由万维网联盟制定，是一个开放标准。<br>SVG格式特点：</li>
-<li>SVG 指可伸缩矢量图形 (Scalable Vector Graphics)</li>
-<li>SVG 用来定义用于网络的基于矢量的图形</li>
-<li>SVG 使用 XML 格式定义图形</li>
-<li>SVG 图像在放大或改变尺寸的情况下其图形质量不会有所损失</li>
-<li>SVG 是万维网联盟的标准</li>
-<li>SVG 与诸如 DOM和 XSL 之类的W3C标准是一个整体<br>SVG跟上面这些图片格式最大的不同，是SVG是矢量图。这意味着SVG图片由直线和曲线以及绘制它们的方法组成。当你放大一个SVG图片的时候，你看到的还是线和曲线，而不会出现像素点。这意味着SVG图片在放大时，不会失真，所以它非常适合用来绘制企业Logo、Icon等。 <h4 id="bmp格式"><a href="#bmp格式" class="headerlink" title="bmp格式"></a>bmp格式</h4>BMP是一种与硬件设备无关的图像文件格式，使用非常广。它采用位映射存储格式，除了图像深度可选以外，不采用其他任何压缩，因此，BMP文件所占用的空间很大。BMP文件的图像深度可选lbit、4bit、8bit及24bit。BMP文件存储数据时，图像的扫描方式是按从左到右、从下到上的顺序。<br>这是一种比较老的图片格式。BMP是无损的，但同时这种图片格式几乎没有对数据进行压缩，所以BMP格式的图片通常具有较大的文件大小。虽然同时支持索引色和直接色是一个优点，但是太大的文件格式格式导致它几乎没有用武之地，现在除了在Windows操作系统中还比较常见之外，我们几乎看不到它。<h4 id="WebP格式"><a href="#WebP格式" class="headerlink" title="WebP格式"></a>WebP格式</h4>WebP是谷歌开发的一种新图片格式，WebP是同时支持有损和无损压缩的、使用直接色的、点阵图。<br>想象Web上的图片之多，百分之几十的提升，是非常非常大的优化。只可惜，目前只有Chrome浏览器和Opera浏览器支持WebP格式，所以WebP的应用并不广泛。为了使用更先进的技术，比如WebP图片格式，来压缩互联网上传输的数据流量，谷歌甚至提供了Chrome Data Compression Proxy，设置了Chrome Data Compression Proxy作为Web代理之后，你访问的所有网站中的图片，在经过Proxy的时候，都会被转换成WebP格式，以降低图片文件的大小。从名字就可以看出来它是为Web而生的，什么叫为Web而生呢？就是说相同质量的图片，WebP具有更小的文件体积。现在网站上充满了大量的图片，如果能够降低每一个图片的文件大小，那么将大大减少浏览器和服务器之间的数据传输量，进而降低访问延迟，提升访问体验。</li>
-</ul>
+        <p>在TypeScript中，利用接口(Interfaces)来定义对象的类型。</p>
+<p>在面向对象语言中，接口（Interfaces）、它是对行为的抽象，而具体如何行动需要由类（classes）去实现（implements）。<br>在TypeScript中没有接口的概念，在编译成JavaScript的时候，所有的接口会被擦出掉，而TypeScript的核心之一就是类型检查。 在TypeScript里，接口的作用就是为这些类型命名和为你的代码或第三方代码定义契约并让代码看起来更好理解。</p>
+<h4 id="TypeScript中的接口"><a href="#TypeScript中的接口" class="headerlink" title="TypeScript中的接口"></a>TypeScript中的接口</h4><p>可用于对对象的形状进行描述，也可用于对类的一部分进行抽象，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface Person &#123;</span><br><span class="line">    name:string;</span><br><span class="line">    age：number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function put(person:Person)&#123;</span><br><span class="line">    console.log(&quot;hello&quot; + person.name+&quot;I&apos;m&quot;+ person.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let Tom: Person = &#123; //这里的对象只要包含必要的属性且值类型正确就可以</span><br><span class="line">    name: &apos;Tom&apos;,</span><br><span class="line">    age: 25</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>如果不给传进去的对象指定是接口类型的数据，那么传入的对象参数可以包含其他属性，编译器会检查必要的属性是否存在且判断类型是否正确。<br>如果是是指定了接口类型的数据，多属性和少属性均会出错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let Tom: Person = &#123;//两种情况均不允许</span><br><span class="line">    name: &apos;Tom&apos;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">let Tom: Person = &#123;</span><br><span class="line">    name: &apos;Tom&apos;,</span><br><span class="line">    age: 25,</span><br><span class="line">    gender: &apos;male&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h4 id="可选属性"><a href="#可选属性" class="headerlink" title="可选属性"></a>可选属性</h4><p>在实际的开发中，接口里的属性不全是需要的，就可以使用可选属性：</p>
+<p>带有可选属性的接口与普通的接口定义差不多，只是在可选属性名字定义的后面加一个?符号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//这里name和age均是可选属性，在传对象的时候name和age可有可无</span><br><span class="line">interface Person &#123;</span><br><span class="line">    name?: string;</span><br><span class="line">    age?: number;</span><br><span class="line">&#125;</span><br><span class="line">function getInfo(p:person)&#123;</span><br><span class="line">    console.log(p.name);</span><br><span class="line">    console.log(p.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let Tom =&#123;name:&apos;tom&apos;&#125;</span><br><span class="line">let Tom =&#123;age:20&#125;</span><br><span class="line">getInfo(Tom);</span><br></pre></td></tr></table></figure>
+<h4 id="任意属性"><a href="#任意属性" class="headerlink" title="任意属性"></a>任意属性</h4><p>如果我们希望一个借口有任意的属性，可使用 [propName: string]: any来实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface Person &#123;</span><br><span class="line">    name: string;</span><br><span class="line">    age?: number;</span><br><span class="line">    [propName: string]: any;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let Tom: Person = &#123;</span><br><span class="line">    name: &apos;Tom&apos;,</span><br><span class="line">    gender: &apos;male&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>一旦定义了任意属性，则确定和可选属性必须是他的子属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let tom: Person = &#123;</span><br><span class="line">    name: &apos;Tom&apos;,</span><br><span class="line">    age: 25,</span><br><span class="line">    gender: &apos;male&apos;</span><br><span class="line">&#125;;</span><br><span class="line">//error TS2411: Property &apos;age&apos; of type &apos;number&apos; is not assignable to string index type &apos;string&apos;.</span><br></pre></td></tr></table></figure></p>
+<p>这里的任意属性是string，而age是number，number不是string的子属性，所以报错</p>
+<h4 id="只读属性"><a href="#只读属性" class="headerlink" title="只读属性"></a>只读属性</h4><p>如果我们希望对象的属性只能在对象创建时候修改其值，在属性名的前面用readonly来指定只读属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">interface Person &#123;</span><br><span class="line">    readonly id: number;</span><br><span class="line">    name: string;</span><br><span class="line">    age?: number;</span><br><span class="line">    [propName: string]: any;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let tom: Person = &#123;</span><br><span class="line">    id: 89757,</span><br><span class="line">    name: &apos;Tom&apos;,</span><br><span class="line">    gender: &apos;male&apos;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">tom.id = 9527;</span><br><span class="line">//error TS2540: Cannot assign to &apos;id&apos; because it is a constant or a read-only property.</span><br></pre></td></tr></table></figure></p>
+<h4 id="定义只读数组"><a href="#定义只读数组" class="headerlink" title="定义只读数组"></a>定义只读数组</h4><p>TypeScript具有ReadonlyArray<t>类型，它与Array<t>相似，只是把所有可变方法去掉了，因此可以确保数组创建后再也不能被修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let a: ReadonlyArray&lt;number&gt; =[1,2,3,4];</span><br><span class="line">a[0] =2;//error</span><br><span class="line">a.length = 9;//error</span><br></pre></td></tr></table></figure></t></t></p>
+<h4 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h4><p>为了使用接口表示函数类型，我们需要给接口定义一个调用签名。 它就像是一个只有参数列表和返回值类型的函数定义。参数列表里的每个参数都需要名字和类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface getStr&#123;</span><br><span class="line">/* 函数传入两个number类型的参数，返回一个string*/</span><br><span class="line">    (x:number,y:number):string;</span><br><span class="line">&#125;</span><br><span class="line">let myStr: getStr;</span><br><span class="line">myStr = function(grade:number,class:nember)&#123;</span><br><span class="line">    return `$&#123;grade&#125;年级$&#123;class&#125;班`;</span><br><span class="line">&#125;</span><br><span class="line">console.log(myStr(2,3)); //2年级3班</span><br></pre></td></tr></table></figure></p>
+<h4 id="可索引类型"><a href="#可索引类型" class="headerlink" title="可索引类型"></a>可索引类型</h4><p>与使用接口描述函数类型差不多，我们也可以描述那些能够“通过索引得到”的类型，比如a[10]或ageMap[“daniel”]。 可索引类型具有一个 索引签名，它描述了对象索引的类型，还有相应的索引返回值类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface StringArray &#123;</span><br><span class="line">  [index: number]: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let myArray: StringArray;</span><br><span class="line">myArray = [&quot;Bob&quot;, &quot;Fred&quot;];</span><br><span class="line"></span><br><span class="line">let myStr: string = myArray[0];//打印Bob</span><br></pre></td></tr></table></figure></p>
+<p>定义了StringArray接口，它具有索引签名。 这个索引签名表示了当用 number去索引StringArray时会得到string类型的返回值</p>
+<p>TypeScript支持两种索引签名：字符串和数字。 可以同时使用两种类型的索引，但是数字索引的返回值必须是字符串索引返回值类型的子类型。 这是因为当使用 number来索引时，JavaScript会将它转换成string然后再去索引对象。 也就是说用 100（一个number）去索引等同于使用”100”（一个string）去索引，因此两者需要保持一致。</p>
+<h4 id="类类型"><a href="#类类型" class="headerlink" title="类类型"></a>类类型</h4><p>一个类去实现接口，而不是直接把接口拿来用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface Clock&#123;</span><br><span class="line">//定义一个由属性和方法的接口</span><br><span class="line">    currentTime:Date;</span><br><span class="line">    setTime(d:Date);</span><br><span class="line">&#125;</span><br><span class="line">//Time类实现了Clock接口</span><br><span class="line">class Time implements Clock&#123;</span><br><span class="line">    currentTime:Date;</span><br><span class="line">    setTime(d:Date)&#123;</span><br><span class="line">        this.currentTime = d</span><br><span class="line">    &#125;</span><br><span class="line">    constructor(h: number, m: number) &#123; &#125;//类的静态部分，不会检查</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="继承接口"><a href="#继承接口" class="headerlink" title="继承接口"></a>继承接口</h4><p>和类一样，接口也可以相互继承。 这让我们能够从一个接口里复制成员到另一个接口里，可以更灵活地将接口分割到可重用的模块里。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//接口可以继承接口  并且可以多继承</span><br><span class="line">interface shape&#123;</span><br><span class="line">    color:string;</span><br><span class="line">&#125;</span><br><span class="line">interface pen extends shape&#123;</span><br><span class="line">    width:number;</span><br><span class="line">&#125;//创建一个对象并指定泛型</span><br><span class="line">circle.color=&quot;red&quot;;//这里可以获取color属性</span><br><span class="line">circle.width=2;//有width属性</span><br></pre></td></tr></table></figure></p>
+<p>一个接口继承多个接口，创建多个接口的合成接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">interface Shape &#123;</span><br><span class="line">    color: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface PenStroke &#123;</span><br><span class="line">    penWidth: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface pen extends Shape, PenStroke &#123;</span><br><span class="line">    sideLength: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let square = &lt;pen&gt;&#123;&#125;; //创建一个对象并指定泛型</span><br><span class="line">square.color = &quot;blue&quot;;</span><br><span class="line">square.sideLength = 10;</span><br></pre></td></tr></table></figure></p>
+<h4 id="混合类型"><a href="#混合类型" class="headerlink" title="混合类型"></a>混合类型</h4><p>所谓的混合类型就是在一个接口中定义多种类型，比如属性，函数，数组等：</p>
+<pre><code>interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void; //没有返回值的函数
+}
 
+function getCounter(): Counter {
+    let counter = &lt;Counter&gt;function (start: number) { };
+    counter.interval = 123;
+    counter.reset = function () { };
+    return counter;
+}
+
+let c = getCounter();
+c(10);
+c.reset();
+c.interval = 5.0;
+</code></pre>
       
     </div>
     
@@ -461,7 +476,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/图像格式/" rel="tag"># 图像格式</a>
+            <a href="/tags/Interfaces/" rel="tag"># Interfaces</a>
           
         </div>
       
@@ -474,8 +489,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/04/axios总结/" rel="next" title="axios总结">
-                <i class="fa fa-chevron-left"></i> axios总结
+              <a href="/2019/01/19/Vue源码解读之依赖收集/" rel="next" title="Vue源码解读之依赖收集">
+                <i class="fa fa-chevron-left"></i> Vue源码解读之依赖收集
               </a>
             
           </div>
@@ -483,10 +498,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/05/Vue源码解读之基础前言/" rel="prev" title="Vue源码解读之基础前言">
-                Vue源码解读之基础前言 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -648,7 +659,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#jpg格式"><span class="nav-number">1.</span> <span class="nav-text">jpg格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gif格式"><span class="nav-number">2.</span> <span class="nav-text">gif格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#png格式"><span class="nav-number">3.</span> <span class="nav-text">png格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#svg格式"><span class="nav-number">4.</span> <span class="nav-text">svg格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bmp格式"><span class="nav-number">5.</span> <span class="nav-text">bmp格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebP格式"><span class="nav-number">6.</span> <span class="nav-text">WebP格式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#TypeScript中的接口"><span class="nav-number">1.</span> <span class="nav-text">TypeScript中的接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可选属性"><span class="nav-number">2.</span> <span class="nav-text">可选属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#任意属性"><span class="nav-number">3.</span> <span class="nav-text">任意属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#只读属性"><span class="nav-number">4.</span> <span class="nav-text">只读属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义只读数组"><span class="nav-number">5.</span> <span class="nav-text">定义只读数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数类型"><span class="nav-number">6.</span> <span class="nav-text">函数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可索引类型"><span class="nav-number">7.</span> <span class="nav-text">可索引类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类类型"><span class="nav-number">8.</span> <span class="nav-text">类类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承接口"><span class="nav-number">9.</span> <span class="nav-text">继承接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#混合类型"><span class="nav-number">10.</span> <span class="nav-text">混合类型</span></a></li></ol></div>
             
 
           </div>
