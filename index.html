@@ -294,6 +294,243 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/25/重学前端之HTML语义/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/25/重学前端之HTML语义/" itemprop="url">重学前端之HTML语义</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T10:55:30+08:00">
+                2019-01-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/重学前端/" itemprop="url" rel="index">
+                    <span itemprop="name">重学前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>HTML的语义类标签在我们的工作中经常遇见的，语义是我们说话表达的意思，多数的语义实际是从文字继承而来的。语义类的标签是纯文字的补充。</p>
+<h4 id="为什么要用语义标签？"><a href="#为什么要用语义标签？" class="headerlink" title="为什么要用语义标签？"></a>为什么要用语义标签？</h4><p>正确使用语义标签的好处在于：</p>
+<ul>
+<li><p>语义类标签对开发者更为友好：增强可读性，清晰的网页结构，方便团队的开发和维护。</p>
+</li>
+<li><p>有利于SEO搜索引擎检索。</p>
+</li>
+</ul>
+<p>并不是说不管什么场景都尽量使用语义类标签，不恰当的使用反而会造成冗余，如ul无序列表，很多时候我们都给并列关系的元素套上ul:</p>
+<p>I have lived in the following countries:</p>
+<ul>
+<li>China</li>
+<li>Norway</li>
+<li>UT</li>
+</ul>
+<p>由此可见，ul出现在行文中间，它的上文多数在于提示列举的某些项，但如果所有并列关系都用ul，会造成冗余标签。</p>
+<h4 id="重要的几个使用场景"><a href="#重要的几个使用场景" class="headerlink" title="重要的几个使用场景"></a>重要的几个使用场景</h4><h5 id="作为自然语言的延伸"><a href="#作为自然语言的延伸" class="headerlink" title="作为自然语言的延伸"></a>作为自然语言的延伸</h5><p>作为自然语言和纯文本的补充，用来表达一定的结构。<br>如在HTML5中提出的特定文档级别的语义：</p>
+<h6 id="ruby语义化"><a href="#ruby语义化" class="headerlink" title="ruby语义化"></a>ruby语义化</h6><p>ruby是一种排版注释系统，位于横排基础文本上方的简短文字，如下图：<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/ruby.jpg" alt="在这里插入图片描述"></p>
+<p>ruby设计的元素包括ruby、rt、rp,使用ruby指定一个具体的表达式，rt提供说明，rt部分将显示子表达式的上方：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ruby&gt;</span><br><span class="line">    友&lt;rt&gt;bi&lt;/rt&gt;</span><br><span class="line">    善&lt;rt&gt;shi&lt;/rt&gt;</span><br><span class="line">    的眼神</span><br><span class="line">&lt;ruby&gt;</span><br></pre></td></tr></table></figure></p>
+<p>但是在不支持ruby的浏览器中需要使用rp对这两个区块进行视觉上的隔离。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> &lt;ruby&gt;</span><br><span class="line">    友</span><br><span class="line">    &lt;rp&gt;</span><br><span class="line">        &lt;rt&gt;bi&lt;/rt&gt;</span><br><span class="line">    &lt;/rp&gt;</span><br><span class="line">    善</span><br><span class="line">    &lt;rp&gt;</span><br><span class="line">        &lt;rt&gt;shi&lt;/rt&gt;</span><br><span class="line">    &lt;/rp&gt;</span><br><span class="line">    的眼神</span><br><span class="line">&lt;/ruby&gt;</span><br></pre></td></tr></table></figure></p>
+<h6 id="略微改变的元素"><a href="#略微改变的元素" class="headerlink" title="略微改变的元素"></a>略微改变的元素</h6><p>比如使用em和strong来强调一段重要的文本，cite用来为对参考文献的引用进行定义，比如书籍或杂志的标题。small不仅仅指的是小字体，它还同样为法律声明增添不具有重要性的旁注或小字。hr现在表达的是主体性的间断，不再仅仅是分割版面的一条水平线。</p>
+<h6 id="mark高亮标记"><a href="#mark高亮标记" class="headerlink" title="mark高亮标记"></a>mark高亮标记</h6><p>可以使用mark元素来标记出网页里被搜索的关键词或是用于高亮显示一段解释性的代码。</p>
+<h5 id="作为标题摘要"><a href="#作为标题摘要" class="headerlink" title="作为标题摘要"></a>作为标题摘要</h5><p>作为文章的结构的提现，语义化的HTML还能支持自动生成目录结构；<br>如h1-h6是html中基础的标题，表示了文章不同层级的标题。有时候，会有副标题，为了避免副标题产生额外的层级，使用hgroup标签：</p>
+<h5 id="作为整体结构"><a href="#作为整体结构" class="headerlink" title="作为整体结构"></a>作为整体结构</h5><p>应用语义结构的页面，可以明确的提示出页面信息的主次关系，能让浏览器更好的支持阅读视图功能：<br>如一个典型的body结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            ......</span><br><span class="line">        &lt;/nav&gt;</span><br><span class="line">    &lt;/header&gt;</span><br><span class="line">    &lt;aside&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            .......</span><br><span class="line">        &lt;/nav&gt;</span><br><span class="line">    &lt;/aside&gt;</span><br><span class="line">    &lt;section&gt;   ....&lt;/section&gt;</span><br><span class="line">    &lt;footer&gt;</span><br><span class="line">        &lt;address&gt; .....&lt;/address&gt;</span><br><span class="line">    &lt;/footer&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>header，出现在头部，表示导航或者介绍性的信息。</li>
+<li>footer,出现在尾部，包含作者信息、相关的链接。</li>
+<li>nav，表示页面的导航，可以通过导航连接到网站的其他页面，或者当前页面的其它部分.</li>
+</ul>
+<p><code>&lt;nav&gt;</code>不但可以作为页面独立的导航区域存在，我们还可以在<code>&lt;header&gt;</code>标签中使用。此外，<code>&lt;nav&gt;</code>标签还可以显示在侧边栏中。由此可见，一个页面之中可以有多个<code>&lt;nav&gt;</code>标签。</p>
+<p>根据HTML5标准，<code>&lt;nav&gt;</code>标签只用于页面的主要导航部分。因为搜索引擎或者屏幕阅读器会根据<code>&lt;nav&gt;</code>标签来确定网站的主体内容，所以并不是任意一组超链接都适合放置在<code>&lt;nav&gt;</code>标签中,我们只要将主要的，基本的链接组放进<code>&lt;nav&gt;</code>即可,对于有辅助性的页脚链接则不推荐使用<code>&lt;nav&gt;</code>标签。</p>
+<ul>
+<li>aside,所包含的内容不是页面的主要内容、具有独立性，是对页面的补充。<code>&lt;aside&gt;</code>标签一般使用在页面、文章的侧边栏、广告、友情链接等区域。</li>
+<li>article,表示包含于一个文档、页面、应用程序或网站中的一段独立的内容，可以被独立的发布或者重新使用文章标记标签。</li>
+</ul>
+<p><code>&lt;article&gt;</code>标签应该使用在相对比较独立、完整的的内容区块，所以我们可以在一篇博客、一个论坛帖子、一篇新闻报道或者一个用户评论中使用它。通常情况下，一个<code>&lt;article&gt;</code>元素包括标题、正文和脚注。和<code>&lt;nav&gt;</code>标签一样，该标签同样不能用在<code>&lt;address&gt;</code>标签中</p>
+<h4 id="实际分析布局"><a href="#实际分析布局" class="headerlink" title="实际分析布局"></a>实际分析布局</h4><p>通过一个很论文很像的例子来深入理解语义类标签，如下页面：<code>https://en.wikipedia.org/wiki/World_Wide_Web</code></p>
+<p>重要的布局我已经用红框框出来了:<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/HTML.png" alt="在这里插入图片描述"></p>
+<p>简要分析一下：</p>
+<ul>
+<li>aside：左侧的侧边栏属于aside，一般是具有导航性质的内容。</li>
+<li>article:文章的主体部分，属于一段独立的内容</li>
+<li><p>hgroup，h1~h6:hgroup属于标题组，这里的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;hgroup&gt;</span><br><span class="line">    &lt;h1&gt;WWorld Wide Web&gt;&lt;/h1&gt;</span><br><span class="line">    &lt;h2&gt;From Wikipedia, the free encyclopedia&gt;&lt;/h2&gt;</span><br><span class="line">&lt;/hgroup&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>abbr：缩写，这里的WWW是WWorld Wide Web的缩写，这里的实现：<code>&lt;abbr title=&quot;WWorld Wide Web&quot;&gt;www&lt;/abbr&gt;</code></p>
+</li>
+<li>hr:水平分割线，在标准的定义中，是故事走向的转变或话题的转变，应该使用border实现</li>
+<li>strong：加粗blockquote</li>
+<li>blockquote，q，cite：表示引述，blockquote表示段落级的引述内容，q表示行内的引述内容，cite表示引述的作品名</li>
+<li><p>figure，figcaption:用于表示与主文章相关的图像,这里的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;figure&gt;</span><br><span class="line">    &lt;img src=&quot;&quot; /&gt;</span><br><span class="line">    &lt;figcaption&gt;The.......&lt;/figcaption&gt;</span><br><span class="line">&lt;/figure&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dfn:包裹白定义的名词，这里的实现：<code>The &lt;dfn&gt;Internet&lt;/dfn&gt; is a ....</code></p>
+</li>
+<li><p>nav，ol,ul:目录的链接，使用nav标签，ol和ul是区分有无顺序</p>
+</li>
+<li><p>pre,samp,code：pre预先排版内容，samp用于计算机的程序输出，<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/HTML2.png" alt="在这里插入图片描述"></p>
+</li>
+</ul>
+<p>这里嵌入的代码和预先编号的段落，是一段灰色背景的文字，这里的实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;pre&gt;&lt;samp&gt;</span><br><span class="line">GET /home.hrml HTTP/1.1</span><br><span class="line">Host:www.example.org</span><br><span class="line">&lt;/samp&gt;&lt;/pre&gt;</span><br></pre></td></tr></table></figure></p>
+<p>附上其他一些标签及说明：</p>
+<p><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/HTML3.png" alt="在这里插入图片描述"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/25/重学前端之知识架构/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2920,202 +3157,6 @@ export default Vue
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/05/图像格式的区别以及应用场景/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="banggan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="banggan's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/05/图像格式的区别以及应用场景/" itemprop="url">图像格式的区别以及应用场景</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T15:00:24+08:00">
-                2019-01-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/图像格式/" itemprop="url" rel="index">
-                    <span itemprop="name">图像格式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-          
-         
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在实际的开发中，遇到了这个问题，有点理不清，特来整理一次：</p>
-<h4 id="jpg格式"><a href="#jpg格式" class="headerlink" title="jpg格式"></a>jpg格式</h4><p>全名应该是JPEG。JPEG 图片以 24 位颜色存储单个光栅图像。JPEG 是与平台无关的格式，支持最高级别的压缩，不过，这种压缩是有损耗的。渐近式JPEG文件支持交错。可以提高或降低 JPEG文件压缩的级别。但是，文件大小是以图像质量为代价的。压缩比率可以高达 100:1。（JPEG 格式可在 10:1 到 20:1 的比率下轻松地压缩文件，而图片质量不会下降。）JPEG压缩可以很好地处理写实摄影作品。但是，对于颜色较少、对比级别强烈、实心边框或纯色区域大的较简单的作品，JPEG 压缩无法提供理想的结果。有时，压缩比率会低到5:1，严重损失了图片完整性。这一损失产生的原因是，JPEG 压缩方案可以很好地压缩类似的色调，但是 JPEG 压缩方案不能很好地处理亮度的强烈差异或处理纯色区域。<br>Jpeg格式特点：</p>
-<ul>
-<li>透明性：它不支持透明性</li>
-<li>动画：它不支持动画</li>
-<li>损耗性：除了一些比如说（仅仅是90、180、270度旋转），裁切，从标准类型到先进类型，编辑图片的原数据之外，所有其它操作对jpeg图像的处理都会使得它的质量损失，所以我们在编辑过程一般用png作为过渡格式。</li>
-<li>隔行渐进显示，它支持隔行渐进显示（但是ie浏览器并不支持这个属性，但是ie会在整个图像信息完全达到的时候显示）。<br>由上可以看出Jpeg是最适web上面的摄影图片和数字照相机中。根据惊叹我们在页面中使用的商品图片、采用人像或者好、实物素材制作的广告更适合采用JPG格式保存。<h4 id="gif格式"><a href="#gif格式" class="headerlink" title="gif格式"></a>gif格式</h4>GIF(GraphicsInterchange Format)的原义是“图像互换格式”，是CompuServe公司在 1987年开发的图像文件格式。GIF文件的数据，是一种基于LZW算法的连续色调的无损压缩格式。其压缩率一般在50％左右，它不属于任何应用程序。目前几乎所有相关软件都支持它，公共领域有大量的软件在使用GIF图像文件。GIF图像文件的数据是经过压缩的，而且是采用了可变长度等压缩算法。所以GIF的图像深度从lbit到8bit，也即GIF最多支持256种色彩的图像。GIF格式的另一个特点是其在一个GIF文件中可以存多幅彩色图像，如果把存于一个文件中的多幅图像数据逐幅读出并显示到屏幕上，就可构成一种最简单的动画。<br>gif 格式特点：</li>
-<li>透明性：gif是一种布尔透明类型，即它可以使全透明，也可是全不透明，但是它并没有半透明的（alpha透明）。</li>
-<li>动画：gif格式支持动画。</li>
-<li>无损耗性：gif是一种无损耗的图像格式，这也意味着你可以对gif图片做任何操作也不会使得图像质量产生损耗。</li>
-<li>水平扫描：gif是使用一种叫做LZW的算法进行压缩的，当压缩gif的过程中，像素是由上到下水平压缩的，这也意味着同等条件下，横向的gif图片比竖向的gif更加小。例如500<em>10的图片比10</em>500的图片更加小。</li>
-<li>间隔渐进显示：gif支持可选择性的间隔渐进显示。<br>由以上特点看出只有256种颜色的gif图片不适合照片，但它适合对颜色要求不高的图形（比如说图标、图表等）。<h4 id="png格式"><a href="#png格式" class="headerlink" title="png格式"></a>png格式</h4>PNG是20世纪90年代中期开始开发的图像文件存储格式，其目的是企图替代GIF和TIFF文件格式，同时增加一些GIF文件格式所不具备的特性。流式网络图形格式(Portable Network Graphic Format，PNG)名称来源于非官方的“PNG’s NotGIF”，是一种位图文件(bitmapfile)存储格式，读成“ping”。PNG用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的α通道数据。PNG使用从LZ77派生的无损数据压缩算法<br>Png格式特点：</li>
-<li>类型：Png这种图片格式包括了许多类，但是在实践的大致中可以分为256色的png和全色的png，你完全可以用256色的png代替gif，用全色的png代替jpeg。</li>
-<li>透明性：png是完全支持alpha透明的（透明、半透明、不透明），尽管有两个怪异的现象在ie6（下面详细讨论）</li>
-<li>动画：它不支持动画<br>Png8的在ie中的怪异表现：半透明的png8在ie6以下的浏览器显示为全透明。<br>alpha透明的全色PNG（png32）在ie6中会出现背景颜色（通常是灰色）<br>上面可以总结：全透明的png8可以在任一浏览器正常显示（就像gif一样）。半透明的png8在除了ie6及其一下的浏览器下错误的显示成全透明，其它的浏览器都能正常显示半透明。图像上颜色较少、并且主要以纯色或者平滑的渐变色填充以及具备较大的亮度差异的图像适合以png8格式存储。<h4 id="svg格式"><a href="#svg格式" class="headerlink" title="svg格式"></a>svg格式</h4>可缩放矢量图形是基于可扩展标记语言（标准通用标记语言的子集），用于描述二维矢量图形的一种图形格式。它由万维网联盟制定，是一个开放标准。<br>SVG格式特点：</li>
-<li>SVG 指可伸缩矢量图形 (Scalable Vector Graphics)</li>
-<li>SVG 用来定义用于网络的基于矢量的图形</li>
-<li>SVG 使用 XML 格式定义图形</li>
-<li>SVG 图像在放大或改变尺寸的情况下其图形质量不会有所损失</li>
-<li>SVG 是万维网联盟的标准</li>
-<li>SVG 与诸如 DOM和 XSL 之类的W3C标准是一个整体<br>SVG跟上面这些图片格式最大的不同，是SVG是矢量图。这意味着SVG图片由直线和曲线以及绘制它们的方法组成。当你放大一个SVG图片的时候，你看到的还是线和曲线，而不会出现像素点。这意味着SVG图片在放大时，不会失真，所以它非常适合用来绘制企业Logo、Icon等。 <h4 id="bmp格式"><a href="#bmp格式" class="headerlink" title="bmp格式"></a>bmp格式</h4>BMP是一种与硬件设备无关的图像文件格式，使用非常广。它采用位映射存储格式，除了图像深度可选以外，不采用其他任何压缩，因此，BMP文件所占用的空间很大。BMP文件的图像深度可选lbit、4bit、8bit及24bit。BMP文件存储数据时，图像的扫描方式是按从左到右、从下到上的顺序。<br>这是一种比较老的图片格式。BMP是无损的，但同时这种图片格式几乎没有对数据进行压缩，所以BMP格式的图片通常具有较大的文件大小。虽然同时支持索引色和直接色是一个优点，但是太大的文件格式格式导致它几乎没有用武之地，现在除了在Windows操作系统中还比较常见之外，我们几乎看不到它。<h4 id="WebP格式"><a href="#WebP格式" class="headerlink" title="WebP格式"></a>WebP格式</h4>WebP是谷歌开发的一种新图片格式，WebP是同时支持有损和无损压缩的、使用直接色的、点阵图。<br>想象Web上的图片之多，百分之几十的提升，是非常非常大的优化。只可惜，目前只有Chrome浏览器和Opera浏览器支持WebP格式，所以WebP的应用并不广泛。为了使用更先进的技术，比如WebP图片格式，来压缩互联网上传输的数据流量，谷歌甚至提供了Chrome Data Compression Proxy，设置了Chrome Data Compression Proxy作为Web代理之后，你访问的所有网站中的图片，在经过Proxy的时候，都会被转换成WebP格式，以降低图片文件的大小。从名字就可以看出来它是为Web而生的，什么叫为Web而生呢？就是说相同质量的图片，WebP具有更小的文件体积。现在网站上充满了大量的图片，如果能够降低每一个图片的文件大小，那么将大大减少浏览器和服务器之间的数据传输量，进而降低访问延迟，提升访问体验。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3168,7 +3209,7 @@ export default Vue
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
