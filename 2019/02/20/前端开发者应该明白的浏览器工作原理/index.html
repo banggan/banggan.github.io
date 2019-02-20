@@ -89,12 +89,12 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/webkit.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/http.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/reqhttp.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/req-http.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/res-http.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/html-http.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/dom-http.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/render.png">
-<meta property="og:updated_time" content="2019-02-20T12:37:18.099Z">
+<meta property="og:updated_time" content="2019-02-20T12:39:03.983Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端开发者应该明白的浏览器工作原理">
 <meta name="twitter:description" content="前言作为前端开发，我们平常跟浏览器打交道的时间也是最多的。在前端面试中，一个较为经典的问题：在浏览器地址中输入url地址，敲回车，发生了什么？浏览器究竟做了什么？相信很多人脑海里都会出现个大概的轮廓，可是一到细化具体的过程就答不上来。那么，作为前端开发者，应该从哪些方面延伸来回答这个问题呢？ 浏览器工作流程对于浏览器来说，当在地址栏输入url地址，浏览器所做的事情就是把一个url变成一个在屏幕上显">
@@ -466,7 +466,7 @@
 <li>如果本地没有，就向dns域名服务器查询（当然，中间可能还会经过路由，也有缓存等），查询到对应的IP。</li>
 </ul>
 <h5 id="tcp-ip请求"><a href="#tcp-ip请求" class="headerlink" title="tcp/ip请求"></a>tcp/ip请求</h5><blockquote>
-<p>这里的tcp/ip请求需要了解3次握手规则建立连接以及断开连接时的四次挥手。<br>这里就不做具体的介绍了，可以参考之前的博客：<a href="https://blog.csdn.net/bangbanggangan/article/details/81031639" target="_blank" rel="noopener">https://blog.csdn.net/bangbanggangan/article/details/81031639</a></p>
+<p>这里的tcp/ip请求需要了解3次握手规则建立连接以及断开连接时的四次挥手,可以参考之前的博客：<a href="https://blog.csdn.net/bangbanggangan/article/details/81031639" target="_blank" rel="noopener">https://blog.csdn.net/bangbanggangan/article/details/81031639</a></p>
 </blockquote>
 <h5 id="五层因特网协议"><a href="#五层因特网协议" class="headerlink" title="五层因特网协议"></a>五层因特网协议</h5><p>其实这个概念挺难记全的，记不全没关系，但是要有一个整体概念。<br>其实就是一个概念：从客户端发出http请求到服务器接收，中间会经过一系列的流程。<br>简括就是：从应用层的发送http请求，到传输层通过三次握手建立tcp/ip连接，再到网络层的ip寻址，再到数据链路层的封装成帧，最后到物理层的利用物理介质传输。<br>当然，服务端的接收就是反过来的步骤。<br>五层因特尔协议栈其实就是： 1.应用层(dns,http)  2.传输层(tcp,udp) 建立tcp连接（三次握手） 3.网络层(IP,ARP) IP寻址 4.数据链路层(PPP) 5.物理层<br>OSI七层框架： 物理层、 数据链路层、 网络层、 传输层、 会话层、 表示层、 应用层。<br>表示层：主要处理两个通信系统中交换信息的表示方式，包括数据格式交换，数据加密与解密，数据压缩与终端类型转换等<br>会话层：它具体管理不同用户和进程之间的对话，如控制登陆和注销过程</p>
 <h4 id="网络通讯HTTP协议"><a href="#网络通讯HTTP协议" class="headerlink" title="网络通讯HTTP协议"></a>网络通讯HTTP协议</h4><p>HTTP协议是基于TCP协议出现的，在TCP的基础上规定了Request-Response的模型，决定了通讯必须由浏览器端发起的，首先来了解下HTTP协议的格式：</p>
@@ -491,7 +491,7 @@
 <li>5xx：服务端错误，如500服务端错误，503服务端暂时错误等</li>
 </ul>
 <p>在前端开发中，最熟悉的系列无非是大家都喜欢的200请求成功的标志，在面试中，问得较多的是304缓存问题和301、302重定向的问题。</p>
-<h5 id="HTTP-HEAD（HTTP头）"><a href="#HTTP-HEAD（HTTP头）" class="headerlink" title="HTTP HEAD（HTTP头）"></a>HTTP HEAD（HTTP头）</h5><p>HTTP头可以看做是一个键值对，在HTTP标准中，Request Header如下图：<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/reqhttp.png" alt="在这里插入图片描述"><br>Response Header如下图：<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/res-http.png" alt="在这里插入图片描述"><br>在实际的开发中，完整的列表可以参考rfc2616标准。</p>
+<h5 id="HTTP-HEAD（HTTP头）"><a href="#HTTP-HEAD（HTTP头）" class="headerlink" title="HTTP HEAD（HTTP头）"></a>HTTP HEAD（HTTP头）</h5><p>HTTP头可以看做是一个键值对，在HTTP标准中，Request Header如下图：<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/req-http.png" alt="在这里插入图片描述"><br>Response Header如下图：<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/res-http.png" alt="在这里插入图片描述"><br>在实际的开发中，完整的列表可以参考rfc2616标准。</p>
 <h5 id="HTTP-Request-Body"><a href="#HTTP-Request-Body" class="headerlink" title="HTTP Request Body"></a>HTTP Request Body</h5><p>HTTP请求的body主要用于表单的提交，常见的body格式：</p>
 <ul>
 <li>application/json</li>
