@@ -453,26 +453,30 @@
 <h5 id="DNS查询"><a href="#DNS查询" class="headerlink" title="DNS查询"></a>DNS查询</h5><p>如果输入的是域名，需要进行dns解析成IP，大致流程：</p>
 <ul>
 <li>如果浏览器有缓存，直接使用浏览器缓存，否则使用本机缓存，再没有的话就是用host</li>
-<li>如果本地没有，就向dns域名服务器查询（当然，中间可能还会经过路由，也有缓存等），查询到对应的IP<h5 id="tcp-ip请求"><a href="#tcp-ip请求" class="headerlink" title="tcp/ip请求"></a>tcp/ip请求</h5>http的本质就是 tcp/ip请求。<br>需要了解3次握手规则建立连接以及断开连接时的四次挥手。<br>这里就不做具体的介绍了，可以参考之前的博客：<a href="https://blog.csdn.net/bangbanggangan/article/details/81031639" target="_blank" rel="noopener">https://blog.csdn.net/bangbanggangan/article/details/81031639</a><h5 id="五层因特网协议栈"><a href="#五层因特网协议栈" class="headerlink" title="五层因特网协议栈"></a>五层因特网协议栈</h5>其实这个概念挺难记全的，记不全没关系，但是要有一个整体概念。<br>其实就是一个概念：从客户端发出http请求到服务器接收，中间会经过一系列的流程。<br>简括就是：从应用层的发送http请求，到传输层通过三次握手建立tcp/ip连接，再到网络层的ip寻址，再到数据链路层的封装成帧，最后到物理层的利用物理介质传输。<br>当然，服务端的接收就是反过来的步骤。<br>五层因特尔协议栈其实就是： 1.应用层(dns,http)  2.传输层(tcp,udp) 建立tcp连接（三次握手） 3.网络层(IP,ARP) IP寻址 4.数据链路层(PPP) 5.物理层<br>OSI七层框架： 物理层、 数据链路层、 网络层、 传输层、 会话层、 表示层、 应用层。</li>
+<li>如果本地没有，就向dns域名服务器查询（当然，中间可能还会经过路由，也有缓存等），查询到对应的IP</li>
+</ul>
+<h5 id="tcp-ip请求"><a href="#tcp-ip请求" class="headerlink" title="tcp/ip请求"></a>tcp/ip请求</h5><p>http的本质就是 tcp/ip请求。<br>需要了解3次握手规则建立连接以及断开连接时的四次挥手。<br>这里就不做具体的介绍了，可以参考之前的博客：<a href="https://blog.csdn.net/bangbanggangan/article/details/81031639" target="_blank" rel="noopener">https://blog.csdn.net/bangbanggangan/article/details/81031639</a></p>
+<h5 id="五层因特网协议栈"><a href="#五层因特网协议栈" class="headerlink" title="五层因特网协议栈"></a>五层因特网协议栈</h5><p>其实这个概念挺难记全的，记不全没关系，但是要有一个整体概念。<br>其实就是一个概念：从客户端发出http请求到服务器接收，中间会经过一系列的流程。<br>简括就是：从应用层的发送http请求，到传输层通过三次握手建立tcp/ip连接，再到网络层的ip寻址，再到数据链路层的封装成帧，最后到物理层的利用物理介质传输。<br>当然，服务端的接收就是反过来的步骤。<br>五层因特尔协议栈其实就是： 1.应用层(dns,http)  2.传输层(tcp,udp) 建立tcp连接（三次握手） 3.网络层(IP,ARP) IP寻址 4.数据链路层(PPP) 5.物理层<br>OSI七层框架： 物理层、 数据链路层、 网络层、 传输层、 会话层、 表示层、 应用层。</p>
+<ul>
 <li>表示层：主要处理两个通信系统中交换信息的表示方式，包括数据格式交换，数据加密与解密，数据压缩与终端类型转换等</li>
-<li><p>会话层：它具体管理不同用户和进程之间的对话，如控制登陆和注销过程</p>
+<li>会话层：它具体管理不同用户和进程之间的对话，如控制登陆和注销过程</li>
+</ul>
 <h4 id="网络通讯HTTP协议"><a href="#网络通讯HTTP协议" class="headerlink" title="网络通讯HTTP协议"></a>网络通讯HTTP协议</h4><p>HTTP协议是基于TCP协议出现的，在TCP的基础上规定了Request-Response的模型，决定了通讯必须由浏览器端发起的，首先来了解下HTTP协议的格式：</p>
 <h5 id="HTTP协议格式"><a href="#HTTP协议格式" class="headerlink" title="HTTP协议格式"></a>HTTP协议格式</h5><p>HTTP协议大致可以分成以下部分：其中path是请求路径、version是固定的字符串，依次介绍下面的每个部分：<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/http.jpg" alt="在这里插入图片描述"></p>
 <h5 id="HTTP-Method-请求方法"><a href="#HTTP-Method-请求方法" class="headerlink" title="HTTP Method 请求方法"></a>HTTP Method 请求方法</h5><p>在request line里面的方法部分，表示HTTP的操作类型，常见的几种请求方法如下：</p>
-</li>
-<li><p>GET：浏览器通过地址访问页面均属于get请求</p>
-</li>
+<ul>
+<li>GET：浏览器通过地址访问页面均属于get请求</li>
 <li>POST：常见的表单提交</li>
 <li>HEAD ：跟get类似，区别在于只返回请求头</li>
 <li>PUT：表示添加资源</li>
 <li>DELETE：表示删除资源</li>
 <li>CONNECT： 多用于HTTPS和WebSocket</li>
 <li>OPTIONS</li>
-<li><p>TRACE</p>
+<li>TRACE</li>
+</ul>
 <h5 id="HTTP-Status-code状态码"><a href="#HTTP-Status-code状态码" class="headerlink" title="HTTP Status code状态码"></a>HTTP Status code状态码</h5><p>常见的状态码有以下几种：</p>
-</li>
-<li><p>1xx：临时回应</p>
-</li>
+<ul>
+<li>1xx：临时回应</li>
 <li>2xx：请求成功，如200</li>
 <li>3xx：请求目标有变化，如301和302表示临时和永久重定向，304表示客户端没有更新内容</li>
 <li>4xx;请求错误，如403无权限，404访问的资源不存在</li>
@@ -484,8 +488,12 @@
 <ul>
 <li>application/json</li>
 <li>application/x-www-form-urlencoded:使用form标签提交的html请求，默认产生</li>
-<li>multipart/form-data:当有文件上传时，使用的格式<h5 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h5>HTTPS在HTTP的基础上增加了两个作用，一是确定请求的目标服务端身份，二是保证传输的数据不会被篡改或者窃听，该协议使用加密通道来传输HTTP内容，所以首先需要与服务端简历TLS加密通道。可以在此处查看详情：<a href="https://tools.ietf.org/html/rfc2818" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc2818</a><h5 id="HTTP2"><a href="#HTTP2" class="headerlink" title="HTTP2"></a>HTTP2</h5>HTTP2是HTTP1.1的升级版，有两大改进：一是支持服务端推送，二是支持TCP链接复用：则使用同一个TCP链接来传输多个HTTP请求。详情见:<a href="https://tools.ietf.org/html/rfc7540" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc7540</a><h4 id="构建DOM树"><a href="#构建DOM树" class="headerlink" title="构建DOM树"></a>构建DOM树</h4>当浏览器使用HTTP向服务端请求页面后，那么如何去解析请求回来的HTML代码、构建DOM树呢？<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/html-http.png" alt="在这里插入图片描述"><h5 id="字符流如何解析成词"><a href="#字符流如何解析成词" class="headerlink" title="字符流如何解析成词"></a>字符流如何解析成词</h5>首先浏览器读取获取的HTML，根据指定的文件编码方式如UTF-8转换为字符流，再将字符串转换为词Token。那什么是词？词是编译原理中的最小单元，如标签开始、属性、标签结束、注释、CDATA节点。Token会标识出当前Token的种类。举个列子：<br><code>&lt;p class=&quot;a&quot; &gt;hello&lt;/p&gt;</code></li>
+<li>multipart/form-data:当有文件上传时，使用的格式</li>
 </ul>
+<h5 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h5><p>HTTPS在HTTP的基础上增加了两个作用，一是确定请求的目标服务端身份，二是保证传输的数据不会被篡改或者窃听，该协议使用加密通道来传输HTTP内容，所以首先需要与服务端简历TLS加密通道。可以在此处查看详情：<a href="https://tools.ietf.org/html/rfc2818" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc2818</a></p>
+<h5 id="HTTP2"><a href="#HTTP2" class="headerlink" title="HTTP2"></a>HTTP2</h5><p>HTTP2是HTTP1.1的升级版，有两大改进：一是支持服务端推送，二是支持TCP链接复用：则使用同一个TCP链接来传输多个HTTP请求。详情见:<a href="https://tools.ietf.org/html/rfc7540" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc7540</a></p>
+<h4 id="构建DOM树"><a href="#构建DOM树" class="headerlink" title="构建DOM树"></a>构建DOM树</h4><p>当浏览器使用HTTP向服务端请求页面后，那么如何去解析请求回来的HTML代码、构建DOM树呢？<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/html-http.png" alt="在这里插入图片描述"></p>
+<h5 id="字符流如何解析成词"><a href="#字符流如何解析成词" class="headerlink" title="字符流如何解析成词"></a>字符流如何解析成词</h5><p>首先浏览器读取获取的HTML，根据指定的文件编码方式如UTF-8转换为字符流，再将字符串转换为词Token。那什么是词？词是编译原理中的最小单元，如标签开始、属性、标签结束、注释、CDATA节点。Token会标识出当前Token的种类。举个列子：<br><code>&lt;p class=&quot;a&quot; &gt;hello&lt;/p&gt;</code></p>
 <p>这里就可以拆分成&lt;p（p标签的开始）、class=”a”（属性）、&gt;（p标签的结束）、hello（文本）、<code>&lt;/p&gt;</code>（结束标签）</p>
 <h5 id="构建DOM树-1"><a href="#构建DOM树-1" class="headerlink" title="构建DOM树"></a>构建DOM树</h5><p>接下来就是将词变成DOM树。在构建DOM树时，是一边生成Token一边消耗Token来生成节点的。</p>
 <pre><code>&lt;html&gt;
