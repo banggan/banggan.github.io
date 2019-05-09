@@ -294,7 +294,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/04/27/webpack解读之LOADER/">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/05/09/webpack核心概念解析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="banggan">
@@ -313,7 +313,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/27/webpack解读之LOADER/" itemprop="url">webpack解读之LOADER</a></h1>
+                <a class="post-title-link" href="/2019/05/09/webpack核心概念解析/" itemprop="url">webpack核心概念解析</a></h1>
         
 
         <div class="post-meta">
@@ -325,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-27T11:01:05+08:00">
-                2019-04-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-09T15:44:53+08:00">
+                2019-05-09
               </time>
             
 
@@ -381,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  3.9k
                 </span>
               
 
@@ -397,7 +397,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  17
                 </span>
               
             </div>
@@ -504,6 +504,125 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [&#123;</span><br><span class="line">       test: /\.(csv|tsv)$/,</span><br><span class="line">       use: [</span><br><span class="line">         &apos;csv-loader&apos;</span><br><span class="line">       ]</span><br><span class="line">     &#125;,</span><br><span class="line">     &#123;</span><br><span class="line">       test: /\.xml$/,</span><br><span class="line">       use: [</span><br><span class="line">         &apos;xml-loader&apos;</span><br><span class="line">       ]</span><br><span class="line">     &#125;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>更多的有关于<a href="https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE" target="_blank" rel="noopener">加载数据的配置见文档</a></li>
+</ul>
+<h2 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h2><p>loaders可以将各个类型的静态资源打包成webpack能处理的模块，而plugins有更强大的功能。它可以从打包优化和压缩，一直到重新定义环境中的变量。</p>
+<p>plugin可以在webpack运行到某一个时刻，自动完成一些事情。</p>
+<h3 id="自动生成html文件，并引入打包生成的js文件到生成的html文件中"><a href="#自动生成html文件，并引入打包生成的js文件到生成的html文件中" class="headerlink" title="自动生成html文件，并引入打包生成的js文件到生成的html文件中"></a>自动生成html文件，并引入打包生成的js文件到生成的html文件中</h3><ul>
+<li>安装使用HtmlWebpackPlugin实现：<code>npm install html-webpack-plugin -D</code></li>
+<li>在webpack.config.js中添加loader的配置</li>
+</ul>
+<p>在src中创建一个html的模板，在HtmlWebpackPlugin的配置中引入该模板，打包后生成和模板类似的html文件并引入打包的js文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</span><br><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  entry: &apos;index.js&apos;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &apos;./dist&apos;),</span><br><span class="line">    filename: &apos;index_bundle.js&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">    plugins: [new HtmlWebpackPlugin(&#123;</span><br><span class="line">        template: &apos;src/index.html&apos; </span><br><span class="line">    &#125;)]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/plugins/html-webpack-plugin/" target="_blank" rel="noopener">HtmlWebpackPlugin的配置见文档</a></li>
+</ul>
+<h3 id="自动清除上一次打包的dist文件"><a href="#自动清除上一次打包的dist文件" class="headerlink" title="自动清除上一次打包的dist文件"></a>自动清除上一次打包的dist文件</h3><p>先删除上一次打包的dist文件，再执行打包</p>
+<ul>
+<li>安装使用CleanWebpackPlugin 实现：<code>npm install clean-webpack-plugin -D</code></li>
+<li>在webpack.config.js中添加loader的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</span><br><span class="line">const CleanWebpackPlugin = require(&apos;clean-webpack-plugin&apos;);</span><br><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  entry: &apos;index.js&apos;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &apos;./dist&apos;),</span><br><span class="line">    filename: &apos;index_bundle.js&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new HtmlWebpackPlugin(&#123;</span><br><span class="line">        template: &apos;src/index.html&apos; </span><br><span class="line">    &#125;),</span><br><span class="line">        new CleanWebpackPlugin([&apos;dist&apos;]), // 在打包之前，可以删除dist文件夹下的所有内容</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/plugins/clean-webpack-plugin/" target="_blank" rel="noopener">CleanWebpackPlugin的配置见文档</a><h2 id="Entry与Output的基础配置"><a href="#Entry与Output的基础配置" class="headerlink" title="Entry与Output的基础配置"></a>Entry与Output的基础配置</h2></li>
+<li>需求：打包多个入口文件，对应的在出口的配置中注意命名filename避免出口文件名字冲突—-使用占位符)来确保每个文件具有唯一的名称</li>
+<li>需求：打包后的文件，作为后端的接口文件，静态资源需要上传到cdn，在output中进行配置，提前加入cdn的地址。在编译时，如果不知道publicPath的地址，可以留空，在入口起点文件运行时动态设置。<code>__webpack_public_path__ = myRuntimePublicPath</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	mode: &apos;development&apos;,</span><br><span class="line">	entry: &#123;</span><br><span class="line">		main: &apos;./src/index.js&apos;,</span><br><span class="line">		sub: &apos;./src/index.js&apos;</span><br><span class="line">	&#125;,</span><br><span class="line">	plugins: [new HtmlWebpackPlugin(&#123;</span><br><span class="line">		template: &apos;src/index.html&apos;</span><br><span class="line">	&#125;), new CleanWebpackPlugin([&apos;dist&apos;])],</span><br><span class="line">	output: &#123;</span><br><span class="line">		publicPath: &apos;http://cdn.com.cn&apos;, //加入cdn地址</span><br><span class="line">		filename: &apos;[name].js&apos;,</span><br><span class="line">		path: path.resolve(__dirname, &apos;dist&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/concepts/output/" target="_blank" rel="noopener">output的配置见文档</a><h2 id="SourceMap的配置"><a href="#SourceMap的配置" class="headerlink" title="SourceMap的配置"></a>SourceMap的配置</h2></li>
+</ul>
+<p>SourceMap是一个映射关系，打包文件和源文件的映射关系，用于开发者的调试。</p>
+<p>在devtool中进行设置：<code>devtool: &#39;source-map&#39;</code>打包速度会降低，在dist里面会有map映射文件</p>
+<p>常用设置devtool说明:</p>
+<ul>
+<li>none:在开发者模式下，默认开启sourcemap,将其关闭</li>
+<li>inline前缀：不单独生成map文件，把对应的map文件以base64的形式直接打包到js文件。</li>
+<li>cheap前缀：sourcemap和打包后的js同行显示，并没有映射到列忽略源自 loader 的 source。 map，并且仅显示转译后的代码，所以打包速度相对来说较快。代码出错提示不用精确显示第几行的第几个字符出错，只显示第几行出错，会提高一些性能，</li>
+<li>moudle前缀：不仅映射业务代码，还会包括loader、第三方模块的错误。</li>
+<li>eval前缀：打包速度最快。</li>
+</ul>
+<p>development环境推荐使用： <code>devtool: &#39;cheap-module-eval-source-map&#39;</code></p>
+<p>production环境推荐使用： <code>devtool: &#39;cheap-module-source-map&#39;</code></p>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/configuration/devtool/" target="_blank" rel="noopener">devtool文档</a></li>
+</ul>
+<h2 id="使用WebpackDevServer提升开发效率"><a href="#使用WebpackDevServer提升开发效率" class="headerlink" title="使用WebpackDevServer提升开发效率"></a>使用WebpackDevServer提升开发效率</h2><p>场景：每次在src里编写完代码都需要手动重新运行 npm run bundle，如何自动解决？</p>
+<p>-安装：<code>npm install webpack-dev-server –D</code></p>
+<ul>
+<li>devServer参数说明</li>
+</ul>
+<ol>
+<li>contentBase :配置开发服务运行时的文件根目录</li>
+<li>open :自动打开浏览器</li>
+<li>host：开发服务器监听的主机地址</li>
+<li>compress :开发服务器是否启动gzip等压缩</li>
+<li>port：开发服务器监听的端口</li>
+</ol>
+<ul>
+<li>在 webpack.config.js 中，加 devServer</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line">const HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</span><br><span class="line">const CleanWebpackPlugin = require(&apos;clean-webpack-plugin&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">	mode: &apos;development&apos;,</span><br><span class="line">	devtool: &apos;cheap-module-eval-source-map&apos;,</span><br><span class="line">	devServer: &#123;</span><br><span class="line">		contentBase: &apos;./dist&apos;,</span><br><span class="line">		open: true,</span><br><span class="line">		port: 8080</span><br><span class="line">		proxy:&#123;//配置跨域，访问的域名会被代理到本地的3000端口</span><br><span class="line">      	&apos;/api&apos;: &apos;http://localhost:3000&apos;</span><br><span class="line">    	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 package.json 中配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;banggan&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;bundle&quot;: &quot;webpack&quot;,</span><br><span class="line">    &quot;watch&quot;: &quot;webpack --watch&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;webpack-dev-server&quot;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/configuration/dev-server/" target="_blank" rel="noopener">devServer文档</a></li>
+</ul>
+<h2 id="如何实现自己写一个类似webpackdevserver的工具"><a href="#如何实现自己写一个类似webpackdevserver的工具" class="headerlink" title="如何实现自己写一个类似webpackdevserver的工具"></a>如何实现自己写一个类似webpackdevserver的工具</h2><ul>
+<li>在package.json 中配置<br>创建一个新的指令，<code>npm run server</code>运行自己写的类似webpackdevserver的工具</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;banggan&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;bundle&quot;: &quot;webpack&quot;,</span><br><span class="line">    &quot;watch&quot;: &quot;webpack --watch&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;webpack-dev-server&quot;,</span><br><span class="line">	&quot;server&quot; : &quot;node server.js&quot; </span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装express:<code>npm install express webpack-dev-middleware -D</code></li>
+<li>在根目录创建一个server.js</li>
+<li>在node中直接使用webpack:<code>webpack（config)</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&apos;express&apos;); //引入express</span><br><span class="line">const webpack = require(&apos;webpack&apos;);//引入webpack</span><br><span class="line">const webpackDevMiddleware = require(&apos;webpack-dev-middleware&apos;);</span><br><span class="line">const config = require(&apos;./webpack.config.js&apos;);//引入配置文件</span><br><span class="line"></span><br><span class="line">const complier = webpack(config); //编译一次吗，打包一次代码</span><br><span class="line">const app = express();//创建express实例</span><br><span class="line"></span><br><span class="line">app.use(webpackDevMiddleware(complier, &#123;&#125;));</span><br><span class="line"></span><br><span class="line">app.listen(3000, () =&gt; &#123;//监听3000端口</span><br><span class="line">	console.log(&apos;server is running&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Hot-Module-Replacement热模块更新"><a href="#Hot-Module-Replacement热模块更新" class="headerlink" title="Hot Module Replacement热模块更新"></a>Hot Module Replacement热模块更新</h2><ul>
+<li><p>场景:在程序运行中。替换、添加、替换某个模块，不需要重新加载整个页面，实现交互时更新。</p>
+</li>
+<li><p>在 webpack.config.js 中，添加配置</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	mode: &apos;development&apos;,</span><br><span class="line">	devtool: &apos;cheap-module-eval-source-map&apos;,</span><br><span class="line">	devServer: &#123;</span><br><span class="line">		contentBase: &apos;./dist&apos;,</span><br><span class="line">		open: true,</span><br><span class="line">		port: 8080,</span><br><span class="line">		hot: true,//开启热更新功能</span><br><span class="line">		hotOnly: true//如果html功能没有实现，也不让浏览器刷新</span><br><span class="line">	&#125;,</span><br><span class="line">	plugins: [</span><br><span class="line">		new HtmlWebpackPlugin(&#123;</span><br><span class="line">			template: &apos;src/index.html&apos;</span><br><span class="line">		&#125;), </span><br><span class="line">		new CleanWebpackPlugin([&apos;dist&apos;]),</span><br><span class="line">		new webpack.HotModuleReplacementPlugin()//使用热模块插件</span><br><span class="line">	],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在main.js文件中，使用 HotModuleReplacementPlugin 启用模块的热替换功能。接口暴露在moudle.hot属性下面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//如果模块启用了HMR，就可以用 module.hot.accept(),监听模块的更新。</span><br><span class="line">if (module.hot) &#123;</span><br><span class="line">  module.hot.accept(&apos;./library.js&apos;, function() &#123;</span><br><span class="line">    // 使用更新过的 library 模块执行某些操作...</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//拒绝给定依赖模块的更新，使用 &apos;decline&apos; 方法强制更新失败。</span><br><span class="line">module.hot.decline(</span><br><span class="line">  dependencies // 可以是一个字符串或字符串数组</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：引入css文件时,用框架Vue，React 时，不需要写 module.hot.accept()，因为在使用css-loader，vue-loader，babel-preset时，均配置好了HMR，不需要自己重新写<br>如果文件没有内置HMR，需要自己手动写监听模块更新代码</p>
+</blockquote>
+<h2 id="结合Bable处理ES6语法"><a href="#结合Bable处理ES6语法" class="headerlink" title="结合Bable处理ES6语法"></a>结合Bable处理ES6语法</h2><ul>
+<li>场景：代码中含有ES6/ES7的代码，为了让低版本的浏览器兼容代码，需要使用Bable进行转换</li>
+<li>安装:<a href="https://www.babeljs.cn/" target="_blank" rel="noopener">Bable官网</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//preset-env语法转换</span><br><span class="line">npm install babel-loader @babel/core @babel/preset-env -D</span><br><span class="line">//兼容低版本浏览器的语法，函数的补充</span><br><span class="line">npm install --save @babel/polyfill</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 webpack.config.js 中，添加配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">  rules: [</span><br><span class="line">    &#123;</span><br><span class="line">        test: /\.js$/,</span><br><span class="line">     	exclude: /node_modules/, //排除在外：在node_modules中的js，babel-loader不生效</span><br><span class="line">     	loader: &quot;babel-loader&quot; ,</span><br><span class="line">        options:&#123;</span><br><span class="line">            &quot;presets&quot;: [[&quot;@babel/preset-env&quot;,&#123;</span><br><span class="line">                targets: &#123;</span><br><span class="line">                    edge: &quot;17&quot;,</span><br><span class="line">                    firefox: &quot;60&quot;,</span><br><span class="line">                    chrome: &quot;67&quot;,</span><br><span class="line">                    safari: &quot;11.1&quot;,</span><br><span class="line">                  &#125;,//运行在大于**版本的浏览器上，，已经支持es6的高浏览器不需要转换为es5</span><br><span class="line">                useBuiltIns:&apos;usage&apos; //按需添加polyfill,把业务代码中的新语法新函数都转成低版本浏览器兼容的</span><br><span class="line">            &#125;]]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在src目录下的index.js中顶部位置导入<code>import &quot;@babel/polyfill&quot;;</code></li>
+</ul>
+<blockquote>
+<p>注意如果不是打包业务代码，而是写的类库、或者z组件库的时候不能使用@babel/polyfill实现，因为会导致声明的变量变成全局变量，污染全局环境。使用<code>plugin-transform-runtime</code>实现</p>
+</blockquote>
+<ul>
+<li>安装插件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @babel/plugin-transform-runtime</span><br><span class="line">npm install --save @babel/runtime</span><br><span class="line">npm install --save @babel/runtime-corejs2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 webpack.config.js 中，添加配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">  rules: [</span><br><span class="line">    &#123;</span><br><span class="line">        test: /\.js$/,</span><br><span class="line">     	exclude: /node_modules/,</span><br><span class="line">     	loader: &quot;babel-loader&quot; ,</span><br><span class="line">        options:&#123;</span><br><span class="line">            &quot;plugins&quot;: [[&quot;@babel/plugin-transform-runtime&quot;,&#123;</span><br><span class="line">                &quot;corejs&quot;: 2,</span><br><span class="line">                &quot;helpers&quot;: true,</span><br><span class="line">                &quot;regenerator&quot;: true,</span><br><span class="line">                &quot;useESModules&quot;: false</span><br><span class="line">            &#125;]]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>由于babel配置的内容较多，官网推荐在根目录下创建属于babel的配置文件.babelrc文件</p>
+<p>由于babel需要配置的内容非常多，我们需要在项目根目录下创建一个 .babelrc 文件。<br>就不需要在 webpack.config.js 中写 babel 的配置了。<br>在  .babelrc  中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;plugins&quot;: [[&quot;@babel/plugin-transform-runtime&quot;, &#123;</span><br><span class="line">		&quot;corejs&quot;: 2,</span><br><span class="line">        &quot;helpers&quot;: true,</span><br><span class="line">        &quot;regenerator&quot;: true,</span><br><span class="line">        &quot;useESModules&quot;: false</span><br><span class="line">	&#125;]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>在webpack.config.js中<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	mode: &apos;development&apos;, //开发环境进行打包，打包的代码不会压缩</span><br><span class="line">	devtool: &apos;cheap-module-eval-source-map&apos;,//不带列信息，只对业务代码进行sourcemap的生成 </span><br><span class="line">	entry: &#123;//配置入口文件</span><br><span class="line">		main: &apos;./src/index.js&apos;</span><br><span class="line">	&#125;,</span><br><span class="line">	devServer: &#123;//配置webpack，开发环境的调试</span><br><span class="line">		contentBase: &apos;./dist&apos;,//启动服务器的目录</span><br><span class="line">		open: true,//打开新的端口号8080</span><br><span class="line">		port: 8080,</span><br><span class="line">		hot: true,//打开热替换功能</span><br><span class="line">		hotOnly: true</span><br><span class="line">	&#125;,</span><br><span class="line">	module: &#123;//对不同的文件进行打包规则</span><br><span class="line">		rules: [&#123; </span><br><span class="line">			test: /\.js$/, //对js文件的babel-loader打包，其配置在.babelrc文件中</span><br><span class="line">			exclude: /node_modules/, //排除在外：在node_modules中的js，babel-loader不生效</span><br><span class="line">			loader: &apos;babel-loader&apos;,</span><br><span class="line">		&#125;, &#123;</span><br><span class="line">			test: /\.(jpg|png|gif)$/,//对图片进行打包</span><br><span class="line">			use: &#123;</span><br><span class="line">				loader: &apos;url-loader&apos;,</span><br><span class="line">				options: &#123;</span><br><span class="line">					name: &apos;[name]_[hash].[ext]&apos;,</span><br><span class="line">					outputPath: &apos;images/&apos;,</span><br><span class="line">					limit: 10240//小于10240以base64的形式进行打包</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; </span><br><span class="line">		&#125;, &#123;</span><br><span class="line">			test: /\.(eot|ttf|svg)$/,//字体文件的打包</span><br><span class="line">			use: &#123;</span><br><span class="line">				loader: &apos;file-loader&apos;</span><br><span class="line">			&#125; </span><br><span class="line">		&#125;, &#123;</span><br><span class="line">			test: /\.scss$/,//scss文件的打包，先用postcss-loader，在用sass-loader进行解析，最后css-loader进行挂载</span><br><span class="line">			use: [</span><br><span class="line">				&apos;style-loader&apos;, </span><br><span class="line">				&#123;</span><br><span class="line">					loader: &apos;css-loader&apos;,</span><br><span class="line">					options: &#123;</span><br><span class="line">						importLoaders: 2</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;,</span><br><span class="line">				&apos;sass-loader&apos;,</span><br><span class="line">				&apos;postcss-loader&apos;</span><br><span class="line">			]</span><br><span class="line">		&#125;, &#123;</span><br><span class="line">			test: /\.css$/,//css文件的打包，没有sass-loader的解析</span><br><span class="line">			use: [</span><br><span class="line">				&apos;style-loader&apos;,</span><br><span class="line">				&apos;css-loader&apos;,</span><br><span class="line">				&apos;postcss-loader&apos;</span><br><span class="line">			]</span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;,</span><br><span class="line">	plugins: [</span><br><span class="line">		new HtmlWebpackPlugin(&#123;</span><br><span class="line">			template: &apos;src/index.html&apos;</span><br><span class="line">		&#125;), </span><br><span class="line">		new CleanWebpackPlugin([&apos;dist&apos;]),//自动清空上一次打包</span><br><span class="line">		new webpack.HotModuleReplacementPlugin()//热替换插件</span><br><span class="line">	],</span><br><span class="line">	output: &#123;//出口文件</span><br><span class="line">		filename: &apos;[name].js&apos;,</span><br><span class="line">		path: path.resolve(__dirname, &apos;dist&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
           
@@ -2669,7 +2788,7 @@ export function defineReactive (  //接收五个参数
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
