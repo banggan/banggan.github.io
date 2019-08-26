@@ -88,7 +88,7 @@
 <meta property="og:description" content="Webpack核心概念解析终于忙完了论文，可以愉快的开始学习了，重拾起重学前端、webpack以及Vue的源码解读作为入职前的复习吧。整个webpack系列将分成五个大的部分进行，以webpack4.0为文档进行解读，从简单的概念解读到最后的实现。整个知识点涉及范围： loader使用loader来预处理文件，把不同的静态资源（模块的结尾不是js的模块)打包成js文件 loader打包静态资源打包">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/webpack-zhishi.png">
-<meta property="og:updated_time" content="2019-04-27T03:18:59.264Z">
+<meta property="og:updated_time" content="2019-05-09T07:51:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack解读之LOADER">
 <meta name="twitter:description" content="Webpack核心概念解析终于忙完了论文，可以愉快的开始学习了，重拾起重学前端、webpack以及Vue的源码解读作为入职前的复习吧。整个webpack系列将分成五个大的部分进行，以webpack4.0为文档进行解读，从简单的概念解读到最后的实现。整个知识点涉及范围： loader使用loader来预处理文件，把不同的静态资源（模块的结尾不是js的模块)打包成js文件 loader打包静态资源打包">
@@ -490,7 +490,7 @@
 </li>
 <li>在webpack.config.js中添加loader的配置</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">module:&#123;</span><br><span class="line">        rules:[&#123;//打包scss文件</span><br><span class="line">            test:/\.scss$/,</span><br><span class="line">            use:[</span><br><span class="line">            &apos;style-loader&apos;,</span><br><span class="line">            &#123;</span><br><span class="line">                loader:&apos;css-loader&apos;,</span><br><span class="line">                options:&#123;</span><br><span class="line">                    importLoaders:2,//index.scss中通过import引入其他的scss文件,引入的scss文件在打包的时候也将依次经过所有的loader</span><br><span class="line">                    modules:true </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &apos;sass-loader&apos;,</span><br><span class="line">            &apos;postcss-loader&apos;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">module:&#123;</span><br><span class="line">        rules:[&#123;//打包scss文件</span><br><span class="line">            test:/\.scss$/,</span><br><span class="line">            use:[</span><br><span class="line">            &apos;style-loader&apos;,</span><br><span class="line">            &#123;</span><br><span class="line">                loader:&apos;css-loader&apos;,</span><br><span class="line">            </span><br><span class="line">                options:&#123;</span><br><span class="line">                    importLoaders:2,//index.scss中通过import引入其他的scss文件,引入的scss文件在打包的时候也将依次经过所有的loader</span><br><span class="line">                    modules:true </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &apos;sass-loader&apos;,</span><br><span class="line">            &apos;postcss-loader&apos;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <h4 id="打包字体图标文件"><a href="#打包字体图标文件" class="headerlink" title="打包字体图标文件"></a>打包字体图标文件</h4><p>在<a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴矢量图标库</a>中，把需要的字体图标下载到本地，解压。将iconfont.eot iconfont.svg iconfont.ttf iconfont.woff 四种图片文件放入到项目中，在src中新建一个放字体图标的文件夹font。将iconfont.css文件拷贝到项目中，修改对应字体的引用路径。</p>
 <ul>
 <li>需要安装 file-loader:<code>npm i file-loader -D</code></li>
@@ -550,6 +550,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/09/webpack核心概念解析/" rel="prev" title="webpack核心概念解析">
+                webpack核心概念解析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -628,7 +632,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -650,7 +654,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

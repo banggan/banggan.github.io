@@ -672,6 +672,265 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/04/27/webpack解读之LOADER/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="banggan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="banggan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/27/webpack解读之LOADER/" itemprop="url">webpack解读之LOADER</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-27T11:01:05+08:00">
+                2019-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack解读/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack解读</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+          
+         
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Webpack核心概念解析"><a href="#Webpack核心概念解析" class="headerlink" title="Webpack核心概念解析"></a>Webpack核心概念解析</h1><p>终于忙完了论文，可以愉快的开始学习了，重拾起重学前端、webpack以及Vue的源码解读作为入职前的复习吧。整个webpack系列将分成五个大的部分进行，以webpack4.0为文档进行解读，从简单的概念解读到最后的实现。<br>整个知识点涉及范围：<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/webpack-zhishi.png" alt="image"></p>
+<h2 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h2><p>使用loader来预处理文件，把不同的静态资源（模块的结尾不是js的模块)打包成js文件</p>
+<h3 id="loader打包静态资源"><a href="#loader打包静态资源" class="headerlink" title="loader打包静态资源"></a>loader打包静态资源</h3><h4 id="打包图片"><a href="#打包图片" class="headerlink" title="打包图片"></a>打包图片</h4><ul>
+<li>安装使用file-loader实现：<code>npm install file-loader -D</code></li>
+<li>在webpack.config.js中添加loader的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    //打包项目的入口文件</span><br><span class="line">    entry: &apos;./src/index.js&apos;,</span><br><span class="line">    module:&#123;</span><br><span class="line">        rules:[&#123;</span><br><span class="line">            test:/\.(jpg|png|gif)$/,//打包以jpg、png、gif结尾的所有图片文件</span><br><span class="line">            use:&#123;</span><br><span class="line">                loader:&apos;file-loader&apos;,</span><br><span class="line">                options:&#123;//placeholder 占位符 </span><br><span class="line">                    name:&apos;[name]_[hash].[ext]&apos;,//保持原图片的名字+hash值和后缀,主要单引号</span><br><span class="line">                    outputPath:&apos;image/&apos;//打包图片的位置</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/loaders/file-loader/" target="_blank" rel="noopener">file-loader的配置见文档</a></li>
+</ul>
+<h4 id="打包图片成base64格式"><a href="#打包图片成base64格式" class="headerlink" title="打包图片成base64格式"></a>打包图片成base64格式</h4><p>url-loader基本能实现file-loader的打包功能，适用于小图片的打包</p>
+<ul>
+<li>好处：图片打包成js文件，不用加载图片的地址，页面快速显示</li>
+<li>坏处：图片过大导致js文件过大</li>
+</ul>
+<p>所以，当图片的大小小于limit值时会把图片打包成base64格式，大于limit值则按照file-loader打包成图片文件</p>
+<ul>
+<li>安装使用url-loader实现：<code>npm install url-loader -D</code></li>
+<li>在webpack.config.js中添加loader的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    module:&#123;</span><br><span class="line">        rules:[&#123;//打包以jpg、png、gif结尾的所有图片文件</span><br><span class="line">            test:/\.(jpg|png|gif)$/,</span><br><span class="line">            use:&#123;</span><br><span class="line">                loader:&apos;url-loader&apos;,</span><br><span class="line">                options:&#123;//placeholder 占位符 </span><br><span class="line">                name:&apos;[name]_[hash].[ext]&apos;,//保持原图片的名字+hash值和后缀,主要单引号</span><br><span class="line">                outputPath:&apos;image/&apos;,//打包图片的位置</span><br><span class="line">                limit:2048</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/loaders/url-loader/" target="_blank" rel="noopener">url-loader的配置见文档</a></li>
+</ul>
+<h4 id="打包样式css文件"><a href="#打包样式css文件" class="headerlink" title="打包样式css文件"></a>打包样式css文件</h4><p>需要使用css-loader、style-loader</p>
+<ul>
+<li>css-loader:分析几个css文件的关系,合并css文件</li>
+<li>style-loader:将css-loader合并的css内容挂载在页面的head部分</li>
+</ul>
+<p>实现方式：</p>
+<ul>
+<li>安装loader实现：<code>npm install css-loader style-loader -D</code></li>
+<li><p>在webpack.config.js中添加loader的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: [&#123;//打包css文件</span><br><span class="line">            test:/\.css$/,</span><br><span class="line">            use:[&apos;style-loader&apos;,&apos;css-loader&apos;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更多的有关于<a href="https://www.webpackjs.com/loaders/css-loader/" target="_blank" rel="noopener">css-loader的配置见文档</a></p>
+<h4 id="打包样式scss文件"><a href="#打包样式scss文件" class="headerlink" title="打包样式scss文件"></a>打包样式scss文件</h4><p>需要使用sass-loader、node-sass</p>
+</li>
+<li><p>安装loader实现：<code>npm install sass-loader node-sass -D</code></p>
+</li>
+<li>在webpack.config.js中添加loader的配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: [&#123;</span><br><span class="line">            test: /\.scss$/,</span><br><span class="line">            use:[&apos;style-loader&apos;,&apos;css-loader&apos;,&apos;sass-loader&apos;] </span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在配置中，有三个loader,执行顺序是从下到上，从右到左。在打包scss文件时，首先执行sass-loader：对sass翻译成css文件，在挂载到css-loader,最后style-loader.</p>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/loaders/sass-loader/" target="_blank" rel="noopener">sass-loader的配置见文档</a></li>
+</ul>
+<h4 id="为样式添加不同浏览器的前缀"><a href="#为样式添加不同浏览器的前缀" class="headerlink" title="为样式添加不同浏览器的前缀"></a>为样式添加不同浏览器的前缀</h4><p>为了兼容不同的浏览器，在写样式的时候需要加上适用不同浏览器的前缀，如-o、-webkit、-moz等</p>
+<p>-安装loader实现：<code>npm install postcss-loader autoprefixer -D</code><br>-在根目录创建postcss.config.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">moudle.exports =&#123;</span><br><span class="line">	plugins:[</span><br><span class="line">        require(&apos;autoprefixer&apos;)</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在webpack.config.js中添加loader的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: [&#123;</span><br><span class="line">            test:/\.scss$/,</span><br><span class="line">            use:[</span><br><span class="line">            &apos;style-loader&apos;,</span><br><span class="line">            &apos;css-loader&apos;,</span><br><span class="line">            &apos;sass-loader&apos;,</span><br><span class="line">            &apos;postcss-loader&apos;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/loaders/postcss-loader/" target="_blank" rel="noopener">postcss-loader的配置见文档</a></li>
+</ul>
+<h4 id="css-loader添加不同的配置"><a href="#css-loader添加不同的配置" class="headerlink" title="css-loader添加不同的配置"></a>css-loader添加不同的配置</h4><h5 id="css模块化打包"><a href="#css模块化打包" class="headerlink" title="css模块化打包"></a>css模块化打包</h5><ul>
+<li>场景：在文件引入的scss不仅影响当前的文件，还影响当前文件引入的其他js文件，造成样式冲突</li>
+<li>实现：css只在当前模块类有效,在配置中添加<code>modules:true</code>开启css的模块化打包，在引入的时候注意区分<h5 id="scss文件的嵌套引用"><a href="#scss文件的嵌套引用" class="headerlink" title="scss文件的嵌套引用"></a>scss文件的嵌套引用</h5></li>
+<li><p>场景：scss文件通过import引入其他scss文件，导致打包的时候引入的scss文件打包错误</p>
+</li>
+<li><p>实现：<code>importLoader:2</code></p>
+</li>
+<li>在webpack.config.js中添加loader的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">module:&#123;</span><br><span class="line">        rules:[&#123;//打包scss文件</span><br><span class="line">            test:/\.scss$/,</span><br><span class="line">            use:[</span><br><span class="line">            &apos;style-loader&apos;,</span><br><span class="line">            &#123;</span><br><span class="line">                loader:&apos;css-loader&apos;,</span><br><span class="line">            </span><br><span class="line">                options:&#123;</span><br><span class="line">                    importLoaders:2,//index.scss中通过import引入其他的scss文件,引入的scss文件在打包的时候也将依次经过所有的loader</span><br><span class="line">                    modules:true </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &apos;sass-loader&apos;,</span><br><span class="line">            &apos;postcss-loader&apos;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="打包字体图标文件"><a href="#打包字体图标文件" class="headerlink" title="打包字体图标文件"></a>打包字体图标文件</h4><p>在<a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴矢量图标库</a>中，把需要的字体图标下载到本地，解压。将iconfont.eot iconfont.svg iconfont.ttf iconfont.woff 四种图片文件放入到项目中，在src中新建一个放字体图标的文件夹font。将iconfont.css文件拷贝到项目中，修改对应字体的引用路径。</p>
+<ul>
+<li>需要安装 file-loader:<code>npm i file-loader -D</code></li>
+<li>在webpack.config.js中添加loader的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: [&#123;</span><br><span class="line">            test: /\.(eot|ttf|svg|woff)$/,</span><br><span class="line">            use:&#123;</span><br><span class="line">                loader:&apos;file-loader&apos;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">            ]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD%E5%AD%97%E4%BD%93" target="_blank" rel="noopener">加载字体的配置见文档</a></li>
+</ul>
+<h4 id="打包数据文件"><a href="#打包数据文件" class="headerlink" title="打包数据文件"></a>打包数据文件</h4><p>如遇到json、scv、xml文件需要打包时，使用csv-loader 和 xml-loader实现。</p>
+<ul>
+<li>安装：npm install csv-loader xml-loader -D</li>
+<li>在webpack.config.js中添加loader的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [&#123;</span><br><span class="line">       test: /\.(csv|tsv)$/,</span><br><span class="line">       use: [</span><br><span class="line">         &apos;csv-loader&apos;</span><br><span class="line">       ]</span><br><span class="line">     &#125;,</span><br><span class="line">     &#123;</span><br><span class="line">       test: /\.xml$/,</span><br><span class="line">       use: [</span><br><span class="line">         &apos;xml-loader&apos;</span><br><span class="line">       ]</span><br><span class="line">     &#125;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更多的有关于<a href="https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE" target="_blank" rel="noopener">加载数据的配置见文档</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/02/20/前端开发者应该明白的浏览器工作原理/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2409,311 +2668,6 @@ c.interval = 5.0;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://banggan.github.io/2019/01/12/Vue源码解读之响应式原理/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="banggan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="banggan's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/12/Vue源码解读之响应式原理/" itemprop="url">Vue源码解读之响应式原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-12T15:36:26+08:00">
-                2019-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue源码解读/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue源码解读</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-          
-         
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>相信用过Vue的基本上都知道Vue的响应式都是利用了Object.defineProperty。<br>当你把一个普通的 JavaScript 对象传给 Vue 实例的 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty 把这些属性全部转为 getter/setter。Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是为什么 Vue 不支持 IE8 以及更低版本浏览器。<br>这些 getter/setter 对用户来说是不可见的，但是在内部它们让 Vue 追踪依赖，在属性被访问和修改时通知变化。<br>每个组件实例都有相应的 watcher 实例对象，它会在组件渲染的过程中把属性记录为依赖，之后当依赖项的 setter 被调用时，会通知 watcher 重新计算，从而致使它关联的组件得以更新。<br><img src="https://raw.githubusercontent.com/banggan/banggan.github.io/master/images/Vue_data_set.png" alt="在这里插入图片描述"></p>
-<h4 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h4><p>Object.defineProperty 方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象，先来看一下它的语法：</p>
-<pre><code>Object.defineProperty(obj, prop, descriptor)
-</code></pre><p>obj 是要在其上定义属性的对象；prop 是要定义或修改的属性的名称；descriptor 是将被定义或修改的属性描述符。<br>这里我们最关心的是 get 和 set，get 是一个给属性提供的 getter 方法，当我们访问了该属性的时候会触发 getter 方法；set 是一个给属性提供的 setter 方法，当我们对该属性做修改的时候会触发 setter 方法。<br>一旦对象拥有了 getter 和 setter，我们可以简单地把这个对象称为响应式对象。</p>
-<h4 id="observe"><a href="#observe" class="headerlink" title="observe"></a>observe</h4><p>observe 的功能就是用来监测数据的变化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">export function observe (value: any, asRootData: ?boolean): Observer | void &#123;</span><br><span class="line">  if (!isObject(value) || value instanceof VNode) &#123;</span><br><span class="line">    return</span><br><span class="line">  &#125;</span><br><span class="line">  let ob: Observer | void</span><br><span class="line">  if (hasOwn(value, &apos;__ob__&apos;) &amp;&amp; value.__ob__ instanceof Observer) &#123;</span><br><span class="line">    ob = value.__ob__</span><br><span class="line">  &#125; else if (</span><br><span class="line">    shouldObserve &amp;&amp;</span><br><span class="line">    !isServerRendering() &amp;&amp;</span><br><span class="line">    (Array.isArray(value) || isPlainObject(value)) &amp;&amp;   //  数组 对象  还是可扩展的</span><br><span class="line">    Object.isExtensible(value) &amp;&amp;</span><br><span class="line">    !value._isVue</span><br><span class="line">  ) &#123;</span><br><span class="line">    ob = new Observer(value)          //满足之后调用Observer</span><br><span class="line">  &#125;</span><br><span class="line">  if (asRootData &amp;&amp; ob) &#123;</span><br><span class="line">    ob.vmCount++</span><br><span class="line">  &#125;</span><br><span class="line">  return ob</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h4><p>Observer 是一个类，它的作用是给对象的属性添加 getter 和 setter，用于依赖收集和派发更新：</p>
-<pre><code>/**
- * Observer class that is attached to each observed
- * object. Once attached, the observer converts the target
- * object&apos;s property keys into getter/setters that
- * collect dependencies and dispatch updates.
- */
-export class Observer {
-  value: any;
-  dep: Dep;
-  vmCount: number; // number of vms that has this object as root $data
-
-  constructor (value: any) {
-    this.value = value
-    this.dep = new Dep()
-    this.vmCount = 0
-    def(value, &apos;__ob__&apos;, this)       // 手机依赖     第四个参数没有传递
-    if (Array.isArray(value)) {   是否为数组
-      const augment = hasProto
-        ? protoAugment
-        : copyAugment
-      augment(value, arrayMethods, arrayKeys)
-      this.observeArray(value)   //  遍历数组的每个元素 
-    } else {
-      this.walk(value)    不是数组执行walk
-    }
-  }
-
-  /**
-   * Walk through each property and convert them into
-   * getter/setters. This method should only be called when
-   * value type is Object.
-   */
-  walk (obj: Object) {        //遍历对象的所有属性  调用defineProperty的方法   遍历keys
-    const keys = Object.keys(obj)
-    for (let i = 0; i &lt; keys.length; i++) {
-      defineProperty(obj, keys[i])
-    }
-  }
-
-  /**
-   * Observe a list of Array items.
-   */
-  observeArray (items: Array&lt;any&gt;) {
-    for (let i = 0, l = items.length; i &lt; l; i++) {
-      observe(items[i])
-    }
-  }
-}
-</code></pre><p>Observer 的构造函数逻辑很简单，首先实例化 Dep 对象，接着通过执行 def 函数把自身实例添加到数据对象 value 的 <strong>ob</strong> 属性上，def 的定义在 src/core/util/lang.js 中：</p>
-<pre><code>//    对defineProperty的一个封装
-    export function def (obj: Object, key: string, val: any, enumerable?: boolean) {
-      Object.defineProperty(obj, key, {
-        value: val,
-        enumerable: !!enumerable,     //  不可枚举的    传入的是undefined
-        writable: true,
-        configurable: true
-      })
-    }
-</code></pre><p>def 函数是一个非常简单的Object.defineProperty 的封装，这就是为什么在开发中输出 data 上对象类型的数据，会发现该对象多了一个 <strong>ob</strong> 的属性。</p>
-<p>回到 Observer 的构造函数，接下来会对 value 做判断，对于数组会调用 observeArray 方法，否则对纯对象调用 walk 方法。可以看到 observeArray 是遍历数组再次调用 observe 方法，而 walk 方法是遍历对象的 key 调用 defineReactive 方法</p>
-<h4 id="defineReactive"><a href="#defineReactive" class="headerlink" title="defineReactive"></a>defineReactive</h4><p>defineReactive 的功能就是定义一个响应式对象，给对象动态添加 getter 和 sette</p>
-<pre><code>/**
- * Define a reactive property on an Object.
- */
-export function defineReactive (  //接收五个参数
-  obj: Object,
-  key: string,
-  val: any,
-  customSetter?: ?Function,
-  shallow?: boolean
-) {
-  const dep = new Dep()
-
-  const property = Object.getOwnPropertyDescriptor(obj, key)          //对象属性的定义
-  if (property &amp;&amp; property.configurable === false) {               // false就什么都不做
-    return
-  }
-
-  // cater for pre-defined getter/setters
-  const getter = property &amp;&amp; property.get
-  const setter = property &amp;&amp; property.set
-  if ((!getter || setter) &amp;&amp; arguments.length === 2) {     //  walk的时候   对key求值赋给val
-    val = obj[key]
-  }
-
-  let childOb = !shallow &amp;&amp; observe(val)
-  Object.defineProperty(obj, key, {
-    enumerable: true,
-    configurable: true,
-    get: function reactiveGetter () {    //访问的时候触发    并依赖收集
-      const value = getter ? getter.call(obj) : val
-      if (Dep.target) {
-        dep.depend()
-        if (childOb) {
-          childOb.dep.depend()
-          if (Array.isArray(value)) {
-            dependArray(value)
-          }
-        }
-      }
-      return value
-    },
-    set: function reactiveSetter (newVal) {  //  修改触发   并派发更新
-      const value = getter ? getter.call(obj) : val
-      /* eslint-disable no-self-compare */
-      if (newVal === value || (newVal !== newVal &amp;&amp; value !== value)) {
-        return
-      }
-      /* eslint-enable no-self-compare */
-      if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; customSetter) {
-        customSetter()
-      }
-      if (setter) {
-        setter.call(obj, newVal)
-      } else {
-        val = newVal
-      }
-      childOb = !shallow &amp;&amp; observe(newVal)
-      dep.notify()
-    }
-  })
-}
-</code></pre><p>defineReactive 函数最开始初始化 Dep 对象的实例，接着拿到 obj 的属性描述符，然后对子对象递归调用 observe 方法，这样就保证了无论 obj 的结构多复杂，它的所有子属性也能变成响应式的对象，这样我们访问或修改 obj 中一个嵌套较深的属性，也能触发 getter 和 setter。最后利用 Object.defineProperty 去给 obj 的属性 key 添加 getter 和 setter。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>响应式对象，核心就是利用 Object.defineProperty 给数据添加了 getter 和 setter，目的就是为了在我们访问数据以及写数据的时候能自动执行一些逻辑：getter 做的事情是依赖收集，setter 做的事情是派发更新。后面会根据依赖收集进行一个解读。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2766,7 +2720,7 @@ export function defineReactive (  //接收五个参数
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
